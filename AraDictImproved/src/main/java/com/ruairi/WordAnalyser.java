@@ -2,6 +2,8 @@ package com.ruairi;
 
 import java.util.HashSet;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.ruairi.SqlQuery;
 
 
 public class WordAnalyser {
@@ -13,20 +15,24 @@ public class WordAnalyser {
 	public static void main(String[] args) {
 
 		// fill map with arabic->english letters
+		letterMap = HashBiMap.create();
 		letterMap = createLetterMap(letterMap);
 
-		String aWord = "يتكلم";
-		System.out.println(transliterateWordAr(aWord));
+		String aWord = "يفعلون";
+		String enWord = transliterateWordAr(aWord);
 
 
-        // HashSet<SegmentedWord> segments = segmentWord("ktab");
+        HashSet<SegmentedWord> segments = segmentWord(enWord);
 
-        // for(SegmentedWord s: segments) {
-        //     System.out.println("prefix - " + s.getPrefix());
-        //     System.out.println("stem - " + s.getStem());
-        //     System.out.println("suffix - " + s.getSuffix());
-        //     System.out.println("\n");
-        // }
+        for(SegmentedWord s: segments) {
+
+			SqlQuery.selectQuery("stems", s.getStem());
+
+            System.out.println("prefix - " + s.getPrefix());
+            System.out.println("stem - " + s.getStem());
+            System.out.println("suffix - " + s.getSuffix());
+            System.out.println("\n");
+        }
 
 		// TODO parse the original file and store the arabic letters -> english letters in a bidirectional map
 
@@ -98,17 +104,16 @@ public class WordAnalyser {
 		chrMap.put('؟', '?'); //\u061F : ARABIC QUESTION MARK
 
 		//Not significant for morphological analysis
-		chrMap.put('ـ', null); //\u0640 : ARABIC TATWEEL
-		chrMap.put('ٹ', null); //\u0679 : ARABIC LETTER TTEH
-		chrMap.put('ڈ', null); //\u0688 : ARABIC LETTER DDAL
-		chrMap.put('ک', null); //\u06A9 : ARABIC LETTER KEHEH
-		chrMap.put('ڑ', null); //\u0691 : ARABIC LETTER RREH
-		chrMap.put('ں', null); //\u06BA : ARABIC LETTER NOON GHUNNA
-		chrMap.put('ھ', null); //\u06BE : ARABIC LETTER HEH DOACHASHMEE
-		chrMap.put('ہ', null); //\u06C1 : ARABIC LETTER HEH GOAL
-		chrMap.put('ے', null); //\u06D2 : ARABIC LETTER YEH BARREE
+		// chrMap.put('ـ', null); //\u0640 : ARABIC TATWEEL
+		// chrMap.put('ٹ', null); //\u0679 : ARABIC LETTER TTEH
+		// chrMap.put('ڈ', null); //\u0688 : ARABIC LETTER DDAL
+		// chrMap.put('ک', null); //\u06A9 : ARABIC LETTER KEHEH
+		// chrMap.put('ڑ', null); //\u0691 : ARABIC LETTER RREH
+		// chrMap.put('ں', null); //\u06BA : ARABIC LETTER NOON GHUNNA
+		// chrMap.put('ھ', null); //\u06BE : ARABIC LETTER HEH DOACHASHMEE
+		// chrMap.put('ہ', null); //\u06C1 : ARABIC LETTER HEH GOAL
+		// chrMap.put('ے', null); //\u06D2 : ARABIC LETTER YEH BARREE
 		//Not suitable for morphological analysis : remove all vowels/diacritics, i.e. undo the job !
-		
 		// TODO replace these characters ("[FNKaui~o]", "");
 		// TODO IDK remove these too("[`\\{]", "");
 
