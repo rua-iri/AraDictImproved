@@ -8,12 +8,17 @@ import java.sql.ResultSet;
 
 public class SqlQuery {
 
+    // TODO I should probably make a new class for the word
     private String prefix;
     private String stem;
     private String suffix;
-    private String wordMeaning;
+    private String[] wordMeaning;
+    private String[] vocForm;
+    private String preCat;
+    private String steCat;
+    private String sufCat;
 
-    private final String jdbcUrl = SecretStuff.jdbcUrl;
+    private final String jdbcUrl = SecretStuff.jdbcUrl.label;
     private final String[][] tableColumn = { { "tableAB", "prefCat", "stemCat" },
             { "tableAC", "prefCat", "suffCat" },
             { "tableBC", "stemCat", "suffCat" } };
@@ -22,7 +27,8 @@ public class SqlQuery {
         this.prefix = prefix;
         this.stem = stem;
         this.suffix = suffix;
-        this.wordMeaning = "";
+        this.wordMeaning = new String[3];
+        this.vocForm = new String[3];
 
         // TODO add more instance variables for the word's definition, root etc
     }
@@ -42,7 +48,9 @@ public class SqlQuery {
         }
 
         if (wordExists) {
+            System.out.println("\n\n");
             System.out.println(this.toString());
+            System.out.println("\n\n");
         }
 
     }
@@ -55,21 +63,11 @@ public class SqlQuery {
         String sqlSelectQuery = "SELECT * FROM ";
         boolean hasResults = false;
 
-        // TODO add default case
-        // use switch statement to check which table to query
-        switch (tableName) {
-            case "stems":
-                sqlSelectQuery += " stems ";
-                break;
-            case "prefixes":
-                sqlSelectQuery += " prefixes ";
-                break;
-            case "suffixes":
-                sqlSelectQuery += " suffixes ";
-                break;
-        }
+        // concatenate elements to create sql query
+        sqlSelectQuery += " " + tableName + " " + " WHERE FORM = ?";
 
-        sqlSelectQuery += " WHERE FORM = ?";
+        // TODO maybe make a separate reusable method for sql queries and return a
+        // Results set object
 
         try {
             Connection conn = DriverManager.getConnection(jdbcUrl);
@@ -78,25 +76,52 @@ public class SqlQuery {
 
             ResultSet rs = ps.executeQuery();
 
-            if (!rs.isBeforeFirst()) {
-                
-            } else {
+            if (rs.isBeforeFirst()) {
 
                 while (rs.next()) {
 
-                    // TODO do something with this data
+                    // TODO store this data in instance variables
                     String vocForm = rs.getString("VOC_FORM");
                     String gloss = rs.getString("GLOSS");
                     String type = rs.getString("CAT");
 
+                    if (tableName == "prefixes") {
+                        setPreCat(type);
+                        setWordMeaning(0, gloss);
+                        setVocForm(0, vocForm);
+
+                    } else if (tableName == "stems") {
+                        // check prefix-stem valid
+                        if (isValidCombination("preste", getPreCat(), type)) {
+                            setSteCat(type);
+                            setWordMeaning(1, gloss);
+                            setVocForm(1, vocForm);
+
+                            break;
+
+                        } else {
+                            continue;
+                        }
+
+                    } else if (tableName == "suffixes") {
+                        // check that both prefix-suffix and stem-suffix are valid
+                        if (isValidCombination("presuf", getPreCat(), type)
+                                && isValidCombination("stesuf", getSteCat(), type)) {
+                            setSufCat(type);
+                            setWordMeaning(2, gloss);
+                            setVocForm(2, vocForm);
+
+                            continue;
+
+                        } else {
+                            continue;
+                        }
+                    }
 
                     System.out.println(vocForm + " - " + gloss + " - " + type);
-
                 }
-
                 hasResults = true;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -137,14 +162,11 @@ public class SqlQuery {
         String sqlSelectQuery = "SELECT * FROM " + tableName + " WHERE " + columnOneName + "='" + columnOneData
                 + "' AND " + columnTwoName + "='" + columnTwoData + "';";
 
-        System.out.println(sqlSelectQuery);
-
         // connect to database and check if there is a record for this combination
         try {
             Connection conn = DriverManager.getConnection(jdbcUrl);
             PreparedStatement ps = conn.prepareStatement(sqlSelectQuery);
 
-            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
 
             // return true if record does exist
@@ -184,17 +206,52 @@ public class SqlQuery {
         this.suffix = suffix;
     }
 
-    public String getWordMeaning() {
+    public String[] getWordMeaning() {
         return wordMeaning;
     }
 
-    public void setWordMeaning(String wordMeaning) {
-        this.wordMeaning = wordMeaning;
+    public void setWordMeaning(int index, String wordMeaning) {
+        this.wordMeaning[index] = wordMeaning;
+    }
+
+    public String getPreCat() {
+        return preCat;
+    }
+
+    public void setPreCat(String preCat) {
+        this.preCat = preCat;
+    }
+
+    public String getSteCat() {
+        return steCat;
+    }
+
+    public void setSteCat(String steCat) {
+        this.steCat = steCat;
+    }
+
+    public String getSufCat() {
+        return sufCat;
+    }
+
+    public void setSufCat(String sufCat) {
+        this.sufCat = sufCat;
+    }
+
+    public String[] getVocForm() {
+        return vocForm;
+    }
+
+    public void setVocForm(int index, String vocForm) {
+        this.vocForm[index] = vocForm;
     }
 
     // toString method
+    @Override
     public String toString() {
-        return "Prefix: " + this.prefix + "\nStem: " + this.stem + "\nSuffix: " + this.suffix;
+        return "Prefix: " + this.prefix + "\nStem: " + this.stem + "\nSuffix: " + this.suffix +
+                "\nPronunciation: " + this.vocForm[0] + this.vocForm[1] + this.vocForm[2] +
+                "\nMeaning: " + this.wordMeaning[0] + this.wordMeaning[1] + this.wordMeaning[2];
     }
 
 }

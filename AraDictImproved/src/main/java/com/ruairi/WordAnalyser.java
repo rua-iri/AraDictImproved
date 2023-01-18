@@ -15,7 +15,7 @@ public class WordAnalyser {
 		letterMap = HashBiMap.create();
 		letterMap = createLetterMap(letterMap);
 
-		String aWord = "تعلم";
+		String aWord = "قلم";
 
 		// transliterate the word from arabic into latin characters
 		String enWord = transliterateWordAr(aWord);
@@ -26,15 +26,15 @@ public class WordAnalyser {
 		// Iterate through each possible segment combination
 		for (SegmentedWord s : segments) {
 
-			SqlQuery sqlQuery = new SqlQuery(s.getPrefix(), s.getStem(), s.getSuffix());
+			// SqlQuery sqlQuery = new SqlQuery(s.getPrefix(), s.getStem(), s.getSuffix());
+			// sqlQuery.runAllQueries();
+			// System.out.println("\n");
+			SqlQuery sqlQuery = new SqlQuery("", "qlm", "");
 			sqlQuery.runAllQueries();
-			System.out.println("\n");
 
-			// sqlQuery.isValidCombination("preste", "Pref-0", "FW");
-
-			// System.out.println("prefix - " + s.getPrefix());
-			// System.out.println("stem - " + s.getStem());
-			// System.out.println("suffix - " + s.getSuffix());
+			// System.out.println("prefix - '" + s.getPrefix() + "'");
+			// System.out.println("stem - '" + s.getStem() + "'");
+			// System.out.println("suffix - '" + s.getSuffix() + "'");
 			// System.out.println("\n");
 		}
 
@@ -124,6 +124,7 @@ public class WordAnalyser {
 		return chrMap;
 	}
 
+	// method to iterate through each character in the word and transliterate it using the BiMap
 	private static String transliterateWordAr(String enWord) {
 		String araWord = "";
 
