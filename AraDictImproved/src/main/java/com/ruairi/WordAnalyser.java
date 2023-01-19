@@ -15,7 +15,7 @@ public class WordAnalyser {
 		letterMap = HashBiMap.create();
 		letterMap = createLetterMap(letterMap);
 
-		String aWord = "قلم";
+		String aWord = "ان";
 
 		// transliterate the word from arabic into latin characters
 		String enWord = transliterateWordAr(aWord);
@@ -29,8 +29,14 @@ public class WordAnalyser {
 			// SqlQuery sqlQuery = new SqlQuery(s.getPrefix(), s.getStem(), s.getSuffix());
 			// sqlQuery.runAllQueries();
 			// System.out.println("\n");
-			SqlQuery sqlQuery = new SqlQuery("", "qlm", "");
-			sqlQuery.runAllQueries();
+
+			WordCombination wordCombination = new WordCombination(s.getPrefix(), s.getStem(), s.getSuffix());
+			SqlQuery.selectQuery(wordCombination);
+
+			for(WordSolution ws: wordCombination.getCombinationSolutions()) {
+				System.out.println(ws.toString());
+			}
+			
 
 			// System.out.println("prefix - '" + s.getPrefix() + "'");
 			// System.out.println("stem - '" + s.getStem() + "'");
@@ -39,6 +45,7 @@ public class WordAnalyser {
 		}
 
 	}
+
 
 	// TODO create method to transliterate latin letters -> arabic letters
 

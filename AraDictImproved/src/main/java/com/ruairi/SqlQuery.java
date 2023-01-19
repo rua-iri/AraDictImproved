@@ -8,250 +8,53 @@ import java.sql.ResultSet;
 
 public class SqlQuery {
 
-    // TODO I should probably make a new class for the word
-    private String prefix;
-    private String stem;
-    private String suffix;
-    private String[] wordMeaning;
-    private String[] vocForm;
-    private String preCat;
-    private String steCat;
-    private String sufCat;
-
-    private final String jdbcUrl = SecretStuff.jdbcUrl.label;
-    private final String[][] tableColumn = { { "tableAB", "prefCat", "stemCat" },
-            { "tableAC", "prefCat", "suffCat" },
-            { "tableBC", "stemCat", "suffCat" } };
-
-    public SqlQuery(String prefix, String stem, String suffix) {
-        this.prefix = prefix;
-        this.stem = stem;
-        this.suffix = suffix;
-        this.wordMeaning = new String[3];
-        this.vocForm = new String[3];
-
-        // TODO add more instance variables for the word's definition, root etc
-    }
-
-    // TODO WRITE THIS!
-    // method to run all queries and determine if the combination is valid and what
-    // the overall meaning is
-    public void runAllQueries() {
-        boolean wordExists = selectQuery("prefixes", this.prefix);
-
-        if (wordExists) {
-            wordExists = selectQuery("stems", this.stem);
-        }
-
-        if (wordExists) {
-            wordExists = selectQuery("suffixes", this.suffix);
-        }
-
-        if (wordExists) {
-            System.out.println("\n\n");
-            System.out.println(this.toString());
-            System.out.println("\n\n");
-        }
-
-    }
+    private static final String jdbcUrl = SecretStuff.jdbcUrl.label;
+    private static final String sQueryString = "SELECT CONCAT(prefixes.VOC_FORM, stems.VOC_FORM, suffixes.VOC_FORM) AS VOC_FORM, CONCAT(prefixes.GLOSS, ' ',  stems.GLOSS, ' ', suffixes.GLOSS) AS GLOSS, CONCAT(prefixes.POS_NICE, ', ', stems.POS_NICE, ', ', suffixes.POS_NICE) AS POS, stems.ROOT, stems.MEASURE FROM stems INNER JOIN tableAB ON stems.CAT=tableAB.stemCat INNER JOIN prefixes ON tableAB.prefCat=prefixes.CAT INNER JOIN tableBC ON stems.CAT=tableBC.stemCat INNER JOIN suffixes ON tableBC.suffCat=suffixes.CAT WHERE prefixes.FORM='%1$s'  AND stems.FORM='%2$s' AND suffixes.FORM='%3$s' AND EXISTS (SELECT * FROM tableAC WHERE tableAC.prefCat=prefixes.CAT AND tableAC.suffCat=suffixes.CAT); ";
 
     // TODO return a value or update instance variable
-    // Method to query for a segment's form in the database
-    public boolean selectQuery(String tableName, String wrdForm) {
+    // Method to query for a segment's form(s) in the database
+    public static void selectQuery(WordCombination wordCombination) {
 
-        // set url for sql db and query to be executed
-        String sqlSelectQuery = "SELECT * FROM ";
-        boolean hasResults = false;
+        // TODO set this to a single variable and alter it with .format()
+        // set sql query to be executed
+        // String sqlSelectQuery = sQueryString.format(wordCombination.getPrefix(), wordCombination.getStem(), wordCombination.getSuffix());
+        String sqlSelectQuery = String.format(sQueryString, wordCombination.getPrefix(), wordCombination.getStem(), wordCombination.getSuffix());
 
-        // concatenate elements to create sql query
-        sqlSelectQuery += " " + tableName + " " + " WHERE FORM = ?";
-
-        // TODO maybe make a separate reusable method for sql queries and return a
-        // Results set object
+        // query the database
+        ResultSet rs = queryDatabase(sqlSelectQuery);
 
         try {
-            Connection conn = DriverManager.getConnection(jdbcUrl);
-            PreparedStatement ps = conn.prepareStatement(sqlSelectQuery);
-            ps.setString(1, wrdForm);
-
-            ResultSet rs = ps.executeQuery();
-
             if (rs.isBeforeFirst()) {
 
+                // iterate through each record returned
                 while (rs.next()) {
 
-                    // TODO store this data in instance variables
-                    String vocForm = rs.getString("VOC_FORM");
-                    String gloss = rs.getString("GLOSS");
-                    String type = rs.getString("CAT");
+                    // instantiate new solution for every record and add it to the solutions for the
+                    // combination
+                    WordSolution wordSolution = new WordSolution(rs.getString("VOC_FORM"), rs.getString("GLOSS"),
+                            rs.getString("POS"), rs.getString("ROOT"), rs.getString("MEASURE"));
 
-                    if (tableName == "prefixes") {
-                        setPreCat(type);
-                        setWordMeaning(0, gloss);
-                        setVocForm(0, vocForm);
+                    wordCombination.setCombinationSolutions(wordSolution);
 
-                    } else if (tableName == "stems") {
-                        // check prefix-stem valid
-                        if (isValidCombination("preste", getPreCat(), type)) {
-                            setSteCat(type);
-                            setWordMeaning(1, gloss);
-                            setVocForm(1, vocForm);
-
-                            break;
-
-                        } else {
-                            continue;
-                        }
-
-                    } else if (tableName == "suffixes") {
-                        // check that both prefix-suffix and stem-suffix are valid
-                        if (isValidCombination("presuf", getPreCat(), type)
-                                && isValidCombination("stesuf", getSteCat(), type)) {
-                            setSufCat(type);
-                            setWordMeaning(2, gloss);
-                            setVocForm(2, vocForm);
-
-                            continue;
-
-                        } else {
-                            continue;
-                        }
-                    }
-
-                    System.out.println(vocForm + " - " + gloss + " - " + type);
                 }
-                hasResults = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return hasResults;
-
     }
 
-    // TODO create method to compare the category for each segment and check if it's
-    // a valid combination
-    public boolean isValidCombination(String columnCombination, String columnOneData, String columnTwoData) {
-
-        boolean recordExists = false;
-        String tableName = "";
-        String columnOneName = "";
-        String columnTwoName = "";
-
-        // TODO add a default case if that's necessary
-        // alter the table and column names depending on what data is being passed
-        switch (columnCombination) {
-            case "preste":
-                tableName = this.tableColumn[0][0];
-                columnOneName = this.tableColumn[0][1];
-                columnTwoName = this.tableColumn[0][2];
-                break;
-            case "presuf":
-                tableName = this.tableColumn[1][0];
-                columnOneName = this.tableColumn[1][1];
-                columnTwoName = this.tableColumn[1][2];
-                break;
-            case "stesuf":
-                tableName = this.tableColumn[2][0];
-                columnOneName = this.tableColumn[2][1];
-                columnTwoName = this.tableColumn[2][2];
-                break;
-        }
-
-        String sqlSelectQuery = "SELECT * FROM " + tableName + " WHERE " + columnOneName + "='" + columnOneData
-                + "' AND " + columnTwoName + "='" + columnTwoData + "';";
-
-        // connect to database and check if there is a record for this combination
+    // method to facilitate communication with database
+    public static ResultSet queryDatabase(String queryString) {
+        ResultSet rs = null;
         try {
             Connection conn = DriverManager.getConnection(jdbcUrl);
-            PreparedStatement ps = conn.prepareStatement(sqlSelectQuery);
-
-            ResultSet rs = ps.executeQuery();
-
-            // return true if record does exist
-            if (rs.isBeforeFirst()) {
-                recordExists = true;
-            }
-
+            PreparedStatement ps = conn.prepareStatement(queryString);
+            rs = ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return recordExists;
-    }
-
-    // setters and getters
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getStem() {
-        return stem;
-    }
-
-    public void setStem(String stem) {
-        this.stem = stem;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
-
-    public String[] getWordMeaning() {
-        return wordMeaning;
-    }
-
-    public void setWordMeaning(int index, String wordMeaning) {
-        this.wordMeaning[index] = wordMeaning;
-    }
-
-    public String getPreCat() {
-        return preCat;
-    }
-
-    public void setPreCat(String preCat) {
-        this.preCat = preCat;
-    }
-
-    public String getSteCat() {
-        return steCat;
-    }
-
-    public void setSteCat(String steCat) {
-        this.steCat = steCat;
-    }
-
-    public String getSufCat() {
-        return sufCat;
-    }
-
-    public void setSufCat(String sufCat) {
-        this.sufCat = sufCat;
-    }
-
-    public String[] getVocForm() {
-        return vocForm;
-    }
-
-    public void setVocForm(int index, String vocForm) {
-        this.vocForm[index] = vocForm;
-    }
-
-    // toString method
-    @Override
-    public String toString() {
-        return "Prefix: " + this.prefix + "\nStem: " + this.stem + "\nSuffix: " + this.suffix +
-                "\nPronunciation: " + this.vocForm[0] + this.vocForm[1] + this.vocForm[2] +
-                "\nMeaning: " + this.wordMeaning[0] + this.wordMeaning[1] + this.wordMeaning[2];
+        return rs;
     }
 
 }
