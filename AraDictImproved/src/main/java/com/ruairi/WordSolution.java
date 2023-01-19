@@ -45,7 +45,7 @@ public class WordSolution {
         if(trueTense.charAt(0)==',') {
             trueTense = trueTense.substring(2);
         }
-        if(trueTense.charAt(trueTense.length()-2)==',') {
+        if(trueTense.length()>=2 && trueTense.charAt(trueTense.length()-2)==',') {
             trueTense = trueTense.substring(0, (trueTense.length()-2));
         }
 

@@ -8,14 +8,11 @@ public class WordAnalyser {
 
 	public static BiMap<Character, Character> letterMap;
 
-	// TODO main method not necessary, just for testing, should be removed
-	public static void main(String[] args) {
 
+	public static void runAnalyser(String aWord) {
 		// fill map with arabic->english letters
 		letterMap = HashBiMap.create();
 		letterMap = createLetterMap(letterMap);
-
-		String aWord = "ان";
 
 		// transliterate the word from arabic into latin characters
 		String enWord = transliterateWordAr(aWord);
@@ -30,24 +27,28 @@ public class WordAnalyser {
 			// sqlQuery.runAllQueries();
 			// System.out.println("\n");
 
-			WordCombination wordCombination = new WordCombination(s.getPrefix(), s.getStem(), s.getSuffix());
+			String pFix = doubleApostrophe(s.getPrefix());
+			String sTem = doubleApostrophe(s.getStem());
+			String sFix = doubleApostrophe(s.getSuffix());
+
+
+			WordCombination wordCombination = new WordCombination(pFix, sTem, sFix);
 			SqlQuery.selectQuery(wordCombination);
 
+			// iterate through each solution found
 			for(WordSolution ws: wordCombination.getCombinationSolutions()) {
 				System.out.println(ws.toString());
+				System.out.println(transliterateWordEn(ws.getPhoneticSpell()));
 			}
-			
 
-			// System.out.println("prefix - '" + s.getPrefix() + "'");
-			// System.out.println("stem - '" + s.getStem() + "'");
-			// System.out.println("suffix - '" + s.getSuffix() + "'");
-			// System.out.println("\n");
 		}
-
 	}
 
 
-	// TODO create method to transliterate latin letters -> arabic letters
+	// this method is necessary because querying for a single apostrophe causes an error
+	public static String doubleApostrophe(String inputForm) {
+		return inputForm.replaceAll("'", "''");
+	}
 
 	
 	/**
@@ -113,21 +114,6 @@ public class WordAnalyser {
 		chrMap.put('؛', ';'); // \u061B : ARABIC SEMICOLON
 		chrMap.put('؟', '?'); // \u061F : ARABIC QUESTION MARK
 
-		// Not significant for morphological analysis
-		// chrMap.put('ـ', null); //\u0640 : ARABIC TATWEEL
-		// chrMap.put('ٹ', null); //\u0679 : ARABIC LETTER TTEH
-		// chrMap.put('ڈ', null); //\u0688 : ARABIC LETTER DDAL
-		// chrMap.put('ک', null); //\u06A9 : ARABIC LETTER KEHEH
-		// chrMap.put('ڑ', null); //\u0691 : ARABIC LETTER RREH
-		// chrMap.put('ں', null); //\u06BA : ARABIC LETTER NOON GHUNNA
-		// chrMap.put('ھ', null); //\u06BE : ARABIC LETTER HEH DOACHASHMEE
-		// chrMap.put('ہ', null); //\u06C1 : ARABIC LETTER HEH GOAL
-		// chrMap.put('ے', null); //\u06D2 : ARABIC LETTER YEH BARREE
-		// Not suitable for morphological analysis : remove all vowels/diacritics, i.e.
-		// undo the job !
-		// TODO replace these characters ("[FNKaui~o]", "");
-		// TODO IDK remove these too("[`\\{]", "");
-
 		return chrMap;
 	}
 
@@ -140,6 +126,16 @@ public class WordAnalyser {
 		}
 
 		return araWord;
+	}
+
+	private static String transliterateWordEn(String arWord) {
+		String enWord = "";
+
+		for(int i=0; i<arWord.length(); i++) {
+			enWord += letterMap.inverse().get(arWord.charAt(i));
+		}
+
+		return enWord;
 	}
 
 	/**

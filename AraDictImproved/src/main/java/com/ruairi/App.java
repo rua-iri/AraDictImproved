@@ -7,9 +7,10 @@ package com.ruairi;
 public class App 
 {
 
-    // TODO process word input from this main method
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        String aWord = "فاسقيناكم";
+        WordAnalyser.runAnalyser(aWord);
     }
+
 }
