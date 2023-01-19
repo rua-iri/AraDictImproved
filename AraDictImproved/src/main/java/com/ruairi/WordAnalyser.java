@@ -1,6 +1,9 @@
 package com.ruairi;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -9,7 +12,12 @@ public class WordAnalyser {
 	public static BiMap<Character, Character> letterMap;
 
 
-	public static void runAnalyser(String aWord) {
+	// method to run the word analyser
+	public static List<WordSolution> runAnalyser(String aWord) {
+
+		// declare list of solutions to be returned
+		List<WordSolution> solutionList = new ArrayList<WordSolution>();
+
 		// fill map with arabic->english letters
 		letterMap = HashBiMap.create();
 		letterMap = createLetterMap(letterMap);
@@ -23,10 +31,6 @@ public class WordAnalyser {
 		// Iterate through each possible segment combination
 		for (SegmentedWord s : segments) {
 
-			// SqlQuery sqlQuery = new SqlQuery(s.getPrefix(), s.getStem(), s.getSuffix());
-			// sqlQuery.runAllQueries();
-			// System.out.println("\n");
-
 			String pFix = doubleApostrophe(s.getPrefix());
 			String sTem = doubleApostrophe(s.getStem());
 			String sFix = doubleApostrophe(s.getSuffix());
@@ -37,11 +41,14 @@ public class WordAnalyser {
 
 			// iterate through each solution found
 			for(WordSolution ws: wordCombination.getCombinationSolutions()) {
-				System.out.println(ws.toString());
-				System.out.println(transliterateWordEn(ws.getPhoneticSpell()));
+				// add solutions to the list
+				solutionList.add(ws);
 			}
 
 		}
+
+		// return the complete list of solutions
+		return solutionList;
 	}
 
 
@@ -128,7 +135,7 @@ public class WordAnalyser {
 		return araWord;
 	}
 
-	private static String transliterateWordEn(String arWord) {
+	public static String transliterateWordEn(String arWord) {
 		String enWord = "";
 
 		for(int i=0; i<arWord.length(); i++) {
