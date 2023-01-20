@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 public class SqlQuery {
 
     private static final String jdbcUrl = SecretStuff.jdbcUrl.label;
-    private static final String sQueryString = "SELECT CONCAT(prefixes.VOC_FORM, stems.VOC_FORM, suffixes.VOC_FORM) AS VOC_FORM, CONCAT(prefixes.GLOSS, ' ',  stems.GLOSS, ' ', suffixes.GLOSS) AS GLOSS, CONCAT(prefixes.POS_NICE, ', ', stems.POS_NICE, ', ', suffixes.POS_NICE) AS POS, stems.ROOT, stems.MEASURE FROM stems INNER JOIN tableAB ON stems.CAT=tableAB.stemCat INNER JOIN prefixes ON tableAB.prefCat=prefixes.CAT INNER JOIN tableBC ON stems.CAT=tableBC.stemCat INNER JOIN suffixes ON tableBC.suffCat=suffixes.CAT WHERE prefixes.FORM='%1$s'  AND stems.FORM='%2$s' AND suffixes.FORM='%3$s' AND EXISTS (SELECT * FROM tableAC WHERE tableAC.prefCat=prefixes.CAT AND tableAC.suffCat=suffixes.CAT); ";
+    private static final String sQueryString = "SELECT CONCAT(prefixes.VOC_FORM, stems.VOC_FORM, suffixes.VOC_FORM) AS VOC_FORM, CONCAT(prefixes.GLOSS, ' ',  stems.GLOSS, ' ', suffixes.GLOSS) AS GLOSS, CONCAT(prefixes.POS_NICE, ', ', stems.POS_NICE, ', ', suffixes.POS_NICE) AS POS, stems.ROOT, stems.MEASURE FROM stems INNER JOIN tableAB ON stems.CAT=tableAB.stemCat INNER JOIN prefixes ON tableAB.prefCat=prefixes.CAT INNER JOIN tableBC ON stems.CAT=tableBC.stemCat INNER JOIN suffixes ON tableBC.suffCat=suffixes.CAT WHERE BINARY prefixes.FORM='%1$s' AND BINARY stems.FORM='%2$s' AND BINARY suffixes.FORM='%3$s' AND EXISTS (SELECT * FROM tableAC WHERE tableAC.prefCat=prefixes.CAT AND tableAC.suffCat=suffixes.CAT); ";
 
     // Method to query for a segment's form(s) in the database
     public static void selectQuery(WordCombination wordCombination) {
