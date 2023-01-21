@@ -14,14 +14,11 @@ public class SqlQuery {
     // Method to query for a segment's form(s) in the database
     public static void selectQuery(WordCombination wordCombination) {
 
-
-        // TODO sql queries need to be case sensitive
-        // a search for حول returns results for هول aswell 
-        // which is highly undesirable
-
+        boolean isUnique = true;
 
         // set sql query to be executed
-        String sqlSelectQuery = String.format(sQueryString, wordCombination.getPrefix(), wordCombination.getStem(), wordCombination.getSuffix());
+        String sqlSelectQuery = String.format(sQueryString, wordCombination.getPrefix(), wordCombination.getStem(),
+                wordCombination.getSuffix());
 
         // query the database
         ResultSet rs = queryDatabase(sqlSelectQuery);
@@ -33,15 +30,15 @@ public class SqlQuery {
                 while (rs.next()) {
 
                     // TODO verbs can return the meaning with the subject before the verb's meaning
-                    // e.g. "fan;ventilate;revive he/it <verb>" 
-                    // this means that the response must be formatted and the database query should be modified
+                    // e.g. "fan;ventilate;revive he/it <verb>"
+                    // this means that the response must be formatted and the database query should
+                    // be modified
                     // this format only seems to exist for suffixes
 
                     // instantiate new solution for every record and add it to the solutions for the
                     // combination
                     WordSolution wordSolution = new WordSolution(rs.getString("VOC_FORM"), rs.getString("GLOSS"),
                             rs.getString("POS"), rs.getString("ROOT"), rs.getString("MEASURE"));
-
 
                     wordCombination.setCombinationSolutions(wordSolution);
 

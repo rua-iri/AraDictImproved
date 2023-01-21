@@ -20,7 +20,7 @@ public class App
     }
 
     // TODO add another method to return something if no results are found
-    // TODO maybe add a default value here @RequestParam(value = "name", defaultValue = "World")
+    // TODO maybe add a default value here @RequestParam(value = "q", defaultValue = "تجربة")
     @GetMapping("/api/word")
     public List<WordSolution> solutionMapper(@RequestParam(value = "q") String apiQuery) {
         return WordAnalyser.runAnalyser(apiQuery);

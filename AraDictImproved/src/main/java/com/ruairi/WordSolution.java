@@ -44,11 +44,11 @@ public class WordSolution {
 
         // remove preceding and trailing commas
         String trueTense = tense;
-        if(trueTense.charAt(0)==',') {
+        if (trueTense.charAt(0) == ',') {
             trueTense = trueTense.substring(2);
         }
-        if(trueTense.length()>=2 && trueTense.charAt(trueTense.length()-2)==',') {
-            trueTense = trueTense.substring(0, (trueTense.length()-2));
+        if (trueTense.length() >= 2 && trueTense.charAt(trueTense.length() - 2) == ',') {
+            trueTense = trueTense.substring(0, (trueTense.length() - 2));
         }
 
         this.tense = trueTense;
@@ -77,5 +77,6 @@ public class WordSolution {
         return "WordSolution [phoneticSpell=" + phoneticSpell + ", meaning=" + meaning + ", tense=" + tense + ", root="
                 + root + ", verbForm=" + verbForm + "]";
     }
+
 
 }
