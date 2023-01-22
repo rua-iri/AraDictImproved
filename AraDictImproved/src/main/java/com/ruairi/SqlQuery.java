@@ -14,7 +14,7 @@ public class SqlQuery {
     // Method to query for a segment's form(s) in the database
     public static void selectQuery(WordCombination wordCombination) {
 
-        boolean isUnique = true;
+        boolean isUnique;
 
         // set sql query to be executed
         String sqlSelectQuery = String.format(sQueryString, wordCombination.getPrefix(), wordCombination.getStem(),
@@ -35,12 +35,26 @@ public class SqlQuery {
                     // be modified
                     // this format only seems to exist for suffixes
 
+                    // Reset isUnique to true for each iteration
+                    isUnique = true;
+
                     // instantiate new solution for every record and add it to the solutions for the
                     // combination
                     WordSolution wordSolution = new WordSolution(rs.getString("VOC_FORM"), rs.getString("GLOSS"),
                             rs.getString("POS"), rs.getString("ROOT"), rs.getString("MEASURE"));
 
-                    wordCombination.setCombinationSolutions(wordSolution);
+                    
+                    // Check if the solution is unique
+                    for (WordSolution wSol : wordCombination.getCombinationSolutions()) {
+                        if (wordSolution.toString().equals(wSol.toString())) {
+                            isUnique = false;
+                        }
+                    }
+
+                    // only add the solution if it is unique
+                    if (isUnique) {
+                        wordCombination.setCombinationSolutions(wordSolution);
+                    }
 
                 }
             }
