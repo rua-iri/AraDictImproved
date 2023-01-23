@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 public class SqlQuery {
 
     private static final String jdbcUrl = SecretStuff.jdbcUrl.label;
-    private static final String sQueryString = "SELECT CONCAT(prefixes.VOC_FORM, stems.VOC_FORM, suffixes.VOC_FORM) AS VOC_FORM, CONCAT(prefixes.GLOSS, ' ',  stems.GLOSS, ' ', suffixes.GLOSS) AS GLOSS, CONCAT(prefixes.POS_NICE, ', ', stems.POS_NICE, ', ', suffixes.POS_NICE) AS POS, stems.ROOT, stems.MEASURE FROM stems INNER JOIN tableAB ON stems.CAT=tableAB.stemCat INNER JOIN prefixes ON tableAB.prefCat=prefixes.CAT INNER JOIN tableBC ON stems.CAT=tableBC.stemCat INNER JOIN suffixes ON tableBC.suffCat=suffixes.CAT WHERE BINARY prefixes.FORM='%1$s' AND BINARY stems.FORM='%2$s' AND BINARY suffixes.FORM='%3$s' AND EXISTS (SELECT * FROM tableAC WHERE tableAC.prefCat=prefixes.CAT AND tableAC.suffCat=suffixes.CAT); ";
+    private static final String sQueryString = "SELECT CONCAT(prefixes.VOC_FORM, stems.VOC_FORM, suffixes.VOC_FORM) AS VOC_FORM, prefixes.GLOSS AS PRE_GLOSS, stems.GLOSS AS STE_GLOSS, suffixes.GLOSS AS SUF_GLOSS, CONCAT(prefixes.POS_NICE, ', ', stems.POS_NICE, ', ', suffixes.POS_NICE) AS POS, stems.ROOT, stems.MEASURE FROM stems INNER JOIN tableAB ON stems.CAT=tableAB.stemCat INNER JOIN prefixes ON tableAB.prefCat=prefixes.CAT INNER JOIN tableBC ON stems.CAT=tableBC.stemCat INNER JOIN suffixes ON tableBC.suffCat=suffixes.CAT WHERE BINARY prefixes.FORM='%1$s' AND BINARY stems.FORM='%2$s' AND BINARY suffixes.FORM='%3$s' AND EXISTS (SELECT * FROM tableAC WHERE tableAC.prefCat=prefixes.CAT AND tableAC.suffCat=suffixes.CAT); ";
 
     // Method to query for a segment's form(s) in the database
     public static void selectQuery(WordCombination wordCombination) {
@@ -29,18 +29,23 @@ public class SqlQuery {
                 // iterate through each record returned
                 while (rs.next()) {
 
-                    // TODO verbs can return the meaning with the subject before the verb's meaning
-                    // e.g. "fan;ventilate;revive he/it <verb>"
-                    // this means that the response must be formatted and the database query should
-                    // be modified
-                    // this format only seems to exist for suffixes
-
                     // Reset isUnique to true for each iteration
                     isUnique = true;
 
+                    String glossMeaning = rs.getString("PRE_GLOSS");
+
+                    // if <verb> is in the results returned then replace it with the stem's meaning
+                    if(rs.getString("SUF_GLOSS").contains("<verb>")) {
+                        glossMeaning += rs.getString("SUF_GLOSS");
+                        glossMeaning = glossMeaning.replaceAll("<verb>", rs.getString("STE_GLOSS"));
+                    } else {
+                        glossMeaning += rs.getString("STE_GLOSS") + rs.getString("SUF_GLOSS");
+                    }
+
+
                     // instantiate new solution for every record and add it to the solutions for the
                     // combination
-                    WordSolution wordSolution = new WordSolution(rs.getString("VOC_FORM"), rs.getString("GLOSS"),
+                    WordSolution wordSolution = new WordSolution(rs.getString("VOC_FORM"), glossMeaning,
                             rs.getString("POS"), rs.getString("ROOT"), rs.getString("MEASURE"));
 
                     

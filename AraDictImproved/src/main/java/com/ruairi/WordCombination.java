@@ -9,7 +9,6 @@ public class WordCombination {
     private String suffix;
     private ArrayList<WordSolution> combinationSolutions;
 
-    // TODO add way to ensure that WordSolutions are unique
 
     public WordCombination(String prefix, String stem, String suffix) {
         this.prefix = prefix;
