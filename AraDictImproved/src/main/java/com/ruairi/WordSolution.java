@@ -23,9 +23,7 @@ public class WordSolution {
     }
 
     public void setPhoneticSpell(String phoneticSpell) {
-        // transliterate word back to arabic
-        String arPhoneticSpell = WordAnalyser.transliterateWordEn(phoneticSpell);
-        this.phoneticSpell = arPhoneticSpell;
+        this.phoneticSpell = phoneticSpell;
     }
 
     public String getMeaning() {
@@ -59,9 +57,7 @@ public class WordSolution {
     }
 
     public void setRoot(String root) {
-        // transliterate root back to arabic
-        String arRoot = WordAnalyser.transliterateWordEn(root);
-        this.root = arRoot;
+        this.root = root;
     }
 
     public String getVerbForm() {
