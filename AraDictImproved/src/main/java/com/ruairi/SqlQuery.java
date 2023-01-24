@@ -34,21 +34,20 @@ public class SqlQuery {
 
                     String glossMeaning = rs.getString("PRE_GLOSS");
 
+
                     // if <verb> is in the results returned then replace it with the stem's meaning
-                    if(rs.getString("SUF_GLOSS").contains("<verb>")) {
-                        glossMeaning += rs.getString("SUF_GLOSS");
+                    if (rs.getString("SUF_GLOSS").contains("<verb>")) {
+                        glossMeaning += " " + rs.getString("SUF_GLOSS");
                         glossMeaning = glossMeaning.replaceAll("<verb>", rs.getString("STE_GLOSS"));
                     } else {
-                        glossMeaning += rs.getString("STE_GLOSS") + rs.getString("SUF_GLOSS");
+                        glossMeaning += " " + rs.getString("STE_GLOSS") + " " + rs.getString("SUF_GLOSS");
                     }
-
 
                     // instantiate new solution for every record and add it to the solutions for the
                     // combination
                     WordSolution wordSolution = new WordSolution(rs.getString("VOC_FORM"), glossMeaning,
                             rs.getString("POS"), rs.getString("ROOT"), rs.getString("MEASURE"));
 
-                    
                     // Check if the solution is unique
                     for (WordSolution wSol : wordCombination.getCombinationSolutions()) {
                         if (wordSolution.toString().equals(wSol.toString())) {
