@@ -10,7 +10,7 @@ public class WordAnalyser {
 	public static List<WordSolution> runAnalyser(String aWord) {
 
 		// remove harakat from the word if they are written
-		aWord = removeDiacratics(aWord);
+		aWord = removeDiacritics(aWord);
 
 		// declare list of solutions to be returned
 		List<WordSolution> solutionList = new ArrayList<WordSolution>();
@@ -42,7 +42,7 @@ public class WordAnalyser {
 
 	// Remove all short vowels from the word so that the
 	// database can be queried without issue
-	private static String removeDiacratics(String araWord) {
+	private static String removeDiacritics(String araWord) {
 
 		araWord = araWord.replaceAll("َ", "");
 		araWord = araWord.replaceAll("ً", "");
