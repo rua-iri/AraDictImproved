@@ -1,9 +1,9 @@
 # AraDictImproved
 
-A program to deconstruct an arabic word and return its possible defintions using an updated and hopefully improved version of aramorph.
+A program to deconstruct an arabic word and return its possible defintions using an updated and hopefully improved version of aramorph which can be found [here](https://github.com/gitGNU/gnu_aramorph).
 
 Aramorph was used as the basis for the website [Aratools](http://www.aratools.com/) which I found absolutely vital at university!
 
-My intention is to be able to deploy this program as an api to use in other projects.
+The original database has been updated so that words no longer need to be transliterated before checking them. This is because the entire database has itself been transliterated into arabic, hopefully improving the performance of the program.
 
-I'd eventually like to alter the database so that transliteration is no longer necessary. Might do that in the future...
+This program is currently running as an api on my website, which I intend to use as the backend for other projects.
