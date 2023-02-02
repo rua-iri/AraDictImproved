@@ -51,6 +51,7 @@ public class WordAnalyser {
 		araWord = araWord.replaceAll("ِ", "");
 		araWord = araWord.replaceAll("ٍ", "");
 		araWord = araWord.replaceAll("ْ", "");
+		araWord = araWord.replaceAll("ّ", "");
 
 		return araWord;
 	}
