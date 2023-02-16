@@ -44,15 +44,12 @@ public class WordAnalyser {
 	// database can be queried without issue
 	private static String removeDiacritics(String araWord) {
 
-		araWord = araWord.replaceAll("َ", "");
-		araWord = araWord.replaceAll("ً", "");
-		araWord = araWord.replaceAll("ُ", "");
-		araWord = araWord.replaceAll("ٌ", "");
-		araWord = araWord.replaceAll("ِ", "");
-		araWord = araWord.replaceAll("ٍ", "");
-		araWord = araWord.replaceAll("ْ", "");
-		araWord = araWord.replaceAll("ّ", "");
+		String[] harakatAra = {"َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"};
 
+		for(String haraka : harakatAra) {
+			araWord = araWord.replaceAll(haraka, "");
+		}
+		
 		return araWord;
 	}
 
@@ -62,8 +59,7 @@ public class WordAnalyser {
 	 * 
 	 * @return The list of combinations
 	 * @param translitered The word. It is assumed that
-	 *                     {@link #romanizeWord(String word) romanizeWord} has been
-	 *                     called before
+	 * 
 	 */
 	private static HashSet<SegmentedWord> segmentWord(String translitered) {
 		HashSet<SegmentedWord> segmented = new HashSet<SegmentedWord>();
