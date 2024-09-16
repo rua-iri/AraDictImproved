@@ -1,4 +1,4 @@
-package com.ruairi;
+package com.rua_iri;
 
 import java.util.List;
 
@@ -14,7 +14,6 @@ public class App {
 
   public static void main(String[] args) {
     SpringApplication.run(App.class, args);
-
   }
 
   // TODO add another method to return something if no results are found

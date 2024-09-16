@@ -1,4 +1,4 @@
-package com.ruairi;
+package com.rua_iri;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.ruairi;
+package com.rua_iri;
 
 public class WordSolution {
 
