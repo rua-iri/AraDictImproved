@@ -1,5 +1,6 @@
 package com.rua_iri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,13 @@ public class App {
   @GetMapping("/api/word")
   public List<WordSolution> solutionMapper(
       @RequestParam(value = "q", defaultValue = "العربية") String apiQuery) {
-    return WordAnalyser.runAnalyser(apiQuery);
+    try {
+      List<WordSolution> solutionList = WordAnalyser.runAnalyser(apiQuery);
+      return solutionList;
+    } catch (Exception e) {
+      System.err.println(e);
+      return new ArrayList<WordSolution>();
+    }
   }
 
 }
