@@ -1,4 +1,4 @@
-package com.ruairi.AraDictImproved;
+package com.rua_iri.AraDictImproved;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,8 +11,6 @@ public class QueryDBTest {
 
     @Test
     public void testGenerateConnectionString() {
-        System.out.println("AppTest Running");
-
 
         String expected = "";
         String actual = QueryDB.generateConnectionString();

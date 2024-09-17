@@ -4,4 +4,4 @@ server:
   
 logging:
   file:
-    name: "logfile.txt"
+    name: "logfile.log"
