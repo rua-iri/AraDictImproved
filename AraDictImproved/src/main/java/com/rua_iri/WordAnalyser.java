@@ -7,33 +7,29 @@ import java.util.List;
 public class WordAnalyser {
 
 	// method to run the word analyser
-	public static List<WordSolution> runAnalyser(String aWord) {
+	public static List<WordSolution> runAnalyser(String arabicWord) {
 
-		// remove harakat from the word if they are written
-		aWord = removeDiacritics(aWord);
-
-		// declare list of solutions to be returned
 		List<WordSolution> solutionList = new ArrayList<WordSolution>();
-
-		// create a list of all possible segments
-		HashSet<SegmentedWord> segments = segmentWord(aWord);
+		
+		// remove harakat from the word if they are written
+		arabicWord = removeDiacritics(arabicWord);
+		
+		HashSet<SegmentedWord> segments = segmentWord(arabicWord);
 
 		// Iterate through each possible segment combination
-		for (SegmentedWord s : segments) {
+		for (SegmentedWord segment : segments) {
+			
+			String prefix = segment.getPrefix();
+			String stem = segment.getStem();
+			String suffix = segment.getSuffix();
 
-			String pFix = s.getPrefix();
-			String sTem = s.getStem();
-			String sFix = s.getSuffix();
-
-			WordCombination wordCombination = new WordCombination(pFix, sTem, sFix);
-			SqlQuery.selectQuery(wordCombination);
+			WordCombination wordCombination = new WordCombination(prefix, stem, suffix);
+			QueryDB.selectQuery(wordCombination);
 
 			// iterate through each solution found
 			for (WordSolution ws : wordCombination.getCombinationSolutions()) {
-				// add solutions to the list
 				solutionList.add(ws);
 			}
-
 		}
 
 		// return the complete list of solutions
@@ -42,15 +38,15 @@ public class WordAnalyser {
 
 	// Remove all short vowels from the word so that the
 	// database can be queried without issue
-	private static String removeDiacritics(String araWord) {
+	private static String removeDiacritics(String arabicWord) {
 
-		String[] harakatAra = {"َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"};
+		String[] harakatArray = {"َ", "ً", "ُ", "ٌ", "ِ", "ٍ", "ْ", "ّ"};
 
-		for(String haraka : harakatAra) {
-			araWord = araWord.replaceAll(haraka, "");
+		for(String haraka : harakatArray) {
+			arabicWord = arabicWord.replaceAll(haraka, "");
 		}
 		
-		return araWord;
+		return arabicWord;
 	}
 
 	/**

@@ -18,11 +18,10 @@ public class App {
   }
 
   // TODO add another method to return something if no results are found
-  @GetMapping("/api/word")
-  public List<WordSolution> solutionMapper(
-      @RequestParam(value = "q", defaultValue = "العربية") String apiQuery) {
+  @GetMapping("/api")
+  public List<WordSolution> solutionMapper(@RequestParam(value = "word", defaultValue = "العربية") String queryWord) {
     try {
-      List<WordSolution> solutionList = WordAnalyser.runAnalyser(apiQuery);
+      List<WordSolution> solutionList = WordAnalyser.runAnalyser(queryWord);
       return solutionList;
     } catch (Exception e) {
       System.err.println(e);

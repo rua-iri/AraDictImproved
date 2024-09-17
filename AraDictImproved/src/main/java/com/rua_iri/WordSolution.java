@@ -42,6 +42,7 @@ public class WordSolution {
 
         // remove preceding and trailing commas
         String trueTense = tense;
+
         if (trueTense.charAt(0) == ',') {
             trueTense = trueTense.substring(2);
         }
@@ -73,6 +74,5 @@ public class WordSolution {
         return "WordSolution [phoneticSpell=" + phoneticSpell + ", meaning=" + meaning + ", tense=" + tense + ", root="
                 + root + ", verbForm=" + verbForm + "]";
     }
-
 
 }
