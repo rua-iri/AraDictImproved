@@ -1,0 +1,7 @@
+
+server:
+  port: 8765
+  
+logging:
+  file:
+    name: "logfile.txt"

@@ -18,7 +18,7 @@ public class App {
   }
 
   // TODO add another method to return something if no results are found
-  @GetMapping("/api")
+  @GetMapping("/api/translate")
   public List<WordSolution> solutionMapper(@RequestParam(value = "word", defaultValue = "العربية") String queryWord) {
     try {
       List<WordSolution> solutionList = WordAnalyser.runAnalyser(queryWord);
@@ -27,6 +27,11 @@ public class App {
       System.err.println(e);
       return new ArrayList<WordSolution>();
     }
+  }
+
+  @GetMapping("/api/hello")
+  public String helloMapper() {
+    return "Hello, World!";
   }
 
 }
