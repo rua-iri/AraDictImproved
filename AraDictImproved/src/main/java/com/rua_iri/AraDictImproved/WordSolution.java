@@ -1,4 +1,4 @@
-package com.rua_iri;
+package com.rua_iri.AraDictImproved;
 
 public class WordSolution {
 

@@ -1,4 +1,4 @@
-package com.rua_iri;
+package com.rua_iri.AraDictImproved;
 
 import java.util.ArrayList;
 import java.util.List;

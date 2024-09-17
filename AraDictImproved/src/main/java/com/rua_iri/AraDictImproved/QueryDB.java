@@ -1,4 +1,4 @@
-package com.rua_iri;
+package com.rua_iri.AraDictImproved;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
