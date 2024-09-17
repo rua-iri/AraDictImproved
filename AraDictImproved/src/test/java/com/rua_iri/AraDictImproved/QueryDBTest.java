@@ -19,9 +19,7 @@ class QueryDBTest {
     void testGenerateConnectionString() {
 
         String actual = QueryDB.generateConnectionString();
-        System.out.println("\n\n\n" + actual + "\n\n\n");
 
-        // String regexPattern = "jdbc:mysql://localhost:+\\w/+\\w\\?user=+\\w&password=+\\w";
         String regexPattern = "jdbc:mysql://localhost:\\w*/\\w*\\?user=\\w*&password=\\w*";
 
         Pattern pattern = Pattern.compile(regexPattern, Pattern.CASE_INSENSITIVE);
