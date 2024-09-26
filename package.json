@@ -1,0 +1,29 @@
+{
+  "name": "aradictimproved",
+  "version": "1.0.0",
+  "description": "Arabic Morphological API",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rua-iri/AraDictImproved.git"
+  },
+  "author": "rua-iri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rua-iri/AraDictImproved/issues"
+  },
+  "homepage": "https://github.com/rua-iri/AraDictImproved#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
