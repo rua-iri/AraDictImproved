@@ -9,5 +9,8 @@ git clone https://github.com/rua-iri/AraDictImproved.git
 
 npm install
 
+npm run test
+
 npm run start
 ```
+
