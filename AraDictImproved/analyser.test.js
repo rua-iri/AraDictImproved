@@ -1,7 +1,8 @@
-const main = require("./main");
+const analyser = require("./analyser");
+
 
 test("Searches for definition of 'they speak'", async () => {
-  const data = await main("يتكلمون");
+  const data = await analyser("يتكلمون");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّمُونَ",
@@ -15,7 +16,7 @@ test("Searches for definition of 'they speak'", async () => {
 });
 
 test("Searches for definition of 'they speak' (with harakat)", async () => {
-  const data = await main("يَتَكَلَّمُون");
+  const data = await analyser("يَتَكَلَّمُون");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّمُونَ",
@@ -29,7 +30,7 @@ test("Searches for definition of 'they speak' (with harakat)", async () => {
 });
 
 test("Searches for definition of 'to listen'", async () => {
-  const data = await main("الاستمتاع");
+  const data = await analyser("الاستمتاع");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "الٱِسْتِمْتاع",
@@ -42,7 +43,7 @@ test("Searches for definition of 'to listen'", async () => {
 });
 
 test("Searches for definition of word 'rwh'", async () => {
-  const data = await main("روح");
+  const data = await analyser("روح");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "رَوَّحَ",
@@ -69,7 +70,7 @@ test("Searches for definition of word 'rwh'", async () => {
 });
 
 test("Searches for definition of word 'going'", async () => {
-  const data = await main("ذاهب");
+  const data = await analyser("ذاهب");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "ذاهِب",
@@ -82,7 +83,7 @@ test("Searches for definition of word 'going'", async () => {
 });
 
 test("Searches for definition of word 'smoking' (with harakat)", async () => {
-  const data = await main("التَدْخِين");
+  const data = await analyser("التَدْخِين");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "التَدْخِين",
@@ -95,7 +96,7 @@ test("Searches for definition of word 'smoking' (with harakat)", async () => {
 });
 
 test("Searches for definition of word 'smoking'", async () => {
-  const data = await main("التدخين");
+  const data = await analyser("التدخين");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "التَدْخِين",
@@ -108,7 +109,7 @@ test("Searches for definition of word 'smoking'", async () => {
 });
 
 test("Searches for word ktb with many definitions", async () => {
-  const data = await main("كتب");
+  const data = await analyser("كتب");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "كَتَبَ",
@@ -136,12 +137,12 @@ test("Searches for word ktb with many definitions", async () => {
 });
 
 test("Searches for word with no definitions", async () => {
-  const data = await main("كشمستيب");
+  const data = await analyser("كشمستيب");
   expect(data).toStrictEqual([]);
 });
 
 test("Checks word does not have same meanings as similar word", async () => {
-  const data = await main("يتكلمون");
+  const data = await analyser("يتكلمون");
   expect(data).not.toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّم",
