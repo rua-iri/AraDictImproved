@@ -2,8 +2,6 @@ const sqlite3 = require("sqlite3").verbose();
 const { open } = require("sqlite");
 const { WordSolution } = require("./wordModels");
 
-
-
 const selectQuery = `SELECT DISTINCT 
 prefixes.VOC_FORM || stems.VOC_FORM || suffixes.VOC_FORM AS VOC_FORM,
 prefixes.GLOSS AS PRE_GLOSS, 
@@ -30,46 +28,41 @@ FROM tableAC
 WHERE tableAC.prefCatID=prefixes.CAT_ID 
 AND tableAC.suffCatID=suffixes.CAT_ID);`;
 
-
-
 async function runQuery(wordCombination) {
+  const db = await open({
+    filename: `data/aramorph.sqlite`,
+    mode: sqlite3.OPEN_READONLY,
+    driver: sqlite3.Database,
+  });
 
-    const db = await open({
-        filename: `data/aramorph.sqlite`,
-        mode: sqlite3.OPEN_READONLY,
-        driver: sqlite3.Database
-    })
+  const statement = await db.prepare(selectQuery);
+  const result = await statement.all({
+    "@prefix": wordCombination.prefix,
+    "@stem": wordCombination.stem,
+    "@suffix": wordCombination.suffix,
+  });
 
-    const statement = await db.prepare(selectQuery);
-    const result = await statement.all(
-        {
-            "@prefix": wordCombination.prefix,
-            "@stem": wordCombination.stem,
-            "@suffix": wordCombination.suffix
-        }
-    );
+  for (let row of result) {
+    let glossMeaning = row.PRE_GLOSS;
 
-    for (let row of result) {
-
-        let glossMeaning = row.PRE_GLOSS;
-
-        if (row.SUF_GLOSS.includes("<verb>")) {
-            glossMeaning += " " + row.SUF_GLOSS;
-            glossMeaning = glossMeaning.replace("<verb>", row.STE_GLOSS);
-        } else {
-            glossMeaning += " " + row.STE_GLOSS;
-            glossMeaning += " " + row.SUF_GLOSS;
-        }
-
-        let wordSolution = new WordSolution(row.VOC_FORM, glossMeaning, row.POS, row.ROOT, row.MEASURE);
-
-        wordCombination.addSolution(wordSolution);
+    if (row.SUF_GLOSS.includes("<verb>")) {
+      glossMeaning += " " + row.SUF_GLOSS;
+      glossMeaning = glossMeaning.replace("<verb>", row.STE_GLOSS);
+    } else {
+      glossMeaning += " " + row.STE_GLOSS;
+      glossMeaning += " " + row.SUF_GLOSS;
     }
 
+    let wordSolution = new WordSolution(
+      row.VOC_FORM,
+      glossMeaning,
+      row.POS,
+      row.ROOT,
+      row.MEASURE
+    );
 
+    wordCombination.addSolution(wordSolution);
+  }
 }
 
-
-
 module.exports = { runQuery };
-

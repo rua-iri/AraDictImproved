@@ -10,6 +10,4 @@ app.get("/hello", (req, res) => {
   res.json({ hello: "world" });
 });
 
-
-
 module.exports = app;
