@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const main = require("./main");
+const runAnalyser = require("./analyser");
 
 const app = express();
 
@@ -13,7 +13,9 @@ app.get("/hello", (req, res) => {
 
 app.get("/word", async (req, res) => {
   const word = req.body.word;
-  const meanings = await main(word);
+  console.log(word);
+
+  const meanings = await runAnalyser(word);
 
   res.json(meanings);
 });

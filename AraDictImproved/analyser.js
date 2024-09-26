@@ -51,9 +51,7 @@ function segmentWord(word) {
 }
 
 async function runAnalyser(arabicWord) {
-  // console.log("Word with harakat: " + arabicWord);
   arabicWord = removeDiacritics(arabicWord);
-  // console.log("Word without harakat: " + arabicWord);
 
   let solutionsArray = [];
 
@@ -72,13 +70,7 @@ async function runAnalyser(arabicWord) {
     }
   }
 
-  // console.log(solutionsArray)
   return solutionsArray;
 }
 
-async function main(lookupWord) {
-  wordMeanings = await runAnalyser(lookupWord);
-  return wordMeanings;
-}
-
-module.exports = main;
+module.exports = runAnalyser;
