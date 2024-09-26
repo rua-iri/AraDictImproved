@@ -10,8 +10,8 @@ const harakatCodeArray = [
   1616, // kasra
   1613, // tanwiin kasra
   1618, // sukuun
-  1617,
-]; // shadda
+  1617, // shadda
+];
 
 function removeDiacritics(word) {
   let outputWord = "";
@@ -80,17 +80,5 @@ async function main(lookupWord) {
   wordMeanings = await runAnalyser(lookupWord);
   return wordMeanings;
 }
-
-// main("يتكلم")
-// main("كتب")
-// main("الاستمتاع")
-// main("روح")
-// main("ذاهب")
-// main("التدخين")
-// main("التَدْخِين")
-// main("يتكلمون")
-// main("يَتَكَلَّمُون")
-// main("للتطبيق")
-// main("لِلتَطْبِيق")
 
 module.exports = main;
