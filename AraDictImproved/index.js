@@ -11,8 +11,8 @@ app.get("/hello", (req, res) => {
   res.json({ hello: "world" });
 });
 
-app.get("/word", async (req, res) => {
-  const word = req.body.word;
+app.get("/word/:word", async (req, res) => {
+  const word = req.params.word;
   console.log(word);
 
   const meanings = await runAnalyser(word);
