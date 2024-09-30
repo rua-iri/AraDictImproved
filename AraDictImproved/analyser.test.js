@@ -1,8 +1,7 @@
-const analyser = require("./analyser");
-
+const { runAnalyser, removeDiacritics } = require("./analyser");
 
 test("Searches for definition of 'they speak'", async () => {
-  const data = await analyser("يتكلمون");
+  const data = await runAnalyser("يتكلمون");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّمُونَ",
@@ -16,7 +15,7 @@ test("Searches for definition of 'they speak'", async () => {
 });
 
 test("Searches for definition of 'they speak' (with harakat)", async () => {
-  const data = await analyser("يَتَكَلَّمُون");
+  const data = await runAnalyser("يَتَكَلَّمُون");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّمُونَ",
@@ -30,7 +29,7 @@ test("Searches for definition of 'they speak' (with harakat)", async () => {
 });
 
 test("Searches for definition of 'to listen'", async () => {
-  const data = await analyser("الاستمتاع");
+  const data = await runAnalyser("الاستمتاع");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "الٱِسْتِمْتاع",
@@ -43,7 +42,7 @@ test("Searches for definition of 'to listen'", async () => {
 });
 
 test("Searches for definition of word 'rwh'", async () => {
-  const data = await analyser("روح");
+  const data = await runAnalyser("روح");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "رَوَّحَ",
@@ -70,7 +69,7 @@ test("Searches for definition of word 'rwh'", async () => {
 });
 
 test("Searches for definition of word 'going'", async () => {
-  const data = await analyser("ذاهب");
+  const data = await runAnalyser("ذاهب");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "ذاهِب",
@@ -83,7 +82,7 @@ test("Searches for definition of word 'going'", async () => {
 });
 
 test("Searches for definition of word 'smoking' (with harakat)", async () => {
-  const data = await analyser("التَدْخِين");
+  const data = await runAnalyser("التَدْخِين");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "التَدْخِين",
@@ -96,7 +95,7 @@ test("Searches for definition of word 'smoking' (with harakat)", async () => {
 });
 
 test("Searches for definition of word 'smoking'", async () => {
-  const data = await analyser("التدخين");
+  const data = await runAnalyser("التدخين");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "التَدْخِين",
@@ -109,7 +108,7 @@ test("Searches for definition of word 'smoking'", async () => {
 });
 
 test("Searches for word ktb with many definitions", async () => {
-  const data = await analyser("كتب");
+  const data = await runAnalyser("كتب");
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "كَتَبَ",
@@ -137,12 +136,12 @@ test("Searches for word ktb with many definitions", async () => {
 });
 
 test("Searches for word with no definitions", async () => {
-  const data = await analyser("كشمستيب");
+  const data = await runAnalyser("كشمستيب");
   expect(data).toStrictEqual([]);
 });
 
 test("Checks word does not have same meanings as similar word", async () => {
-  const data = await analyser("يتكلمون");
+  const data = await runAnalyser("يتكلمون");
   expect(data).not.toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّم",
@@ -152,4 +151,16 @@ test("Checks word does not have same meanings as similar word", async () => {
       verbForm: "5",
     },
   ]);
+});
+
+test("Checks word has diacritics removed correctly", () => {
+  const expected = "الكتاب";
+  const actual = removeDiacritics("اَلكِتَابُ");
+  expect(actual).toEqual(expected);
+});
+
+test("Checks word does not still have diacritics", () => {
+  const expected = "اَلكِتَابُ";
+  const actual = removeDiacritics("اَلكِتَابُ");
+  expect(actual).not.toEqual(expected);
 });

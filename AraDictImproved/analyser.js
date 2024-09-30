@@ -73,4 +73,4 @@ async function runAnalyser(arabicWord) {
   return solutionsArray;
 }
 
-module.exports = runAnalyser;
+module.exports = { runAnalyser, removeDiacritics };
