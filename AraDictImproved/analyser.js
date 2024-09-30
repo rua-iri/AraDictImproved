@@ -1,5 +1,5 @@
 const { SegmentedWord, WordCombination } = require("./wordModels");
-const { runQuery } = require("./helpers");
+const { runQuery } = require("./queryDB");
 
 // An array of the character codes for Arabic harakat
 const harakatCodeArray = [
