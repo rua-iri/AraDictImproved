@@ -2,7 +2,7 @@
 
 <div align="center">
   <div>
-    A program to deconstruct an arabic word and return its possible defintions using an updated and hopefully improved version of aramorph which can be found [here](https://github.com/gitGNU/gnu_aramorph).
+    A program to deconstruct an arabic word and return its possible defintions using an updated and hopefully improved version of [gnu_aramorph](https://github.com/gitGNU/gnu_aramorph)). 
     </div>
   <br/>
   <div>
