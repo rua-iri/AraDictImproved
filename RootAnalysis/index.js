@@ -5,7 +5,11 @@ const { runAnalyser } = require("./analyser");
 
 const app = express();
 
-app.use("")
+app.use(bodyParser.json());
+app.use(cors());
 
-
+app.get("hello", (req, res) => {
+  console.log(req);
+  res.json({hello: "world"});
+})
 
