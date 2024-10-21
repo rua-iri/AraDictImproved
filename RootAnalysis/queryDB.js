@@ -15,7 +15,7 @@ async function runQuery(root) {
   });
 
   const statement = await db.prepare(selectQuery);
-  const result = statement.all({
+  const result = statement.get({
     "@root": root,
   });
 
