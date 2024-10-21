@@ -3,17 +3,17 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const { runAnalyser } = require("./analyser");
 
-const app = express();
+const router = express.Router();
 
-app.use(bodyParser.json());
-app.use(cors());
+router.use(bodyParser.json());
+router.use(cors());
 
-app.get("/hello", (req, res) => {
+router.get("/hello", (req, res) => {
   console.log(req.body);
   res.json({ hello: "world" });
 });
 
-app.get("/word/:word", async (req, res) => {
+router.get("/:word", async (req, res) => {
   const word = req.params.word;
   console.log(word);
 
@@ -22,4 +22,4 @@ app.get("/word/:word", async (req, res) => {
   res.json(meanings);
 });
 
-module.exports = app;
+module.exports = router;
