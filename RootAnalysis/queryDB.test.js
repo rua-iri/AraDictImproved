@@ -24,11 +24,10 @@ test("Queries for root كدع", async () => {
   });
 });
 
-
 test("Queries incorrectly for root كدع", async () => {
-    const data = await runQuery("ششا");
-    expect(data).not.toEqual({
-      root: "كدع",
-      desc: "كَدَعَه يَكْدَعُه كَدْعاً: دَفَعَه.",
-    });
+  const data = await runQuery("ششا");
+  expect(data).not.toEqual({
+    root: "كدع",
+    desc: "كَدَعَه يَكْدَعُه كَدْعاً: دَفَعَه.",
   });
+});
