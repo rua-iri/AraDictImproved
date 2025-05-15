@@ -23,7 +23,7 @@ WHERE prefixes.FORM=@prefix
 AND stems.FORM=@stem 
 AND suffixes.FORM=@suffix 
 AND EXISTS 
-(SELECT * 
+(SELECT 1 
 FROM tableAC 
 WHERE tableAC.prefCatID=prefixes.CAT_ID 
 AND tableAC.suffCatID=suffixes.CAT_ID);`;
