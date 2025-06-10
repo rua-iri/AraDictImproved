@@ -34,5 +34,9 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 3030
 
+
+# Ensure tests are passing
+run npm run test
+
 # Run the application.
 CMD npm run start
