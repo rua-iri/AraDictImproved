@@ -14,7 +14,6 @@ router.use(bodyParser.json());
 router.use(cors());
 
 router.get("/hello", (req, res) => {
-  console.log(req);
   res.status(200).send(new Response200({ hello: "world" }));
 });
 
