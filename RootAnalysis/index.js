@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { runQuery } = require("./queryDB");
+const { runQuery, runQueryMySQL } = require("./queryDB");
 const {
   Response200,
   Response404,
@@ -23,6 +23,7 @@ router.get("/:root", async (req, res) => {
     console.log(root);
 
     const rootData = await runQuery(root);
+    // const rootData = await runQueryMySQL(root);
 
     if (!rootData) {
       res.status(404).send(new Response404("No Roots found"));
