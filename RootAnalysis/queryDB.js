@@ -1,6 +1,6 @@
 const sqlite = require("sqlite3").verbose();
-const mysql = require("mysql2");
 const { open } = require("sqlite");
+const mysql = require("mysql2/promise");
 
 const selectQuery = `
 SELECT lisan.root, lisan.desc
@@ -17,12 +17,12 @@ WHERE laneslexicon.root = ?;
 async function runQueryMySQL(root) {
   const conn = await mysql.createConnection({
     host: "dictionary_db",
-    port: "3307",
+    port: "3306",
     user: "db_user",
     password: "password",
     database: "arabic_dictionaries",
   });
-  const [results, fields] = conn.query(selectQueryMySQL, [root]);
+  const [results, fields] = await conn.query(selectQueryMySQL, [root]);
 
   return results;
 }

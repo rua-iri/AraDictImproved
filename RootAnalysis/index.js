@@ -22,8 +22,8 @@ router.get("/:root", async (req, res) => {
     const root = req.params.root;
     console.log(root);
 
-    const rootData = await runQuery(root);
-    // const rootData = await runQueryMySQL(root);
+    // const rootData = await runQuery(root);
+    const rootData = await runQueryMySQL(root);
 
     if (!rootData) {
       res.status(404).send(new Response404("No Roots found"));
