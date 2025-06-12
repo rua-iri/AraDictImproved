@@ -19,8 +19,8 @@ WHERE hanswehr.root = ?;
 
 async function runQuery(root, tableName) {
   const conn = await mysql.createConnection({
-    host: process.env.DB_HOSTNAME || "dictionary_db",
-    port: process.env.DB_PORT || "3307",
+    host: process.env.DB_HOSTNAME,
+    port: process.env.DB_PORT,
     user: "db_user",
     password: "password",
     database: "arabic_dictionaries",
