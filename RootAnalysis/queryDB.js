@@ -5,7 +5,8 @@ SELECT laneslexicon.root,
 laneslexicon.word, 
 laneslexicon.meaning
 FROM laneslexicon
-WHERE laneslexicon.root = ?;
+WHERE laneslexicon.root = ?
+AND laneslexicon.root <> laneslexicon.meaning;
 `;
 
 const selectQueryHansWehr = `
