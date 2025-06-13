@@ -38,6 +38,9 @@ async function runQuery(root, tableName) {
 
   const [results] = await conn.query(selectQuery, [root]);
 
+  await conn.end();
+  console.log("DB connection closed");
+
   return results;
 }
 
