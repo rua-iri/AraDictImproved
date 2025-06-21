@@ -15,15 +15,10 @@
 ```bash
 git clone https://github.com/rua-iri/AraDictImproved.git
 
-npm install
-
-npm run test
-
-npm run start
 ```
 
 ```bash
 docker compose up --build
 
-curl localhost:3030/word/hello
+curl localhost:3030/word/health
 ```
