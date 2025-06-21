@@ -1,5 +1,13 @@
 const mysql = require("mysql2/promise");
 
+const connectionObject = {
+  host: process.env.DB_HOSTNAME,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+};
+
 const selectQueryLanesLexicon = `
 SELECT laneslexicon.root, 
 laneslexicon.word, 
@@ -31,13 +39,7 @@ WHERE hanswehr.root = ?;
 `;
 
 async function runQuery(root, tableName) {
-  const conn = await mysql.createConnection({
-    host: process.env.DB_HOSTNAME,
-    port: process.env.DB_PORT,
-    user: "db_user",
-    password: "password",
-    database: "arabic_dictionaries",
-  });
+  const conn = await mysql.createConnection(connectionObject);
 
   let selectQuery;
 
@@ -58,13 +60,7 @@ async function runQuery(root, tableName) {
 }
 
 async function runQueryCount(root, tableName) {
-  const conn = await mysql.createConnection({
-    host: process.env.DB_HOSTNAME,
-    port: process.env.DB_PORT,
-    user: "db_user",
-    password: "password",
-    database: "arabic_dictionaries",
-  });
+  const conn = await mysql.createConnection(connectionObject);
 
   let selectQuery;
 
