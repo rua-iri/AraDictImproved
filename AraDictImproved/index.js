@@ -13,8 +13,12 @@ const router = express.Router();
 router.use(bodyParser.json());
 router.use(cors());
 
-router.get("/hello", (req, res) => {
-  res.status(200).send(new Response200({ hello: "world" }));
+router.get("/health", (req, res) => {
+  try {
+    res.status(200).send(new Response200({ status: "ok" }));
+  } catch (error) {
+    res.status(500).send(new Response500());
+  }
 });
 
 router.get("/:word", async (req, res) => {
