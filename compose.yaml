@@ -64,7 +64,6 @@ services:
       MYSQL_DATABASE: "arabic_dictionaries"
       MYSQL_USER: "db_user"
       MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
     ports:
       - 3307:3306
     volumes:
