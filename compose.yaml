@@ -73,7 +73,7 @@ services:
       - backend-api-network
 
   redis-stack:
-    image: reddis-stack:latest
+    image: redis/redis-stack:latest
     ports:
      - 6379:6379
      - 8001:8001
