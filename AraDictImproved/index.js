@@ -17,6 +17,7 @@ router.get("/health", (req, res) => {
   try {
     res.status(200).send(new Response200({ status: "ok" }));
   } catch (error) {
+    console.log(error);
     res.status(500).send(new Response500());
   }
 });
