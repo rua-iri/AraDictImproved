@@ -1,6 +1,6 @@
 const { createClient } = require("redis");
 
-function getCache(key) {
+async function getCache(key) {
   const client = createClient();
   client.connect();
 
@@ -17,4 +17,4 @@ function setCache(key, value) {
 }
 
 
-module.exports = {};
+module.exports = {getCache, setCache};
