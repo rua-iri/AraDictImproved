@@ -34,6 +34,8 @@ router.get("/:dict_name/:root", async (req, res) => {
 
     if (cacheValue[cacheKey]) {
       res.status(200).send(new Response200(JSON.parse(cacheValue[cacheKey])));
+    } else {
+      console.log("No cached value found")
     }
 
     const rootData = await runQuery(root, dictName);
@@ -41,7 +43,7 @@ router.get("/:dict_name/:root", async (req, res) => {
     if (!rootData) {
       res.status(404).send(new Response404("No Roots found"));
     } else {
-      setCache(cacheKey, JSON.stringify(rootData));
+      setCache(cacheKey, rootData);
       res.status(200).send(new Response200(rootData));
     }
   } catch (error) {

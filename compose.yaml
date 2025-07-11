@@ -20,6 +20,7 @@ services:
       DB_USER: "db_user"
       DB_PASSWORD: "password"
       REDIS_HOSTNAME: "redis-stack"
+      REDIS_PORT: "6379"
     ports:
       - 3031:3030
     networks:

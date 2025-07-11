@@ -1,13 +1,20 @@
 const { createClient } = require("redis");
 
 const redisHostname = process.env.REDIS_HOSTNAME;
-const connectionString = `redis://${redisHostname}:6379`;
+const redisPort = process.env.REDIS_PORT;
 
 async function getCache(key) {
-  const client = createClient({ url: connectionString });
+  const client = createClient({
+    socket: {
+      host: redisHostname,
+      port: redisPort,
+    },
+  });
   client.on("error", (error) => console.log("Redis Error", error));
-
   client.connect();
+
+  console.log(`Searching for cached value of ${key}`);
+  console.log(typeof key);
 
   const data = await client.hGetAll(key);
   client.close();
@@ -15,7 +22,12 @@ async function getCache(key) {
 }
 
 async function setCache(key, value) {
-  const client = createClient(connectionString);
+  const client = createClient({
+    socket: {
+      host: redisHostname,
+      port: redisPort,
+    },
+  });
   client.on("error", (error) => console.log("Redis Error", error));
   client.connect();
 
