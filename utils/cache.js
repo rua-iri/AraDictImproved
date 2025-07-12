@@ -31,6 +31,8 @@ async function setCache(key, value) {
   client.on("error", (error) => console.log("Redis Error", error));
   client.connect();
 
+  client.setEx(key, 3600, value);
+
   client.hSet(key, value);
   client.close();
 }
