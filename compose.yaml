@@ -19,10 +19,16 @@ services:
       DB_NAME: "arabic_dictionaries"
       DB_USER: "db_user"
       DB_PASSWORD: "password"
+      REDIS_HOSTNAME: "redis-stack"
+      REDIS_PORT: "6379"
     ports:
       - 3031:3030
     networks:
       - backend-api-network
+    restart: always
+    depends_on:
+      - dictionary_db
+      - redis-stack
 
   # The commented out section below is an example of how to define a PostgreSQL
   # database that your application can use. `depends_on` tells Docker Compose to
@@ -64,6 +70,7 @@ services:
       MYSQL_DATABASE: "arabic_dictionaries"
       MYSQL_USER: "db_user"
       MYSQL_PASSWORD: "password"
+      MYSQL_RANDOM_ROOT_PASSWORD: true
     ports:
       - 3307:3306
     volumes:
@@ -75,8 +82,12 @@ services:
   redis-stack:
     image: redis/redis-stack:latest
     ports:
-     - 6379:6379
-     - 8001:8001
+      - 6379:6379
+      - 8001:8001
+    networks:
+      - backend-api-network
+    # environment:
+    #   - REDDIS_PASSWORD=password
 
 volumes:
   dictionary-db-vol:
