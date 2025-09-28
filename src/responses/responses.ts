@@ -1,26 +1,36 @@
-class Response200 {
-  constructor(data) {
+interface AraDictResponse {
+  status: string;
+  data: string | Object | Array<Object>;
+}
+
+class Response200 implements AraDictResponse {
+  status;
+  data;
+
+  constructor(data: string | Object | Array<Object>) {
     this.status = "success";
     this.data = data;
   }
 }
 
-class Response404 {
-  constructor(message) {
+class Response404 implements AraDictResponse {
+  status;
+  data;
+
+  constructor(data: string) {
     this.status = "error";
-    this.message = message;
+    this.data = data;
   }
 }
 
-class Response500 {
+class Response500 implements AraDictResponse {
+  status;
+  data;
+
   constructor() {
     this.status = "error";
-    this.message = "Internal Server Error";
+    this.data = "Internal Server Error";
   }
 }
 
-module.exports = {
-  Response200,
-  Response404,
-  Response500,
-};
+export { Response200, Response404, Response500 };

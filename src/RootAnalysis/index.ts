@@ -1,20 +1,20 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const { runQuery, runQueryCount } = require("./queryDB");
-const { getCache, setCache } = require("../utils/cache.js");
-const {
+import express, {type Request, type Response} from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import { runQuery, runQueryCount } from "./queryDB.js";
+import { getCache, setCache } from "../utils/cache.js";
+import {
   Response200,
   Response404,
   Response500,
-} = require("../responses/responses.js");
+} from "../responses/responses.js";
 
 const router = express.Router();
 
 router.use(bodyParser.json());
 router.use(cors());
 
-router.get("/health", (req, res) => {
+router.get("/health", (req: Request, res: Response) => {
   try {
     res.status(200).send(new Response200({ status: "ok" }));
   } catch (error) {
@@ -23,7 +23,7 @@ router.get("/health", (req, res) => {
   }
 });
 
-router.get("/:dict_name/:root", async (req, res) => {
+router.get("/:dict_name/:root", async (req: Request, res: Response) => {
   try {
     const root = req.params.root;
     const dictName = req.params.dict_name;
@@ -52,7 +52,7 @@ router.get("/:dict_name/:root", async (req, res) => {
   }
 });
 
-router.get("/:dict_name/count/:root/", async (req, res) => {
+router.get("/:dict_name/count/:root/", async (req: Request, res: Response) => {
   try {
     const root = req.params.root;
     const dictName = req.params.dict_name;
@@ -80,4 +80,4 @@ router.get("/:dict_name/count/:root/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

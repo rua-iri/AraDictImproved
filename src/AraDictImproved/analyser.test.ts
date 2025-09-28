@@ -1,4 +1,4 @@
-const { runAnalyser, removeDiacritics } = require("./analyser");
+import { runAnalyser, removeDiacritics } from "./analyser.js";
 
 test("Searches for definition of 'they speak'", async () => {
   const data = await runAnalyser("يتكلمون");

@@ -1,4 +1,4 @@
-const mysql = require("mysql2/promise");
+import mysql from "mysql2/promise";
 
 const connectionObject = {
   host: process.env.DB_HOSTNAME,
@@ -38,7 +38,7 @@ FROM hanswehr
 WHERE hanswehr.root = ?;
 `;
 
-async function runQuery(root, tableName) {
+async function runQuery(root: string, tableName: string) {
   const conn = await mysql.createConnection(connectionObject);
 
   let selectQuery;
@@ -59,7 +59,7 @@ async function runQuery(root, tableName) {
   return results;
 }
 
-async function runQueryCount(root, tableName) {
+async function runQueryCount(root: string, tableName: string) {
   const conn = await mysql.createConnection(connectionObject);
 
   let selectQuery;
@@ -82,4 +82,4 @@ async function runQueryCount(root, tableName) {
   return results[0];
 }
 
-module.exports = { runQuery, runQueryCount };
+export { runQuery, runQueryCount };

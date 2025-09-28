@@ -1,11 +1,13 @@
-require("dotenv").config();
-const express = require("express");
+import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express"
 const app = express();
 
-const araDictRouter = require("./AraDictImproved");
-const rootAnalysisRouter = require("./RootAnalysis");
+import araDictRouter from "./AraDictImproved/index.js"
+import rootAnalysisRouter from "./RootAnalysis/index.js"
 
-const port = process.env.PORT || "3000";
+const port: string = process.env.PORT || "3000";
 
 console.log(`Server Running on port: ${port}`);
 
