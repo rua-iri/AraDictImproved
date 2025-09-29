@@ -8,10 +8,25 @@
 
 ARG NODE_VERSION=20.19.2
 
+FROM node:${NODE_VERSION}-alpine AS buildstage
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN --mount=type=cache,target=/root/.npm npm ci
+
+COPY . .
+
+RUN npm run tsc
+
+
+
+
 FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 
 WORKDIR /usr/src/app
@@ -24,6 +39,8 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
+
+COPY --from=buildstage /usr/src/app/dist ./dist
 
 # Run the application as a non-root user.
 USER node
@@ -39,4 +56,4 @@ EXPOSE 3030
 # RUN npm run test
 
 # Run the application.
-CMD npm run start
+CMD ["npm", "run", "start"]
