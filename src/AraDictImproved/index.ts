@@ -7,6 +7,7 @@ import {
   Response404,
   Response500,
 } from "../responses/responses.js";
+import { getCache, setCache } from "../utils/cache.js";
 
 const router = express.Router();
 
@@ -31,11 +32,20 @@ router.get("/:word", async (req: Request, res: Response) => {
       return res.status(404).send(new Response404("No word provided"));
     }
 
+    const cacheKey = `word:${word}`;
+
+    const cacheValue = await getCache(cacheKey);
+
+    if (cacheValue) {
+      return res.status(200).send(new Response200(JSON.parse(cacheValue)));
+    }
+
     const meanings: Array<object> = await runAnalyser(word);
 
     if (meanings.length == 0) {
       return res.status(404).send(new Response404("No words found"));
     } else {
+      setCache(cacheKey, JSON.stringify(meanings));
       return res.status(200).send(new Response200(meanings));
     }
   } catch (error) {
