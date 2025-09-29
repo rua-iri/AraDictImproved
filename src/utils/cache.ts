@@ -41,7 +41,7 @@ async function setCache(key: string, value: string) {
 
   client.setEx(key, 3600, value);
 
-  client.hSet(key, value);
+  await client.set(key, value)
   client.close();
 }
 

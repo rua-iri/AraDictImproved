@@ -1,11 +1,25 @@
 import mysql from "mysql2/promise";
 
+interface databaseCountRow extends mysql.RowDataPacket {
+  wordCount: number;
+}
+
+function retrieveEnvVariable(varName: string): string {
+  const envVariable = process.env[varName];
+
+  if (!envVariable) {
+    throw new Error(`Environment Variable not set: ${varName}`);
+  }
+
+  return envVariable;
+}
+
 const connectionObject = {
-  host: process.env.DB_HOSTNAME,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: retrieveEnvVariable("DB_HOSTNAME"),
+  port: Number(retrieveEnvVariable("DB_PORT")),
+  user: retrieveEnvVariable("DB_USER"),
+  password: retrieveEnvVariable("DB_PASSWORD"),
+  database: retrieveEnvVariable("DB_NAME"),
 };
 
 const selectQueryLanesLexicon = `
@@ -72,7 +86,7 @@ async function runQueryCount(root: string, tableName: string) {
     throw new Error("Table name not found");
   }
 
-  const [results] = await conn.query(selectQuery, [root]);
+  const [results] = await conn.query<databaseCountRow[]>(selectQuery, [root]);
 
   console.log(results);
 

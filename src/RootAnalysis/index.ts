@@ -1,4 +1,4 @@
-import express, {type Request, type Response} from "express";
+import express, { type Request, type Response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { runQuery, runQueryCount } from "./queryDB.js";
@@ -25,12 +25,17 @@ router.get("/health", (req: Request, res: Response) => {
 
 router.get("/:dict_name/:root", async (req: Request, res: Response) => {
   try {
-    const root = req.params.root;
-    const dictName = req.params.dict_name;
-    console.log(root);
+    const root: string | undefined = req.params.root;
+    const dictName: string | undefined = req.params.dict_name;
+
+    if (root === undefined || dictName === undefined) {
+      res.status(404).send(new Response404("No root or dictionary provided"));
+      return;
+    }
+
     const cacheKey = `root:${dictName}:${root}`;
 
-    const cacheValue = getCache(cacheKey);
+    const cacheValue = await getCache(cacheKey);
 
     if (cacheValue[cacheKey]) {
       res.status(200).send(new Response200(cacheValue[cacheKey]));
@@ -43,8 +48,8 @@ router.get("/:dict_name/:root", async (req: Request, res: Response) => {
     if (!rootData) {
       res.status(404).send(new Response404("No Roots found"));
     } else {
-      setCache(cacheKey, rootData);
-      res.status(200).send(new Response200(rootData));
+      setCache(cacheKey, JSON.stringify(rootData));
+      res.status(200).send(new Response200(JSON.stringify(rootData)));
     }
   } catch (error) {
     console.log(error);
@@ -54,14 +59,20 @@ router.get("/:dict_name/:root", async (req: Request, res: Response) => {
 
 router.get("/:dict_name/count/:root/", async (req: Request, res: Response) => {
   try {
-    const root = req.params.root;
-    const dictName = req.params.dict_name;
+    const root: string | undefined = req.params.root;
+    const dictName: string | undefined = req.params.dict_name;
+
+    if (root === undefined || dictName === undefined) {
+      res.status(404).send(new Response404("No root or dictionary provided"));
+      return;
+    }
+
     const cacheKey = `root:${dictName}:${root}`;
 
-    const cacheValue = getCache(cacheKey);
+    const cacheValue = await getCache(cacheKey);
 
     if (cacheValue[cacheKey]) {
-      res.status(200).send(new Response200(cacheValue[cacheKey]));
+      res.status(200).send(new Response200(cacheValue));
     } else {
       console.log("No cached value found");
     }
@@ -71,8 +82,8 @@ router.get("/:dict_name/count/:root/", async (req: Request, res: Response) => {
     if (!rootData) {
       res.status(404).send(new Response404("No Roots found"));
     } else {
-      setCache(cacheKey, rootData);
-      res.status(200).send(new Response200(rootData));
+      setCache(cacheKey, JSON.stringify(rootData));
+      res.status(200).send(new Response200(JSON.stringify(rootData)));
     }
   } catch (error) {
     console.log(error);
