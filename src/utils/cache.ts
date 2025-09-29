@@ -3,7 +3,7 @@ import { createClient } from "redis";
 const redisHostname = process.env.REDIS_HOSTNAME;
 const redisPort = process.env.REDIS_PORT;
 
-async function getCache(key: string) {
+async function getCache(key: string): Promise<string | null> {
   if (!redisHostname || !redisPort) {
     throw new Error("Empty Redis Hostname or Port");
   }
@@ -20,7 +20,7 @@ async function getCache(key: string) {
   console.log(`Searching for cached value of ${key}`);
   console.log(typeof key);
 
-  const data = await client.hGetAll(key);
+  const data = await client.get(key);
   client.close();
   return data;
 }
