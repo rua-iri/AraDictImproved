@@ -15,7 +15,10 @@
 ```bash
 git clone https://github.com/rua-iri/AraDictImproved.git
 
+cp .example.env .env
 ```
+
+The `.env` file should then be populated with the appropriate secrets to allow the database to create a user and allow other services to connect to it.
 
 ```bash
 docker compose up --build

@@ -7,6 +7,7 @@ import {
   Response404,
   Response500,
 } from "../responses/responses.js";
+import { getCache, setCache } from "../utils/cache.js";
 
 const router = express.Router();
 
@@ -15,10 +16,10 @@ router.use(cors());
 
 router.get("/health", (req: Request, res: Response) => {
   try {
-    res.status(200).send(new Response200({ status: "ok" }));
+    return res.status(200).send(new Response200({ status: "ok" }));
   } catch (error) {
     console.log(error);
-    res.status(500).send(new Response500());
+    return res.status(500).send(new Response500());
   }
 });
 
@@ -28,20 +29,28 @@ router.get("/:word", async (req: Request, res: Response) => {
     console.log(word);
 
     if (typeof word === "undefined") {
-      res.status(404).send(new Response404("No word provided"));
-      return;
+      return res.status(404).send(new Response404("No word provided"));
     }
 
-    const meanings: Array<Object> = await runAnalyser(word);
+    const cacheKey = `word:${word}`;
+
+    const cacheValue = await getCache(cacheKey);
+
+    if (cacheValue) {
+      return res.status(200).send(new Response200(JSON.parse(cacheValue)));
+    }
+
+    const meanings: Array<object> = await runAnalyser(word);
 
     if (meanings.length == 0) {
-      res.status(404).send(new Response404("No words found"));
+      return res.status(404).send(new Response404("No words found"));
     } else {
-      res.status(200).send(new Response200(meanings));
+      setCache(cacheKey, JSON.stringify(meanings));
+      return res.status(200).send(new Response200(meanings));
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send(new Response500());
+    return res.status(500).send(new Response500());
   }
 });
 

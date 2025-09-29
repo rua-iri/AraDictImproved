@@ -1,10 +1,14 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import ts from "typescript-eslint";
 
 export default [
   {
-    files: ["**/*.js"],
-    languageOptions: { sourceType: "commonjs" },
+    files: ["**/*.ts"],
+    languageOptions: {
+      parser: ts.parser,
+      sourceType: "module",
+    },
   },
   {
     languageOptions: {
@@ -15,4 +19,5 @@ export default [
     },
   },
   pluginJs.configs.recommended,
+  ...ts.configs.recommended,
 ];

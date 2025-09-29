@@ -2,14 +2,14 @@ import type { QueryResult } from "mysql2";
 
 interface AraDictResponse {
   status: string;
-  data: string | Object | Array<Object> | QueryResult;
+  data: string | object | Array<object> | QueryResult;
 }
 
 class Response200 implements AraDictResponse {
   status;
   data;
 
-  constructor(data: string | Object | Array<Object> | QueryResult) {
+  constructor(data: string | object | Array<object> | QueryResult) {
     this.status = "success";
     this.data = data;
   }
