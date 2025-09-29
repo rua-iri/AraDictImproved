@@ -1,11 +1,25 @@
-const mysql = require("mysql2/promise");
+import mysql from "mysql2/promise";
+
+interface databaseCountRow extends mysql.RowDataPacket {
+  wordCount: number;
+}
+
+function retrieveEnvVariable(varName: string): string {
+  const envVariable = process.env[varName];
+
+  if (!envVariable) {
+    throw new Error(`Environment Variable not set: ${varName}`);
+  }
+
+  return envVariable;
+}
 
 const connectionObject = {
-  host: process.env.DB_HOSTNAME,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: retrieveEnvVariable("DB_HOSTNAME"),
+  port: Number(retrieveEnvVariable("DB_PORT")),
+  user: retrieveEnvVariable("DB_USER"),
+  password: retrieveEnvVariable("DB_PASSWORD"),
+  database: retrieveEnvVariable("DB_NAME"),
 };
 
 const selectQueryLanesLexicon = `
@@ -38,7 +52,7 @@ FROM hanswehr
 WHERE hanswehr.root = ?;
 `;
 
-async function runQuery(root, tableName) {
+async function runQuery(root: string, tableName: string) {
   const conn = await mysql.createConnection(connectionObject);
 
   let selectQuery;
@@ -59,7 +73,7 @@ async function runQuery(root, tableName) {
   return results;
 }
 
-async function runQueryCount(root, tableName) {
+async function runQueryCount(root: string, tableName: string) {
   const conn = await mysql.createConnection(connectionObject);
 
   let selectQuery;
@@ -72,7 +86,7 @@ async function runQueryCount(root, tableName) {
     throw new Error("Table name not found");
   }
 
-  const [results] = await conn.query(selectQuery, [root]);
+  const [results] = await conn.query<databaseCountRow[]>(selectQuery, [root]);
 
   console.log(results);
 
@@ -82,4 +96,4 @@ async function runQueryCount(root, tableName) {
   return results[0];
 }
 
-module.exports = { runQuery, runQueryCount };
+export { runQuery, runQueryCount };

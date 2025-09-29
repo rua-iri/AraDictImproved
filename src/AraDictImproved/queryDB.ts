@@ -1,6 +1,9 @@
-const sqlite3 = require("sqlite3").verbose();
-const { open } = require("sqlite");
-const { WordSolution } = require("./wordModels");
+import type { WordCombination } from "./wordModels.js";
+
+import sqlite3 from "sqlite3";
+sqlite3.verbose();
+import { open } from "sqlite";
+import { WordSolution } from "./wordModels.js";
 
 const selectQuery = `SELECT DISTINCT 
 prefixes.VOC_FORM || stems.VOC_FORM || suffixes.VOC_FORM AS VOC_FORM,
@@ -28,7 +31,7 @@ FROM tableAC
 WHERE tableAC.prefCatID=prefixes.CAT_ID 
 AND tableAC.suffCatID=suffixes.CAT_ID);`;
 
-async function runQuery(wordCombination) {
+async function runQuery(wordCombination: WordCombination) {
   const db = await open({
     filename: `data/aramorph.sqlite`,
     mode: sqlite3.OPEN_READONLY,
@@ -65,4 +68,4 @@ async function runQuery(wordCombination) {
   }
 }
 
-module.exports = { runQuery };
+export { runQuery };

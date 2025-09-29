@@ -1,8 +1,8 @@
-const { SegmentedWord, WordCombination } = require("./wordModels");
-const { runQuery } = require("./queryDB");
+import  { SegmentedWord, WordCombination } from "./wordModels.js"
+import  { runQuery } from "./queryDB.js"
 
 // An array of the character codes for Arabic harakat
-const harakatCodeArray = [
+const harakatCodeArray: number[] = [
   1614, // fatha
   1611, // tanwiin fatha
   1615, // dhamma
@@ -13,10 +13,10 @@ const harakatCodeArray = [
   1617, // shadda
 ];
 
-function removeDiacritics(word) {
+function removeDiacritics(word: string) {
   let outputWord = "";
   for (let i = 0; i < word.length; i++) {
-    if (!harakatCodeArray.includes(word[i].charCodeAt(0))) {
+    if (!harakatCodeArray.includes(word.charAt(i).charCodeAt(0))) {
       outputWord += word[i];
     }
   }
@@ -24,8 +24,8 @@ function removeDiacritics(word) {
   return outputWord;
 }
 
-function segmentWord(word) {
-  let possibleSegments = new Set();
+function segmentWord(word: string): Set<SegmentedWord> {
+  let possibleSegments: Set<SegmentedWord> = new Set();
   let prefixLength = 0;
   let suffixLength = 0;
 
@@ -50,7 +50,7 @@ function segmentWord(word) {
   return possibleSegments;
 }
 
-async function runAnalyser(arabicWord) {
+async function runAnalyser(arabicWord: string): Promise<Array<Object>> {
   arabicWord = removeDiacritics(arabicWord);
 
   let solutionsArray = [];
@@ -73,4 +73,4 @@ async function runAnalyser(arabicWord) {
   return solutionsArray;
 }
 
-module.exports = { runAnalyser, removeDiacritics };
+export { runAnalyser, removeDiacritics };

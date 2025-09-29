@@ -1,4 +1,4 @@
-// const { runQuery } = require("./queryDB");
+// import { runQuery } from "./queryDB.js";
 
 // TODO fix tests to work with new DB
 

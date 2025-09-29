@@ -3,7 +3,7 @@ class SegmentedWord {
   stem;
   suffix;
 
-  constructor(prefix, stem, suffix) {
+  constructor(prefix: string, stem: string, suffix: string) {
     this.prefix = prefix;
     this.stem = stem;
     this.suffix = suffix;
@@ -17,7 +17,13 @@ class WordSolution {
   root;
   verbForm;
 
-  constructor(phoneticSpelling, meaning, tense, root, verbForm) {
+  constructor(
+    phoneticSpelling: string,
+    meaning: string,
+    tense: string,
+    root: string,
+    verbForm: string
+  ) {
     this.phoneticSpelling = phoneticSpelling;
     this.meaning = meaning;
     this.tense = this.setTense(tense);
@@ -25,7 +31,7 @@ class WordSolution {
     this.verbForm = verbForm;
   }
 
-  setTense(tense) {
+  setTense(tense: string) {
     let trueTense = tense;
 
     if (trueTense.charAt(0) == ",") {
@@ -57,18 +63,18 @@ class WordCombination {
   prefix;
   stem;
   suffix;
-  combinationSolutions;
+  combinationSolutions: WordSolution[];
 
-  constructor(prefix, stem, suffix) {
+  constructor(prefix: string, stem: string, suffix: string) {
     this.prefix = prefix;
     this.stem = stem;
     this.suffix = suffix;
     this.combinationSolutions = [];
   }
 
-  addSolution(solution) {
+  addSolution(solution: WordSolution) {
     this.combinationSolutions.push(solution);
   }
 }
 
-module.exports = { SegmentedWord, WordSolution, WordCombination };
+export { SegmentedWord, WordSolution, WordCombination };

@@ -1,19 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const { runAnalyser } = require("./analyser");
-const {
+import express, { type Request, type Response } from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import { runAnalyser } from "./analyser.js";
+import {
   Response200,
   Response404,
   Response500,
-} = require("../responses/responses.js");
+} from "../responses/responses.js";
 
 const router = express.Router();
 
 router.use(bodyParser.json());
 router.use(cors());
 
-router.get("/health", (req, res) => {
+router.get("/health", (req: Request, res: Response) => {
   try {
     res.status(200).send(new Response200({ status: "ok" }));
   } catch (error) {
@@ -22,12 +22,17 @@ router.get("/health", (req, res) => {
   }
 });
 
-router.get("/:word", async (req, res) => {
+router.get("/:word", async (req: Request, res: Response) => {
   try {
-    const word = req.params.word;
+    const word: string | undefined = req.params.word;
     console.log(word);
 
-    const meanings = await runAnalyser(word);
+    if (typeof word === "undefined") {
+      res.status(404).send(new Response404("No word provided"));
+      return;
+    }
+
+    const meanings: Array<Object> = await runAnalyser(word);
 
     if (meanings.length == 0) {
       res.status(404).send(new Response404("No words found"));
@@ -40,4 +45,4 @@ router.get("/:word", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
