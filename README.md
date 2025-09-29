@@ -22,3 +22,12 @@ docker compose up --build
 
 curl localhost:3030/word/health
 ```
+
+## Caching
+
+This Project includes a Redis container to cache the reads from the database and speed up the response time, since all database operations are reads.
+
+<img width="1332" height="231" alt="image" src="https://github.com/user-attachments/assets/df8e0633-5d48-4a39-82f8-336457d76d74" />
+
+As can be seen in the image above the results are dramatic between the first read and the second (over 20x faster results).
+
