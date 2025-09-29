@@ -25,18 +25,18 @@ function removeDiacritics(word: string) {
 }
 
 function segmentWord(word: string): Set<SegmentedWord> {
-  let possibleSegments: Set<SegmentedWord> = new Set();
+  const possibleSegments: Set<SegmentedWord> = new Set();
   let prefixLength = 0;
   let suffixLength = 0;
 
   while (prefixLength <= 4 && prefixLength < word.length) {
-    let prefix = word.substring(0, prefixLength);
+    const prefix = word.substring(0, prefixLength);
     let stemLength = word.length - prefixLength;
     suffixLength = 0;
 
     while (stemLength >= 1 && suffixLength <= 6) {
-      let stem = word.substring(prefixLength, prefixLength + stemLength);
-      let suffix = word.substring(
+      const stem = word.substring(prefixLength, prefixLength + stemLength);
+      const suffix = word.substring(
         prefixLength + stemLength,
         prefixLength + stemLength + suffixLength
       );
@@ -50,22 +50,22 @@ function segmentWord(word: string): Set<SegmentedWord> {
   return possibleSegments;
 }
 
-async function runAnalyser(arabicWord: string): Promise<Array<Object>> {
+async function runAnalyser(arabicWord: string): Promise<Array<object>> {
   arabicWord = removeDiacritics(arabicWord);
 
-  let solutionsArray = [];
+  const solutionsArray = [];
 
   const possibleSegments = segmentWord(arabicWord);
 
-  for (let segment of possibleSegments) {
-    let prefix = segment.prefix;
-    let stem = segment.stem;
-    let suffix = segment.suffix;
+  for (const segment of possibleSegments) {
+    const prefix = segment.prefix;
+    const stem = segment.stem;
+    const suffix = segment.suffix;
 
-    let wordCombination = new WordCombination(prefix, stem, suffix);
+    const wordCombination = new WordCombination(prefix, stem, suffix);
     await runQuery(wordCombination);
 
-    for (let solution of wordCombination.combinationSolutions) {
+    for (const solution of wordCombination.combinationSolutions) {
       solutionsArray.push(solution.toDict());
     }
   }

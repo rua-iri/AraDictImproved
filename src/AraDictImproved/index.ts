@@ -32,7 +32,7 @@ router.get("/:word", async (req: Request, res: Response) => {
       return;
     }
 
-    const meanings: Array<Object> = await runAnalyser(word);
+    const meanings: Array<object> = await runAnalyser(word);
 
     if (meanings.length == 0) {
       res.status(404).send(new Response404("No words found"));
