@@ -10,10 +10,13 @@
     </div>
 </div>
 
+
 ## Setup
 
 ```bash
 git clone https://github.com/rua-iri/AraDictImproved.git
+
+cd AraDictImproved/
 
 cp .example.env .env
 ```
@@ -22,9 +25,44 @@ The `.env` file should then be populated with the appropriate secrets to allow t
 
 ```bash
 docker compose up --build
-
-curl localhost:3030/word/health
 ```
+
+
+## Databases
+
+This project utilises two different databases, a dump of each is stored in the `data/` directory.
+
+### `arabic_dictionaries.sql`
+
+A MySQL database, containing the contents of [Hans Wehr's Dictionary](https://en.wikipedia.org/wiki/A_Dictionary_of_Modern_Written_Arabic) and [Lane's Lexicon](https://en.wikipedia.org/wiki/Arabic%E2%80%93English_Lexicon).
+
+This database is used to reference the meaning of a given arabic root and any words that are derrived from it.
+
+### `aramorph.sqlite`
+
+An SQLite database that is used to determine the possible words that could be constructed from a given combination of letters.
+
+It's contents are originally sourced from Han's Wehr's dictionary as well.
+
+
+## Endpoints
+
+This API exposes two main endpoints to query the previously detailed databases.
+
+`/word/<arabic_word>`
+
+Within the second endpoint it is necessary to specify the dictionary that will be queried.
+
+`/root/lane/<arabic_word>`
+
+`/root/hans/<arabic_word>`
+
+In order to check the status of the service, there are also health endpoints for each of the endpoints.
+
+`/word/health`
+
+`/root/health`
+
 
 ## Caching
 
