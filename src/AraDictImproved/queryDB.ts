@@ -46,7 +46,7 @@ async function runQuery(wordCombination: WordCombination) {
   });
 
   for (const row of result) {
-    let glossMeaning = row.PRE_GLOSS;
+    let glossMeaning: string = row.PRE_GLOSS;
 
     if (row.SUF_GLOSS.includes("<verb>")) {
       glossMeaning += " " + row.SUF_GLOSS;
@@ -55,6 +55,7 @@ async function runQuery(wordCombination: WordCombination) {
       glossMeaning += " " + row.STE_GLOSS;
       glossMeaning += " " + row.SUF_GLOSS;
     }
+    glossMeaning = glossMeaning.trim()
 
     const wordSolution = new WordSolution(
       row.VOC_FORM,
