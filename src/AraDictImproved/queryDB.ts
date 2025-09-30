@@ -55,7 +55,8 @@ async function runQuery(wordCombination: WordCombination) {
       glossMeaning += " " + row.STE_GLOSS;
       glossMeaning += " " + row.SUF_GLOSS;
     }
-    glossMeaning = glossMeaning.trim()
+
+    glossMeaning = glossMeaning.trim();
 
     const wordSolution = new WordSolution(
       row.VOC_FORM,
