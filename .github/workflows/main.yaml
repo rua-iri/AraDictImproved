@@ -1,4 +1,4 @@
-name: Run Jest Unit Tests
+name: Test Lint and Compile Workflow
 
 on:
   workflow_dispatch:
@@ -16,6 +16,15 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 18
-      - run: npm ci
-      - run: npm run test
-      - run: npm run lint
+      - name: Install Step
+        run: npm ci
+
+      - name: Test Step
+        run: npm run test
+
+      - name: Linting Step
+        run: npm run lint
+      
+      - name: Test Compile Step
+        run: npm run tsc
+
