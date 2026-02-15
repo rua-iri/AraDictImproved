@@ -1,0 +1,13 @@
+body {
+  /* background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/more-leaves.png");
+  background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/more-leaves-on-green.png");
+  background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/morocco.png"); 
+  background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/morocco.png"); */
+
+  background-image: linear-gradient(
+      rgba(28, 101, 129, 0.342),
+      rgba(51, 152, 192, 0.199)
+    ),
+    url("./assets/moroccan.png");
+  height: 98.5vh;
+}
