@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import WordDataContainer from "./WordDataContainer";
-import Arrow from "./Arrow";
+import WordDataContainer from "./WordDataContainer.js";
+import Arrow from "./Arrow.js";
 import { fetchWordMeanings } from "/utils/fetcher";
 
 function ExamplesAnchor({ wordSelected }) {

@@ -1,20 +1,20 @@
-import SingleWord from "./components/TextSpace/SingleWord";
-import TopBar from "./components/TopBar/TopBar";
-import InputArea from "./components/TextSpace/InputArea";
-import OptionsMenu from "./components/Modals/OptionsMenu";
-import CustomButton from "./components/CustomButton";
-import TextContainer from "./components/TextSpace/TextContainer";
-import AppInfoModal from "./components/Modals/AppInfoModal";
+import SingleWord from "./components/TextSpace/SingleWord.js";
+import TopBar from "./components/TopBar/TopBar.js";
+import InputArea from "./components/TextSpace/InputArea.js";
+import OptionsMenu from "./components/Modals/OptionsMenu.js";
+import CustomButton from "./components/CustomButton.js";
+import TextContainer from "./components/TextSpace/TextContainer.js";
+import AppInfoModal from "./components/Modals/AppInfoModal.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSelectedWord,
   resetSelectedWord,
-} from "./features/selectedWord/selectedWordSlice";
+} from "./features/selectedWord/selectedWordSlice.js";
 import {
   resetTextContent,
   setTextContent,
-} from "./features/textContent/textContentSlice";
-import Header from "./components/Header";
+} from "./features/textContent/textContentSlice.js";
+import Header from "./components/Header.js";
 
 export default function App() {
   const dispatch = useDispatch();

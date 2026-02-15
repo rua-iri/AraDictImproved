@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setFontSize } from "../../features/font/font";
+import { setFontSize } from "../../features/font/font.js";
 
 export default function FontSize() {
   const fontSize = useSelector((state) => state.fontSlice.size);

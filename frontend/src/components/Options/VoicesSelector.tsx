@@ -1,6 +1,6 @@
-import AudioPlayer from "../AudioPlayer";
+import AudioPlayer from "../AudioPlayer.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setVoice } from "../../features/voice/voiceSlice";
+import { setVoice } from "../../features/voice/voiceSlice.js";
 
 export default function VoicesSelector() {
   const voiceList = [

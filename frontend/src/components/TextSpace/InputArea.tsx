@@ -1,4 +1,4 @@
-import CustomButton from "../CustomButton";
+import CustomButton from "../CustomButton.js";
 
 export default function InputArea({ handleSubmit }) {
   return (
