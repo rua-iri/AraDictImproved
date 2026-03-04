@@ -1,6 +1,8 @@
 import AudioPlayer from "../AudioPlayer.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setVoice } from "../../features/voice/voiceSlice.js";
+import { useAppSelector } from "../../app/hooks.js";
+import type { ChangeEvent } from "react";
 
 export default function VoicesSelector() {
   const voiceList = [
@@ -22,11 +24,11 @@ export default function VoicesSelector() {
     },
   ];
 
-  const selectedVoice = useSelector((state) => state.voice.value);
+  const selectedVoice = useAppSelector((state) => state.voice.value);
   const dispatch = useDispatch();
 
-  function changeSelectedVoice(event) {
-    dispatch(setVoice(event.target.value));
+  function changeSelectedVoice(event: ChangeEvent<HTMLInputElement>) {
+    dispatch(setVoice(event.currentTarget.value));
   }
 
   return (

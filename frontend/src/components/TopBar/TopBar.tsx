@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
 import WordDataContainer from "./WordDataContainer.js";
-import Arrow from "./Arrow.js";
-import { fetchWordMeanings } from "/utils/fetcher";
+import NavigationArrow from "./Arrow.js";
+import { fetchWordMeanings } from "../../../utils/fetcher.js";
+import type { WordMeaning } from "../../types/types.js";
 
-function ExamplesAnchor({ wordSelected }) {
+type ExamplesAnchorProps = {
+  selectedWordPhonetic: string;
+};
+
+type TopBarProps = {
+  selectedWord: string;
+};
+
+function ExamplesAnchor({ selectedWordPhonetic }: ExamplesAnchorProps) {
   const examplesLink =
-    "https://context.reverso.net/translation/arabic-english/" + wordSelected;
+    "https://context.reverso.net/translation/arabic-english/" +
+    selectedWordPhonetic;
 
   return (
     <a
@@ -19,8 +29,8 @@ function ExamplesAnchor({ wordSelected }) {
   );
 }
 
-export default function TopBar({ selectedWord }) {
-  const [allMeanings, setAllMeanings] = useState([]);
+export default function TopBar({ selectedWord }: TopBarProps) {
+  const [allMeanings, setAllMeanings] = useState<WordMeaning[]>([]);
   const [resultCounter, setResultCounter] = useState(0);
 
   const lookupWord = async () => {
@@ -40,7 +50,7 @@ export default function TopBar({ selectedWord }) {
     }
   }, [selectedWord]);
 
-  function cycleResults(isNext) {
+  function cycleResults(isNext: boolean) {
     if (isNext && resultCounter < allMeanings.length - 1) {
       setResultCounter(resultCounter + 1);
     } else if (!isNext && resultCounter > 0) {
@@ -48,15 +58,15 @@ export default function TopBar({ selectedWord }) {
     }
   }
 
-  const wordSelected = allMeanings[resultCounter]
+  const selectedWordPhonetic = allMeanings[resultCounter]
     ? allMeanings[resultCounter].phoneticSpelling
     : selectedWord;
 
   return (
     <div className="flex rounded-t-lg py-3 mb-1 flex-row-reverse w-full bg-slate-600 text-slate-50">
-      <Arrow
+      <NavigationArrow
         isArrowRight={true}
-        onClick={() => cycleResults(false)}
+        handleClick={() => cycleResults(false)}
         isDisabled={!resultCounter}
       />
 
@@ -64,23 +74,23 @@ export default function TopBar({ selectedWord }) {
         className="flex flex-col px-2 text-xl items-center justify-center"
         dir="rtl"
       >
-        <div>{wordSelected}</div>
+        <div>{selectedWordPhonetic}</div>
 
-        {wordSelected !== "Selected Word" && (
-          <ExamplesAnchor wordSelected={wordSelected} />
+        {selectedWordPhonetic !== "Selected Word" && (
+          <ExamplesAnchor selectedWordPhonetic={selectedWordPhonetic} />
         )}
       </div>
       <div className="w-full">
         <WordDataContainer
           allTranslations={allMeanings}
           resCounter={resultCounter}
-          textContent={wordSelected}
+          textContent={selectedWordPhonetic}
         />
       </div>
 
-      <Arrow
+      <NavigationArrow
         isArrowRight={false}
-        onClick={() => cycleResults(true)}
+        handleClick={() => cycleResults(true)}
         isDisabled={!(resultCounter < allMeanings.length - 1)}
       />
     </div>

@@ -1,24 +1,28 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../app/hooks.js";
 import { setFontSize } from "../../features/font/font.js";
+import type { ChangeEvent } from "react";
+
+type FontSizeKey = "0" | "10" | "20" | "30" | "40" | "50";
 
 export default function FontSize() {
-  const fontSize = useSelector((state) => state.fontSlice.size);
+  const fontSize = useAppSelector((state) => state.fontSlice.size);
 
   const dispatch = useDispatch();
 
   const sizesRange = {
-    0: "xs",
-    10: "sm",
-    20: "base",
-    30: "lg",
-    40: "xl",
-    50: "2xl",
+    "0": "xs",
+    "10": "sm",
+    "20": "base",
+    "30": "lg",
+    "40": "xl",
+    "50": "2xl",
   };
 
-  function changeFontSize(event) {
-    const fontSizeKey = event.target.value;
+  function changeFontSize(event: ChangeEvent<HTMLInputElement>) {
+    const fontSizeKey: FontSizeKey = event.currentTarget.value as FontSizeKey;
     console.log(fontSizeKey);
-    dispatch(setFontSize(sizesRange[fontSizeKey]));
+    dispatch(setFontSize(sizesRange[fontSizeKey as keyof typeof sizesRange]));
   }
 
   return (
@@ -29,7 +33,7 @@ export default function FontSize() {
         min={0}
         max="50"
         value={Object.keys(sizesRange).find(
-          (key) => sizesRange[key] === fontSize
+          (key) => sizesRange[key as keyof typeof sizesRange] === fontSize,
         )}
         className="range"
         step="10"

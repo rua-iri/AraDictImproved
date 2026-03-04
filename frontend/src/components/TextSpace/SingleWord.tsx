@@ -1,4 +1,16 @@
-export default function SingleWord({ isSelected, onClick, alt, wordContent }) {
+type SingleWordProps = {
+  isSelected: boolean;
+  onClick: Function;
+  alt: string;
+  wordContent: string;
+};
+
+export default function SingleWord({
+  isSelected,
+  onClick,
+  alt,
+  wordContent,
+}: SingleWordProps) {
   let fontDecoration = "";
 
   // alert(fontSize)

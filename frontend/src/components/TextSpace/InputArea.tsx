@@ -1,6 +1,8 @@
 import CustomButton from "../CustomButton.js";
 
-export default function InputArea({ handleSubmit }) {
+type InputAreaProps = { handleSubmit: Function };
+
+export default function InputArea({ handleSubmit }: InputAreaProps) {
   return (
     <div className="my-3">
       <form onSubmit={() => handleSubmit(event)}>

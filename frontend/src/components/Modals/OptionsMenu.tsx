@@ -4,13 +4,13 @@ import CustomButton from "../CustomButton.js";
 import FontSize from "../Options/FontSizeSelector.js";
 
 export default function OptionsMenu() {
-  const optionsRef = useRef();
+  const optionsRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
       <CustomButton
         textContent="Options"
-        handleClick={() => optionsRef.current.showModal()}
+        handleClick={() => optionsRef.current && optionsRef.current.showModal()}
       />
 
       <dialog ref={optionsRef} className="modal">

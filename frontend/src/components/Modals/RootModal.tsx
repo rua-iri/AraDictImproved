@@ -1,21 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent, type RefObject } from "react";
 import { fetchRootMeanings } from "../../../utils/fetcher.js";
+import type { RootMeaning } from "../../types/types.js";
 
-export default function RootModal({ root }) {
-  const [rootData, setRootData] = useState({});
+type RootModalProps = {
+  root: string | undefined;
+  modalRef: RefObject<HTMLDialogElement>;
+};
+type RootDescriptionProps = {
+  rootMeanings: RootMeaning[];
+  dictionaryChoice: string;
+};
+
+export default function RootModal({ root, modalRef }: RootModalProps) {
+  const [rootData, setRootData] = useState<RootMeaning[]>([]);
   const [dictionaryChoice, setDictionaryChoice] = useState("lane");
 
   async function getRootMeaning() {
     if (root) {
       setRootData(await fetchRootMeanings(root, dictionaryChoice));
     } else {
-      setRootData({});
+      setRootData([]);
     }
   }
 
-  function changeDictionary(event) {
-    console.log(event.target.getAttribute("data-dictionary-name"));
-    setDictionaryChoice(event.target.getAttribute("data-dictionary-name"));
+  function changeDictionary(event: MouseEvent<HTMLInputElement>) {
+    const dataDictionaryName = event.currentTarget.getAttribute(
+      "data-dictionary-name",
+    );
+    console.log(dataDictionaryName);
+    if (dataDictionaryName) setDictionaryChoice(dataDictionaryName);
   }
 
   useEffect(() => {
@@ -23,7 +36,7 @@ export default function RootModal({ root }) {
   }, [root, dictionaryChoice]);
 
   return (
-    <dialog id="root_modal" className="modal text-black">
+    <dialog id="root_modal" className="modal text-black" ref={modalRef}>
       <div className="modal-box h-[75%]">
         <h3 className="font-bold text-lg">
           Root:
@@ -72,32 +85,37 @@ export default function RootModal({ root }) {
   );
 }
 
-function RootDescription({ rootMeanings, dictionaryChoice }) {
+function RootDescription({
+  rootMeanings,
+  dictionaryChoice,
+}: RootDescriptionProps) {
   if (!rootMeanings || Object.keys(rootMeanings).length === 0) {
     return <div>No Description Found</div>;
   }
 
-  const rootMeaningElements = rootMeanings.map((rootMeaning, index) => (
-    <div
-      className="collapse collapse-plus bg-base-100 border border-base-300"
-      dir="ltr"
-      key={`${dictionaryChoice}-${index}`}
-    >
-      <input
-        type="checkbox"
-        name="root-accordion"
-        defaultChecked={index === 0}
-      />
-      <div className="collapse-title font-semibold" dir="ltr">
-        {rootMeaning.word}
-      </div>
-      <span
-        className="collapse-content"
+  const rootMeaningElements = rootMeanings.map(
+    (rootMeaning: RootMeaning, index: number) => (
+      <div
+        className="collapse collapse-plus bg-base-100 border border-base-300"
         dir="ltr"
-        dangerouslySetInnerHTML={{ __html: rootMeaning.meaning }}
-      />
-    </div>
-  ));
+        key={`${dictionaryChoice}-${index}`}
+      >
+        <input
+          type="checkbox"
+          name="root-accordion"
+          defaultChecked={index === 0}
+        />
+        <div className="collapse-title font-semibold" dir="ltr">
+          {rootMeaning.word}
+        </div>
+        <span
+          className="collapse-content"
+          dir="ltr"
+          dangerouslySetInnerHTML={{ __html: rootMeaning.meaning }}
+        />
+      </div>
+    ),
+  );
 
   return <div className="my-4">{rootMeaningElements}</div>;
 }

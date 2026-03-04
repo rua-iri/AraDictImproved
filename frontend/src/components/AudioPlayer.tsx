@@ -2,12 +2,19 @@ import { useRef } from "react";
 import { unicodeToBase64 } from "../../utils/textFormatter.js";
 import { SpeakerWaveIcon } from "@heroicons/react/16/solid";
 
-export default function AudioPlayer({ textContent, speakerName }) {
+type AudioPlayerProps = {
+  textContent: string;
+  speakerName: string | null;
+};
+export default function AudioPlayer({
+  textContent,
+  speakerName,
+}: AudioPlayerProps) {
   let audioLink = "";
   const word64 = unicodeToBase64(textContent);
-  const audioElem = useRef();
+  const audioElem = useRef<HTMLAudioElement>(null);
 
-  if (textContent !== "Selected Word") {
+  if (textContent !== "Selected Word" && speakerName) {
     audioLink =
       "https://voice.reverso.net/RestPronunciation.svc/v1/output=json/GetVoiceStream/" +
       `voiceName=${speakerName}22k` +
@@ -16,7 +23,7 @@ export default function AudioPlayer({ textContent, speakerName }) {
 
   function audioClick() {
     console.log(audioLink);
-    audioLink && audioElem.current.play();
+    audioLink && audioElem.current?.play();
   }
 
   return (
@@ -25,7 +32,7 @@ export default function AudioPlayer({ textContent, speakerName }) {
 
       <button
         className={`btn btn-sm`}
-        disabled={textContent !== "Selected Word" ? "" : "disabled"}
+        disabled={textContent !== "Selected Word" ? false : true}
         onClick={audioClick}
       >
         <SpeakerWaveIcon className="h-5" />
