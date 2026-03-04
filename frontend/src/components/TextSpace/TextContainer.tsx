@@ -1,7 +1,11 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/hooks.js";
 
-export default function TextContainer({ textContent }) {
-  const fontSize = useSelector((state) => state.fontSlice.size);
+type TextContainerProps = {
+  textContent: JSX.Element[] | undefined;
+};
+
+export default function TextContainer({ textContent }: TextContainerProps) {
+  const fontSize = useAppSelector((state) => state.fontSlice.size);
 
   return (
     <div className="m-4 max-h-100 lg:max-h-160 overflow-scroll overflow-x-auto border">

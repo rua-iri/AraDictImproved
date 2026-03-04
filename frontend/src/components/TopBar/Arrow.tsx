@@ -3,23 +3,32 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/react/20/solid";
 
-export default function Arrow({ isArrowRight, onClick, isDisabled }) {
-  let buttonClass =
-    "invert w-10 flex items-center justify-center select-none";
+type NavigationArrowProps = {
+  isArrowRight: boolean;
+  handleClick: Function;
+  isDisabled: boolean;
+};
 
-  let iconClass = "size-12"
+export default function NavigationArrow({
+  isArrowRight,
+  handleClick,
+  isDisabled,
+}: NavigationArrowProps) {
+  let buttonClass = "invert w-10 flex items-center justify-center select-none";
+
+  let iconClass = "size-12";
 
   if (isDisabled) {
     buttonClass += " btn-disabled blur-xs grayscale";
-    iconClass += " text-slate-400"
+    iconClass += " text-slate-400";
   } else {
-    iconClass += " text-black"
+    iconClass += " text-black";
   }
 
   return (
     <button
       className={buttonClass}
-      onClick={onClick}
+      onClick={() => handleClick()}
       disabled={isDisabled}
       role="button"
       aria-disabled={isDisabled}

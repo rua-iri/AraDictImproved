@@ -1,16 +1,25 @@
-import AudioPlayer from "../AudioPlayer";
-import RootModal from "../Modals/RootModal";
-import { useSelector } from "react-redux";
+import { useRef } from "react";
+import { useAppSelector } from "../../app/hooks.js";
+import type { WordMeaning } from "../../types/types.js";
+import AudioPlayer from "../AudioPlayer.js";
+import RootModal from "../Modals/RootModal.js";
+
+type WordDataContainerProps = {
+  allTranslations: WordMeaning[];
+  resCounter: number;
+  textContent: string;
+};
 
 export default function WordDataContainer({
   allTranslations,
   resCounter,
   textContent,
-}) {
+}: WordDataContainerProps) {
   let translationArray = allTranslations;
   let resultCounter = resCounter;
+  const modalRef = useRef<HTMLDialogElement>(null);
 
-  const selectedVoice = useSelector((state) => state.voice.value);
+  const selectedVoice = useAppSelector((state) => state.voice.value);
 
   let rootElem;
 
@@ -23,9 +32,9 @@ export default function WordDataContainer({
         <button
           dir="rtl"
           className={`btn btn-sm`}
-          onClick={() => document.getElementById("root_modal").showModal()}
+          onClick={() => modalRef.current && modalRef.current.showModal()}
         >
-          {rootArray.map((rootLetter, index) => (
+          {rootArray.map((rootLetter: string, index: number) => (
             <div className="inline mx-0.5" key={index}>
               {rootLetter}
             </div>
@@ -62,7 +71,10 @@ export default function WordDataContainer({
           <AudioPlayer textContent={textContent} speakerName={selectedVoice} />
         </div>
       </div>
-      <RootModal root={translationArray[resCounter]?.root} />
+      <RootModal
+        root={translationArray[resCounter]?.root}
+        modalRef={modalRef}
+      />
     </div>
   );
 }

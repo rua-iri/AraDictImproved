@@ -1,25 +1,27 @@
-import SingleWord from "./components/TextSpace/SingleWord";
-import TopBar from "./components/TopBar/TopBar";
-import InputArea from "./components/TextSpace/InputArea";
-import OptionsMenu from "./components/Modals/OptionsMenu";
-import CustomButton from "./components/CustomButton";
-import TextContainer from "./components/TextSpace/TextContainer";
-import AppInfoModal from "./components/Modals/AppInfoModal";
-import { useDispatch, useSelector } from "react-redux";
+import SingleWord from "./components/TextSpace/SingleWord.js";
+import TopBar from "./components/TopBar/TopBar.js";
+import InputArea from "./components/TextSpace/InputArea.js";
+import OptionsMenu from "./components/Modals/OptionsMenu.js";
+import CustomButton from "./components/CustomButton.js";
+import TextContainer from "./components/TextSpace/TextContainer.js";
+import AppInfoModal from "./components/Modals/AppInfoModal.js";
+import { useDispatch } from "react-redux";
 import {
   setSelectedWord,
   resetSelectedWord,
-} from "./features/selectedWord/selectedWordSlice";
+} from "./features/selectedWord/selectedWordSlice.js";
 import {
   resetTextContent,
   setTextContent,
-} from "./features/textContent/textContentSlice";
-import Header from "./components/Header";
+} from "./features/textContent/textContentSlice.js";
+import TitleHeader from "./components/TitleHeader.js";
+import type { FormEvent } from "react";
+import { useAppSelector } from "./app/hooks.js";
 
 export default function App() {
   const dispatch = useDispatch();
-  const selectedWord = useSelector((state) => state.selectedWord.value);
-  const textContent = useSelector((state) => state.textContent.value);
+  const selectedWord = useAppSelector((state) => state.selectedWord.value);
+  const textContent = useAppSelector((state) => state.textContent.value);
 
   let pressTime = Date.now();
 
@@ -29,14 +31,14 @@ export default function App() {
     dispatch(resetSelectedWord());
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const inputText = event.target[0].value;
+    const inputText = event.currentTarget.value;
     dispatch(setTextContent(inputText));
   }
 
   //function to be executed when a word is clicked
-  function activateWord(elemAlt) {
+  function activateWord(elemAlt: string) {
     // check that 500 seconds have passed the same so the server isn't spammed
     if (Date.now() >= pressTime + 500 && elemAlt !== selectedWord) {
       dispatch(setSelectedWord(elemAlt));
@@ -49,23 +51,23 @@ export default function App() {
   const wordAra = textContent?.replaceAll("\n", " ").split(" ");
 
   //then map each element in the array to the Word component
-  const wordCollection = wordAra?.map((wrd, index) => {
-    const wrdFormatted = wrd.replace(/[.,،/#!$%^&*;:{}=\-_`~()"؛]/g, "");
+  const wordCollection = wordAra?.map((word: string, index: number) => {
+    const wordSanitised = word.replace(/[.,،/#!$%^&*;:{}=\-_`~()"؛]/g, "");
 
     return (
       <SingleWord
-        wordContent={wrd}
-        key={wrd + index}
-        alt={wrdFormatted}
+        wordContent={word}
+        key={word + index}
+        alt={wordSanitised}
         onClick={activateWord}
-        isSelected={selectedWord === wrdFormatted}
+        isSelected={selectedWord === wordSanitised}
       />
     );
   });
 
   return (
     <div className="App min-h-svh h-full bg-slate-200 relative">
-      <Header />
+      <TitleHeader />
 
       <div className="text-center bg-white rounded-lg pb-3 mx-8 lg:mx-56">
         <div className="block">

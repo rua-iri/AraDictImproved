@@ -12,7 +12,6 @@ export const textContentSlice = createSlice({
   reducers: {
     setTextContent: (state, action) => {
       state.value = action.payload;
-      console.log("asdf");
       console.log(action.payload);
       localStorage.setItem("textContent", action.payload);
     },

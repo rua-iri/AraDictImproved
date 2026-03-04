@@ -2,14 +2,14 @@ import { useRef } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 export default function AppInfoModal() {
-  const modalRef = useRef();
+  const modalRef = useRef<HTMLDialogElement>(null);
 
   return (
     <>
       <div className="absolute bottom-0 m-3">
         <button
           className="btn glass btn-sm btn-circle"
-          onClick={() => modalRef.current.showModal()}
+          onClick={() => modalRef.current && modalRef.current.showModal()}
         >
           <InformationCircleIcon className="h-full" />
         </button>
