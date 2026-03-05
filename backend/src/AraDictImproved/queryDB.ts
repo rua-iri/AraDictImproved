@@ -1,9 +1,9 @@
 import type { WordCombination } from "./wordModels.js";
 
-import sqlite3 from "sqlite3";
-sqlite3.verbose();
-import { open } from "sqlite";
+import { DatabaseSync } from "node:sqlite";
 import { WordSolution } from "./wordModels.js";
+
+const DB_NAME = "data/aramorph.sqlite";
 
 const selectQuery = `SELECT DISTINCT 
 prefixes.VOC_FORM || stems.VOC_FORM || suffixes.VOC_FORM AS VOC_FORM,
@@ -31,39 +31,37 @@ FROM tableAC
 WHERE tableAC.prefCatID=prefixes.CAT_ID 
 AND tableAC.suffCatID=suffixes.CAT_ID);`;
 
-async function runQuery(wordCombination: WordCombination) {
-  const db = await open({
-    filename: `data/aramorph.sqlite`,
-    mode: sqlite3.OPEN_READONLY,
-    driver: sqlite3.Database,
-  });
-
-  const statement = await db.prepare(selectQuery);
-  const result = await statement.all({
+function runQuery(wordCombination: WordCombination) {
+  const db = new DatabaseSync(DB_NAME);
+  const statement = db.prepare(selectQuery);
+  const result = statement.all({
     "@prefix": wordCombination.prefix,
     "@stem": wordCombination.stem,
     "@suffix": wordCombination.suffix,
   });
 
   for (const row of result) {
-    let glossMeaning: string = row.PRE_GLOSS;
+    const stemGlossMeaning = row.STE_GLOSS as string;
+    const suffixGlossMeaning = row.SUF_GLOSS as string;
+    const vocalisedForm = row.VOC_FORM as string;
+    let glossMeaning = row.PRE_GLOSS as string;
 
-    if (row.SUF_GLOSS.includes("<verb>")) {
-      glossMeaning += " " + row.SUF_GLOSS;
-      glossMeaning = glossMeaning.replace("<verb>", row.STE_GLOSS);
+    if (suffixGlossMeaning.includes("<verb>")) {
+      glossMeaning += " " + suffixGlossMeaning;
+      glossMeaning = glossMeaning.replace("<verb>", stemGlossMeaning);
     } else {
-      glossMeaning += " " + row.STE_GLOSS;
-      glossMeaning += " " + row.SUF_GLOSS;
+      glossMeaning += " " + stemGlossMeaning;
+      glossMeaning += " " + suffixGlossMeaning;
     }
 
     glossMeaning = glossMeaning.trim();
 
     const wordSolution = new WordSolution(
-      row.VOC_FORM,
+      vocalisedForm,
       glossMeaning,
-      row.POS,
-      row.ROOT,
-      row.MEASURE
+      row.POS as string,
+      row.ROOT as string,
+      row.MEASURE as string,
     );
 
     wordCombination.addSolution(wordSolution);

@@ -1,5 +1,5 @@
-import  { SegmentedWord, WordCombination } from "./wordModels.js"
-import  { runQuery } from "./queryDB.js"
+import { SegmentedWord, WordCombination } from "./wordModels.js";
+import { runQuery } from "./queryDB.js";
 
 // An array of the character codes for Arabic harakat
 const harakatCodeArray: number[] = [
@@ -38,7 +38,7 @@ function segmentWord(word: string): Set<SegmentedWord> {
       const stem = word.substring(prefixLength, prefixLength + stemLength);
       const suffix = word.substring(
         prefixLength + stemLength,
-        prefixLength + stemLength + suffixLength
+        prefixLength + stemLength + suffixLength,
       );
       possibleSegments.add(new SegmentedWord(prefix, stem, suffix));
       stemLength--;
@@ -63,7 +63,7 @@ async function runAnalyser(arabicWord: string): Promise<Array<object>> {
     const suffix = segment.suffix;
 
     const wordCombination = new WordCombination(prefix, stem, suffix);
-    await runQuery(wordCombination);
+    runQuery(wordCombination);
 
     for (const solution of wordCombination.combinationSolutions) {
       solutionsArray.push(solution.toDict());
