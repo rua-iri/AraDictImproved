@@ -1,17 +1,6 @@
 import { SegmentedWord, WordCombination } from "./wordModels.js";
 import { SqliteDB } from "./SqliteDB.js";
-
-// An array of the character codes for Arabic harakat
-const harakatCodeArray: number[] = [
-  1614, // fatha
-  1611, // tanwiin fatha
-  1615, // dhamma
-  1612, // tanwiin dhamma
-  1616, // kasra
-  1613, // tanwiin kasra
-  1618, // sukuun
-  1617, // shadda
-];
+import { harakatCodeArray } from "./constants.js";
 
 function removeDiacritics(word: string) {
   let outputWord = "";
