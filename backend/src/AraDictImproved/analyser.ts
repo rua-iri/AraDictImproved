@@ -1,5 +1,5 @@
 import { SegmentedWord, WordCombination } from "./wordModels.js";
-import { runQuery } from "./queryDB.js";
+import { SqliteDB } from "./SqliteDB.js";
 
 // An array of the character codes for Arabic harakat
 const harakatCodeArray: number[] = [
@@ -52,6 +52,7 @@ function segmentWord(word: string): Set<SegmentedWord> {
 
 async function runAnalyser(arabicWord: string): Promise<Array<object>> {
   arabicWord = removeDiacritics(arabicWord);
+  const sqliteDB = new SqliteDB();
 
   const solutionsArray = [];
 
@@ -63,7 +64,7 @@ async function runAnalyser(arabicWord: string): Promise<Array<object>> {
     const suffix = segment.suffix;
 
     const wordCombination = new WordCombination(prefix, stem, suffix);
-    runQuery(wordCombination);
+    sqliteDB.queryWordMeanings(wordCombination);
 
     for (const solution of wordCombination.combinationSolutions) {
       solutionsArray.push(solution.toDict());
