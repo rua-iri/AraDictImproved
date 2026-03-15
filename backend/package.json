@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Arabic Morphological API",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "node ./dist/server.js",
