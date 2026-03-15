@@ -1,7 +1,6 @@
-import type { WordCombination } from "./wordModels.js";
-
 import { DatabaseSync } from "node:sqlite";
-import { WordSolution } from "./wordModels.js";
+import type { WordCombination } from "./wordModels";
+import { WordSolution } from "./wordModels";
 export class SqliteDB {
   private DB_NAME = "data/aramorph.sqlite";
   private selectQuery = `SELECT DISTINCT 

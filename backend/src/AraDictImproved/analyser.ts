@@ -1,6 +1,6 @@
-import { SegmentedWord, WordCombination } from "./wordModels.js";
-import { SqliteDB } from "./SqliteDB.js";
-import { harakatCodeArray } from "./constants.js";
+import { SegmentedWord, WordCombination } from "./wordModels";
+import { SqliteDB } from "./SqliteDB";
+import { harakatCodeArray } from "./constants";
 
 function removeDiacritics(word: string) {
   let outputWord = "";

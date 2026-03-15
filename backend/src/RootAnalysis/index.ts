@@ -1,8 +1,8 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { runQuery, runQueryCount } from "./queryDB.js";
-import { getCache, setCache } from "../utils/cache.js";
+import { runQuery, runQueryCount } from "./queryDB";
+import { getCache, setCache } from "../utils/cache";
 import {
   Response200,
   Response404,
@@ -29,7 +29,9 @@ router.get("/:dict_name/:root", async (req: Request, res: Response) => {
     const dictName: string | undefined = req.params.dict_name;
 
     if (root === undefined || dictName === undefined) {
-      return res.status(404).send(new Response404("No root or dictionary provided"));
+      return res
+        .status(404)
+        .send(new Response404("No root or dictionary provided"));
     }
 
     const cacheKey = `root:${dictName}:${root}`;
@@ -62,7 +64,9 @@ router.get("/:dict_name/count/:root/", async (req: Request, res: Response) => {
     const dictName: string | undefined = req.params.dict_name;
 
     if (root === undefined || dictName === undefined) {
-      return res.status(404).send(new Response404("No root or dictionary provided"));
+      return res
+        .status(404)
+        .send(new Response404("No root or dictionary provided"));
     }
 
     const cacheKey = `root:${dictName}:${root}`;

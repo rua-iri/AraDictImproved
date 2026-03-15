@@ -1,13 +1,13 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { runAnalyser } from "./analyser.js";
+import { runAnalyser } from "./analyser";
 import {
   Response200,
   Response404,
   Response500,
 } from "../responses/responses.js";
-import { getCache, setCache } from "../utils/cache.js";
+import { getCache, setCache } from "../utils/cache";
 
 const router = express.Router();
 

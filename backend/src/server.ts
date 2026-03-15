@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express from "express"
+import express from "express";
 const app = express();
 
-import araDictRouter from "./AraDictImproved/index.js"
-import rootAnalysisRouter from "./RootAnalysis/index.js"
+import araDictRouter from "./AraDictImproved/index";
+import rootAnalysisRouter from "./RootAnalysis/index";
 
 const port: string = process.env.PORT || "3000";
 
