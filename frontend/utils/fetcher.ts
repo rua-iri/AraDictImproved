@@ -7,13 +7,19 @@ export async function fetchWordMeanings(word: string): Promise<WordMeaning[]> {
     const response = await fetch(`${BASE_API_URL}/word/${word}`);
     const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(
+        "Error occurred while making request: " + JSON.stringify(data),
+      );
+    }
+
     if (!data.data) {
       return [];
     }
 
     return data.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }
@@ -25,13 +31,19 @@ export async function fetchRootMeanings(root: string, dictionaryName: string) {
     );
     const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(
+        "Error occurred while making request: " + JSON.stringify(data),
+      );
+    }
+
     if (!data.data) {
       return [];
     }
 
     return data.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return [];
   }
 }
