@@ -145,7 +145,7 @@ test("Checks word does not have same meanings as similar word", async () => {
   expect(data).not.toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّم",
-      meaning: "he/it speak;talk;discuss ",
+      meaning: "he/it speak;talk;discuss",
       tense: "Subject (3. person, male, singular), Imperfect tense verb",
       root: "كلم",
       verbForm: "5",
