@@ -2,9 +2,9 @@ import type { WordMeaning } from "../src/types/types.js";
 
 const BASE_API_URL = import.meta.env.VITE_BASE_API_URL;
 
-export async function fetchWordMeanings(word: string): Promise<WordMeaning[]> {
+async function baseFetcher(requestURL: string) {
   try {
-    const response = await fetch(`${BASE_API_URL}/word/${word}`);
+    const response = await fetch(requestURL);
     const data = await response.json();
 
     if (!response.ok) {
@@ -24,26 +24,15 @@ export async function fetchWordMeanings(word: string): Promise<WordMeaning[]> {
   }
 }
 
+export async function fetchWordMeanings(word: string): Promise<WordMeaning[]> {
+  const requestURL = `${BASE_API_URL}/word/${word}`;
+  return await baseFetcher(requestURL);
+}
+
 export async function fetchRootMeanings(root: string, dictionaryName: string) {
-  try {
-    const response = await fetch(
-      `${BASE_API_URL}/root/${dictionaryName}/${root}`,
-    );
-    const data = await response.json();
+  const requestURL = `${BASE_API_URL}/root/${dictionaryName}/${root}`;
 
-    if (!response.ok) {
-      throw new Error(
-        "Error occurred while making request: " + JSON.stringify(data),
-      );
-    }
+  console.log({ rootData: await baseFetcher(requestURL) });
 
-    if (!data.data) {
-      return [];
-    }
-
-    return data.data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+  return await baseFetcher(requestURL);
 }
