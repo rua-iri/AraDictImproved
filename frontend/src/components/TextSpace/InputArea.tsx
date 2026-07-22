@@ -1,11 +1,25 @@
+import { useDispatch } from "react-redux";
 import CustomButton from "../CustomButton.js";
+import type { FormEvent } from "react";
+import { setTextContent } from "../../features/textContent/textContentSlice.js";
 
-type InputAreaProps = { handleSubmit: Function };
+export default function InputArea() {
+  const dispatch = useDispatch();
 
-export default function InputArea({ handleSubmit }: InputAreaProps) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const inputText = (
+      event.currentTarget.elements.namedItem(
+        "input-textarea",
+      ) as HTMLInputElement
+    ).value;
+    dispatch(setTextContent(inputText));
+  }
+
   return (
     <div className="my-3">
-      <form onSubmit={() => handleSubmit(event)}>
+      <form onSubmit={(event) => handleSubmit(event)}>
         <div className="flex flex-col items-center">
           <textarea
             dir="rtl"
