@@ -25,10 +25,10 @@ router.get("/health", (req: Request, res: Response) => {
 
 router.get("/:dict_name/:root", async (req: Request, res: Response) => {
   try {
-    const root: string | undefined = req.params.root;
-    const dictName: string | undefined = req.params.dict_name;
+    const root: string | string[] | undefined = req.params.root;
+    const dictName: string | string[] | undefined = req.params.dict_name;
 
-    if (root === undefined || dictName === undefined) {
+    if (typeof root !== "string" || typeof dictName !== "string") {
       return res
         .status(404)
         .send(new Response404("No root or dictionary provided"));
@@ -60,10 +60,10 @@ router.get("/:dict_name/:root", async (req: Request, res: Response) => {
 
 router.get("/:dict_name/count/:root/", async (req: Request, res: Response) => {
   try {
-    const root: string | undefined = req.params.root;
-    const dictName: string | undefined = req.params.dict_name;
+    const root: string | string[] | undefined = req.params.root;
+    const dictName: string | string[] | undefined = req.params.dict_name;
 
-    if (root === undefined || dictName === undefined) {
+    if (typeof root !== "string" || typeof dictName !== "string") {
       return res
         .status(404)
         .send(new Response404("No root or dictionary provided"));

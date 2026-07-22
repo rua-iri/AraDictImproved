@@ -25,11 +25,11 @@ router.get("/health", (req: Request, res: Response) => {
 
 router.get("/:word", async (req: Request, res: Response) => {
   try {
-    const word: string | undefined = req.params.word;
+    const word: string | string[] | undefined = req.params.word;
     console.log(word);
 
-    if (typeof word === "undefined") {
-      return res.status(404).send(new Response404("No word provided"));
+    if (typeof word !== "string") {
+      return res.status(404).send(new Response404("No valid word provided"));
     }
 
     const cacheKey = `word:${word}`;
