@@ -1,4 +1,4 @@
-# Translate Reader
+# Arabic Translate Reader
 
 <div align="center">
   <div>
@@ -9,8 +9,6 @@
 <img src="https://github.com/user-attachments/assets/5086571a-8de0-4680-809a-5dbd700a40ac" alt=AraDictImproved logo" width="45%" />
     </div>
 </div>
-
-
 
 ## Setup
 
@@ -24,7 +22,6 @@ npm install
 npm run dev
 ```
 
-## Demo 
+## Demo
 
 [Demo hosted here](https://translate-reader.vercel.app/)
-

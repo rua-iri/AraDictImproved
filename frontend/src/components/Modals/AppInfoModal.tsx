@@ -20,7 +20,7 @@ export default function AppInfoModal() {
           <div className="flex justify-center">
             <img
               src="/android-chrome-192x192.png"
-              alt="Translate Reader Logo"
+              alt="Arabic Translate Reader Logo"
             />
           </div>
 
