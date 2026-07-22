@@ -20,7 +20,7 @@ export default function AppInfoModal() {
           <div className="flex justify-center">
             <img
               src="/android-chrome-192x192.png"
-              alt="Translate Reader Logo"
+              alt="Arabic Translate Reader Logo"
             />
           </div>
 
@@ -45,7 +45,8 @@ export default function AppInfoModal() {
             The full source code can be found in my&nbsp;
             <a
               className="link"
-              href="https://github.com/rua-iri/translate_reader"
+              href="https://github.com/rua-iri/AraDictImproved"
+              rel="noopener noreferrer"
               target="_blank"
             >
               GitHub repository.
@@ -53,19 +54,17 @@ export default function AppInfoModal() {
           </p>
 
           <p className="my-5">
-            Also the backend code is located here:&nbsp;
+            If you notice anything wrong with the site or would like a new
+            feature introduced, please report it as{" "}
             <a
-              className="link"
-              href="https://github.com/rua-iri/AraDictImproved"
+              href="https://github.com/rua-iri/AraDictImproved/issues"
               target="_blank"
+              rel="noopener noreferrer"
+              className="link"
             >
-              in this repository.
+              an issue
             </a>
-          </p>
-
-          <p className="my-5">
-            If you notice anything wrong with the site please report it as an
-            issue there.
+            .
           </p>
         </div>
         <form method="dialog" className="modal-backdrop">

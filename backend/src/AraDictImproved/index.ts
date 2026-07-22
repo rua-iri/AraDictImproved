@@ -1,13 +1,13 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { runAnalyser } from "./analyser.js";
+import { runAnalyser } from "./analyser";
 import {
   Response200,
   Response404,
   Response500,
 } from "../responses/responses.js";
-import { getCache, setCache } from "../utils/cache.js";
+import { getCache, setCache } from "../utils/cache";
 
 const router = express.Router();
 
@@ -25,11 +25,11 @@ router.get("/health", (req: Request, res: Response) => {
 
 router.get("/:word", async (req: Request, res: Response) => {
   try {
-    const word: string | undefined = req.params.word;
+    const word: string | string[] | undefined = req.params.word;
     console.log(word);
 
-    if (typeof word === "undefined") {
-      return res.status(404).send(new Response404("No word provided"));
+    if (typeof word !== "string") {
+      return res.status(404).send(new Response404("No valid word provided"));
     }
 
     const cacheKey = `word:${word}`;

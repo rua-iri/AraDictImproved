@@ -5,26 +5,24 @@ import AudioPlayer from "../AudioPlayer.js";
 import RootModal from "../Modals/RootModal.js";
 
 type WordDataContainerProps = {
-  allTranslations: WordMeaning[];
-  resCounter: number;
+  allMeanings: WordMeaning[];
+  resultCounter: number;
   textContent: string;
 };
 
 export default function WordDataContainer({
-  allTranslations,
-  resCounter,
+  allMeanings,
+  resultCounter,
   textContent,
 }: WordDataContainerProps) {
-  let translationArray = allTranslations;
-  let resultCounter = resCounter;
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const selectedVoice = useAppSelector((state) => state.voice.value);
 
   let rootElem;
 
-  if (translationArray[resCounter]) {
-    const rootArray = translationArray[resCounter].root.split("");
+  if (allMeanings[resultCounter]) {
+    const rootArray = allMeanings[resultCounter].root.split("");
     rootElem =
       rootArray.length === 0 ? (
         <div></div>
@@ -49,13 +47,13 @@ export default function WordDataContainer({
     <div>
       <div className="h-16 flex flex-col">
         <div className="px-1 grow-1">
-          {translationArray[resultCounter]
-            ? translationArray[resultCounter].meaning.replaceAll(";", "/ ")
+          {allMeanings[resultCounter]
+            ? allMeanings[resultCounter].meaning.replaceAll(";", "/ ")
             : "meaning"}
         </div>
         <div className="grow-1">
-          {translationArray[resultCounter]
-            ? translationArray[resultCounter].tense
+          {allMeanings[resultCounter]
+            ? allMeanings[resultCounter].tense
             : "tense"}
         </div>
       </div>
@@ -63,18 +61,15 @@ export default function WordDataContainer({
       <div className="flex w-full h-8">
         <div className="w-full arab-text">{rootElem}</div>
         <div className="w-full">
-          {translationArray[resultCounter]
-            ? translationArray[resultCounter].verbForm
+          {allMeanings[resultCounter]
+            ? allMeanings[resultCounter].verbForm
             : "verbForm"}
         </div>
         <div className="w-full">
           <AudioPlayer textContent={textContent} speakerName={selectedVoice} />
         </div>
       </div>
-      <RootModal
-        root={translationArray[resCounter]?.root}
-        modalRef={modalRef}
-      />
+      <RootModal root={allMeanings[resultCounter]?.root} modalRef={modalRef} />
     </div>
   );
 }

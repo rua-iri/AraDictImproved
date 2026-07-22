@@ -82,8 +82,8 @@ export default function TopBar({ selectedWord }: TopBarProps) {
       </div>
       <div className="w-full">
         <WordDataContainer
-          allTranslations={allMeanings}
-          resCounter={resultCounter}
+          allMeanings={allMeanings}
+          resultCounter={resultCounter}
           textContent={selectedWordPhonetic}
         />
       </div>

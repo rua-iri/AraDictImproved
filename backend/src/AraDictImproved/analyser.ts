@@ -1,17 +1,6 @@
-import  { SegmentedWord, WordCombination } from "./wordModels.js"
-import  { runQuery } from "./queryDB.js"
-
-// An array of the character codes for Arabic harakat
-const harakatCodeArray: number[] = [
-  1614, // fatha
-  1611, // tanwiin fatha
-  1615, // dhamma
-  1612, // tanwiin dhamma
-  1616, // kasra
-  1613, // tanwiin kasra
-  1618, // sukuun
-  1617, // shadda
-];
+import { SegmentedWord, WordCombination } from "./wordModels";
+import { SqliteDB } from "./SqliteDB";
+import { harakatCodeArray } from "./constants";
 
 function removeDiacritics(word: string) {
   let outputWord = "";
@@ -38,7 +27,7 @@ function segmentWord(word: string): Set<SegmentedWord> {
       const stem = word.substring(prefixLength, prefixLength + stemLength);
       const suffix = word.substring(
         prefixLength + stemLength,
-        prefixLength + stemLength + suffixLength
+        prefixLength + stemLength + suffixLength,
       );
       possibleSegments.add(new SegmentedWord(prefix, stem, suffix));
       stemLength--;
@@ -52,6 +41,7 @@ function segmentWord(word: string): Set<SegmentedWord> {
 
 async function runAnalyser(arabicWord: string): Promise<Array<object>> {
   arabicWord = removeDiacritics(arabicWord);
+  const sqliteDB = new SqliteDB();
 
   const solutionsArray = [];
 
@@ -63,7 +53,7 @@ async function runAnalyser(arabicWord: string): Promise<Array<object>> {
     const suffix = segment.suffix;
 
     const wordCombination = new WordCombination(prefix, stem, suffix);
-    await runQuery(wordCombination);
+    sqliteDB.queryWordMeanings(wordCombination);
 
     for (const solution of wordCombination.combinationSolutions) {
       solutionsArray.push(solution.toDict());

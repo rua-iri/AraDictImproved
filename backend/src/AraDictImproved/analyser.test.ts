@@ -1,4 +1,4 @@
-import { runAnalyser, removeDiacritics } from "./analyser.js";
+import { runAnalyser, removeDiacritics } from "./analyser";
 
 test("Searches for definition of 'they speak'", async () => {
   const data = await runAnalyser("يتكلمون");
@@ -33,7 +33,7 @@ test("Searches for definition of 'to listen'", async () => {
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "الٱِسْتِمْتاع",
-      meaning: "the enjoyment ",
+      meaning: "the enjoyment",
       tense: "Determinative, Noun",
       root: "متع",
       verbForm: "",
@@ -46,21 +46,21 @@ test("Searches for definition of word 'rwh'", async () => {
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "رَوَّحَ",
-      meaning: " he/it fan;ventilate;revive",
+      meaning: "he/it fan;ventilate;revive",
       tense: "Perfect tense verb, Suffixed subject (3. person, male, singular)",
       root: "روح",
       verbForm: "2",
     },
     {
       phoneticSpelling: "رُوح",
-      meaning: " spirit;soul ",
+      meaning: "spirit;soul",
       tense: "Noun",
       root: "روح",
       verbForm: "",
     },
     {
       phoneticSpelling: "رَوْح",
-      meaning: " repose;refreshment ",
+      meaning: "repose;refreshment",
       tense: "Noun",
       root: "روح",
       verbForm: "",
@@ -73,7 +73,7 @@ test("Searches for definition of word 'going'", async () => {
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "ذاهِب",
-      meaning: " going ",
+      meaning: "going",
       tense: "Adjective",
       root: "ذهب",
       verbForm: "",
@@ -86,7 +86,7 @@ test("Searches for definition of word 'smoking' (with harakat)", async () => {
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "التَدْخِين",
-      meaning: "the smoking;fumigating ",
+      meaning: "the smoking;fumigating",
       tense: "Determinative, Noun",
       root: "دخن",
       verbForm: "",
@@ -99,7 +99,7 @@ test("Searches for definition of word 'smoking'", async () => {
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "التَدْخِين",
-      meaning: "the smoking;fumigating ",
+      meaning: "the smoking;fumigating",
       tense: "Determinative, Noun",
       root: "دخن",
       verbForm: "",
@@ -112,14 +112,14 @@ test("Searches for word ktb with many definitions", async () => {
   expect(data).toStrictEqual([
     {
       phoneticSpelling: "كَتَبَ",
-      meaning: " he/it write",
+      meaning: "he/it write",
       tense: "Perfect tense verb, Suffixed subject (3. person, male, singular)",
       root: "كتب",
       verbForm: "1",
     },
     {
       phoneticSpelling: "كُتِبَ",
-      meaning: " he/it be written;be fated;be destined",
+      meaning: "he/it be written;be fated;be destined",
       tense:
         "Passive perfect tense verb, Suffixed subject (3. person, male, singular)",
       root: "كتب",
@@ -127,7 +127,7 @@ test("Searches for word ktb with many definitions", async () => {
     },
     {
       phoneticSpelling: "كُتُب",
-      meaning: " books ",
+      meaning: "books",
       tense: "Noun",
       root: "كتب",
       verbForm: "",
@@ -145,7 +145,7 @@ test("Checks word does not have same meanings as similar word", async () => {
   expect(data).not.toStrictEqual([
     {
       phoneticSpelling: "يَتَكَلَّم",
-      meaning: "he/it speak;talk;discuss ",
+      meaning: "he/it speak;talk;discuss",
       tense: "Subject (3. person, male, singular), Imperfect tense verb",
       root: "كلم",
       verbForm: "5",
@@ -154,13 +154,9 @@ test("Checks word does not have same meanings as similar word", async () => {
 });
 
 test("Checks word has diacritics removed correctly", () => {
+  const inputString = "اَلكِتَابُ";
   const expected = "الكتاب";
-  const actual = removeDiacritics("اَلكِتَابُ");
+  const actual = removeDiacritics(inputString);
   expect(actual).toEqual(expected);
-});
-
-test("Checks word does not still have diacritics", () => {
-  const expected = "اَلكِتَابُ";
-  const actual = removeDiacritics("اَلكِتَابُ");
-  expect(actual).not.toEqual(expected);
+  expect(actual).not.toEqual(inputString);
 });

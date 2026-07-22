@@ -31,12 +31,6 @@ export default function App() {
     dispatch(resetSelectedWord());
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const inputText = event.currentTarget.value;
-    dispatch(setTextContent(inputText));
-  }
-
   //function to be executed when a word is clicked
   function activateWord(elemAlt: string) {
     // check that 500 seconds have passed the same so the server isn't spammed
@@ -77,7 +71,7 @@ export default function App() {
         {textContent ? (
           <TextContainer textContent={wordCollection} />
         ) : (
-          <InputArea handleSubmit={handleSubmit} />
+          <InputArea />
         )}
 
         {textContent && (
