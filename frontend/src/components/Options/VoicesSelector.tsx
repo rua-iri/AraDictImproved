@@ -3,27 +3,9 @@ import { useDispatch } from "react-redux";
 import { setVoice } from "../../features/voice/voiceSlice.js";
 import { useAppSelector } from "../../app/hooks.js";
 import type { ChangeEvent } from "react";
+import { voiceList } from "../../constants.js";
 
 export default function VoicesSelector() {
-  const voiceList = [
-    {
-      nameEn: "Leila",
-      nameAr: "ليلَى",
-    },
-    {
-      nameEn: "Mehdi",
-      nameAr: "مَهدِي",
-    },
-    {
-      nameEn: "Nizar",
-      nameAr: "نزار",
-    },
-    {
-      nameEn: "Salma",
-      nameAr: "سلمَى",
-    },
-  ];
-
   const selectedVoice = useAppSelector((state) => state.voice.value);
   const dispatch = useDispatch();
 
