@@ -13,8 +13,6 @@ export default function SingleWord({
 }: SingleWordProps) {
   let fontDecoration = "";
 
-  // alert(fontSize)
-
   if (isSelected) {
     fontDecoration = "bg-slate-200 rounded-sm";
   }

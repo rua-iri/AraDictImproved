@@ -21,7 +21,6 @@ export default function FontSize() {
 
   function changeFontSize(event: ChangeEvent<HTMLInputElement>) {
     const fontSizeKey: FontSizeKey = event.currentTarget.value as FontSizeKey;
-    console.log(fontSizeKey);
     dispatch(setFontSize(sizesRange[fontSizeKey as keyof typeof sizesRange]));
   }
 
@@ -35,7 +34,7 @@ export default function FontSize() {
         value={Object.keys(sizesRange).find(
           (key) => sizesRange[key as keyof typeof sizesRange] === fontSize,
         )}
-        className="range"
+        className="range w-full"
         step="10"
         onChange={changeFontSize}
       />
