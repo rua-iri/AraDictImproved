@@ -1,0 +1,11 @@
+{
+  "semi": true,
+  "singleQuote": false,
+  "arrowParens": "always",
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "htmlWhitespaceSensitivity": "css",
+  "printWidth": 80,
+  "proseWrap": "always",
+  "useTabs": false
+}
