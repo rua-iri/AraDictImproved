@@ -35,11 +35,11 @@ export default function TopBar({ selectedWord }: TopBarProps) {
 
   const lookupWord = async () => {
     try {
-      console.log("selectedWord: ", selectedWord);
       setAllMeanings(await fetchWordMeanings(selectedWord));
     } catch (e) {
-      console.log(e);
-      alert("Error: API Call Failed");
+      /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+      // TODO: improve error handling
+      console.error(e);
     }
   };
 

@@ -31,7 +31,6 @@ export default function App() {
     if (Date.now() >= pressTime + 500 && elemAlt !== selectedWord) {
       dispatch(setSelectedWord(elemAlt));
       pressTime = Date.now();
-      console.log(elemAlt);
     }
   }
 

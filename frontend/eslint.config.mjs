@@ -18,4 +18,7 @@ export default defineConfig({
       projectService: true,
     },
   },
+  rules: {
+    "no-console": 2,
+  },
 });

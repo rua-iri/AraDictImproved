@@ -10,7 +10,6 @@ export const textContentSlice = createSlice({
   reducers: {
     setTextContent: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
-      console.log(action.payload);
       localStorage.setItem("textContent", action.payload);
     },
     resetTextContent: (state) => {

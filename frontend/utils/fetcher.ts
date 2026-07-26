@@ -17,6 +17,8 @@ async function baseFetcher<T>(requestURL: string): Promise<T[]> {
 
     return data.data;
   } catch (error) {
+    /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+    // TODO: improve error handling
     console.error(error);
     return [];
   }

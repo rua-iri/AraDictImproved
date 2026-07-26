@@ -27,7 +27,6 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
     const dataDictionaryName = event.currentTarget.getAttribute(
       "data-dictionary-name",
     );
-    console.log(dataDictionaryName);
     if (dataDictionaryName) setDictionaryChoice(dataDictionaryName);
   }
 
