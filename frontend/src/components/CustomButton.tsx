@@ -1,10 +1,12 @@
-type CustomButtonProps = {
+interface CustomButtonProps {
   textContent: string;
-  handleClick?: Function;
-};
+  handleClick?: () => void;
+}
 export default function CustomButton({
   textContent,
-  handleClick = () => {},
+  handleClick = () => {
+    // do nothing.
+  },
 }: CustomButtonProps) {
   return (
     <button

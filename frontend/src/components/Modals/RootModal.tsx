@@ -2,14 +2,14 @@ import { useEffect, useState, type MouseEvent, type RefObject } from "react";
 import { fetchRootMeanings } from "../../../utils/fetcher.js";
 import type { RootMeaning } from "../../types/types.js";
 
-type RootModalProps = {
+interface RootModalProps {
   root: string | undefined;
   modalRef: RefObject<HTMLDialogElement>;
-};
-type RootDescriptionProps = {
+}
+interface RootDescriptionProps {
   rootMeanings: RootMeaning[];
   dictionaryChoice: string;
-};
+}
 
 export default function RootModal({ root, modalRef }: RootModalProps) {
   const [rootData, setRootData] = useState<RootMeaning[]>([]);

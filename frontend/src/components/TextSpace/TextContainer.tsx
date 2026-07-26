@@ -1,8 +1,8 @@
 import { useAppSelector } from "../../app/hooks.js";
 
-type TextContainerProps = {
+interface TextContainerProps {
   textContent: JSX.Element[] | undefined;
-};
+}
 
 export default function TextContainer({ textContent }: TextContainerProps) {
   const fontSize = useAppSelector((state) => state.fontSlice.size);

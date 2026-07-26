@@ -1,9 +1,9 @@
-type SingleWordProps = {
+interface SingleWordProps {
   isSelected: boolean;
-  onClick: Function;
+  onClick: (alt: string) => void;
   alt: string;
   wordContent: string;
-};
+}
 
 export default function SingleWord({
   isSelected,

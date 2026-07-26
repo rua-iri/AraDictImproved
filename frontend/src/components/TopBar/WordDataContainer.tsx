@@ -4,11 +4,11 @@ import type { WordMeaning } from "../../types/types.js";
 import AudioPlayer from "../AudioPlayer.js";
 import RootModal from "../Modals/RootModal.js";
 
-type WordDataContainerProps = {
+interface WordDataContainerProps {
   allMeanings: WordMeaning[];
   resultCounter: number;
   textContent: string;
-};
+}
 
 export default function WordDataContainer({
   allMeanings,

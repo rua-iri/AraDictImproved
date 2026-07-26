@@ -3,11 +3,11 @@ import {
   ChevronDoubleRightIcon,
 } from "@heroicons/react/20/solid";
 
-type NavigationArrowProps = {
+interface NavigationArrowProps {
   isArrowRight: boolean;
-  handleClick: Function;
+  handleClick: () => void;
   isDisabled: boolean;
-};
+}
 
 export default function NavigationArrow({
   isArrowRight,

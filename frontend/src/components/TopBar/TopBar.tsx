@@ -4,13 +4,13 @@ import NavigationArrow from "./Arrow.js";
 import { fetchWordMeanings } from "../../../utils/fetcher.js";
 import type { WordMeaning } from "../../types/types.js";
 
-type ExamplesAnchorProps = {
+interface ExamplesAnchorProps {
   selectedWordPhonetic: string;
-};
+}
 
-type TopBarProps = {
+interface TopBarProps {
   selectedWord: string;
-};
+}
 
 function ExamplesAnchor({ selectedWordPhonetic }: ExamplesAnchorProps) {
   const examplesLink =

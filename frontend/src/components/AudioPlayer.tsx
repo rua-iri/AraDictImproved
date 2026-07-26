@@ -2,10 +2,10 @@ import { useRef } from "react";
 import { unicodeToBase64 } from "../../utils/textFormatter.js";
 import { SpeakerWaveIcon } from "@heroicons/react/16/solid";
 
-type AudioPlayerProps = {
+interface AudioPlayerProps {
   textContent: string;
   speakerName: string | null;
-};
+}
 export default function AudioPlayer({
   textContent,
   speakerName,
@@ -23,7 +23,7 @@ export default function AudioPlayer({
 
   function audioClick() {
     console.log(audioLink);
-    audioLink && audioElem.current?.play();
+    if (audioLink) audioElem.current?.play();
   }
 
   return (
