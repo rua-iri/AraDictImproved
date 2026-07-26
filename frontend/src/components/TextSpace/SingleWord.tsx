@@ -24,7 +24,9 @@ export default function SingleWord({
       <span
         dir="rtl"
         className={`cursor-pointer ${fontDecoration} me-1`}
-        onClick={() => onClick(alt)}
+        onClick={() => {
+          onClick(alt);
+        }}
       >
         {wordContent}
       </span>

@@ -28,7 +28,9 @@ export default function NavigationArrow({
   return (
     <button
       className={buttonClass}
-      onClick={() => handleClick()}
+      onClick={() => {
+        handleClick();
+      }}
       disabled={isDisabled}
       role="button"
       aria-disabled={isDisabled}

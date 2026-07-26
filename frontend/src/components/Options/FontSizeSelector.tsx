@@ -21,7 +21,7 @@ export default function FontSize() {
 
   function changeFontSize(event: ChangeEvent<HTMLInputElement>) {
     const fontSizeKey: FontSizeKey = event.currentTarget.value as FontSizeKey;
-    dispatch(setFontSize(sizesRange[fontSizeKey as keyof typeof sizesRange]));
+    dispatch(setFontSize(sizesRange[fontSizeKey]));
   }
 
   return (

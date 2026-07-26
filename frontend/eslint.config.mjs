@@ -9,8 +9,8 @@ export default defineConfig({
   files: ["**/*.{ts,tsx}"],
   extends: [
     js.configs.recommended,
-    tseslint.configs.strict,
-    tseslint.configs.stylistic,
+    tseslint.configs.strictTypeChecked,
+    tseslint.configs.stylisticTypeChecked,
     eslintPluginPrettierRecommended,
   ],
   languageOptions: {

@@ -1,16 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: localStorage.getItem("selectedVoice")
-    ? localStorage.getItem("selectedVoice")
-    : "Leila",
+  value: localStorage.getItem("selectedVoice") ?? "Leila",
 };
 
 export const voiceSlice = createSlice({
   name: "voice",
   initialState,
   reducers: {
-    setVoice: (state, action) => {
+    setVoice: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
       localStorage.setItem("selectedVoice", action.payload);
     },

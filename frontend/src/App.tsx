@@ -10,12 +10,8 @@ import {
   setSelectedWord,
   resetSelectedWord,
 } from "./features/selectedWord/selectedWordSlice.js";
-import {
-  resetTextContent,
-  setTextContent,
-} from "./features/textContent/textContentSlice.js";
+import { resetTextContent } from "./features/textContent/textContentSlice.js";
 import TitleHeader from "./components/TitleHeader.js";
-import type { FormEvent } from "react";
 import { useAppSelector } from "./app/hooks.js";
 
 export default function App() {
@@ -25,13 +21,11 @@ export default function App() {
 
   let pressTime = Date.now();
 
-  // function to set the text to an empty string
   function resetText() {
     dispatch(resetTextContent());
     dispatch(resetSelectedWord());
   }
 
-  //function to be executed when a word is clicked
   function activateWord(elemAlt: string) {
     // check that 500 seconds have passed the same so the server isn't spammed
     if (Date.now() >= pressTime + 500 && elemAlt !== selectedWord) {
@@ -51,7 +45,7 @@ export default function App() {
     return (
       <SingleWord
         wordContent={word}
-        key={word + index}
+        key={word + String(index)}
         alt={wordSanitised}
         onClick={activateWord}
         isSelected={selectedWord === wordSanitised}

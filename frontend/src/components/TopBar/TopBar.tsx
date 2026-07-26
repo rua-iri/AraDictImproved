@@ -46,7 +46,7 @@ export default function TopBar({ selectedWord }: TopBarProps) {
   useEffect(() => {
     setResultCounter(0);
     if (selectedWord && selectedWord !== "Selected Word") {
-      lookupWord();
+      void lookupWord();
     }
   }, [selectedWord]);
 
@@ -66,7 +66,9 @@ export default function TopBar({ selectedWord }: TopBarProps) {
     <div className="flex rounded-t-lg py-3 mb-1 flex-row-reverse w-full bg-slate-600 text-slate-50">
       <NavigationArrow
         isArrowRight={true}
-        handleClick={() => cycleResults(false)}
+        handleClick={() => {
+          cycleResults(false);
+        }}
         isDisabled={!resultCounter}
       />
 
@@ -90,7 +92,9 @@ export default function TopBar({ selectedWord }: TopBarProps) {
 
       <NavigationArrow
         isArrowRight={false}
-        handleClick={() => cycleResults(true)}
+        handleClick={() => {
+          cycleResults(true);
+        }}
         isDisabled={!(resultCounter < allMeanings.length - 1)}
       />
     </div>

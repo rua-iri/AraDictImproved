@@ -30,7 +30,9 @@ export default function WordDataContainer({
         <button
           dir="rtl"
           className={`btn btn-sm`}
-          onClick={() => modalRef.current && modalRef.current.showModal()}
+          onClick={() => {
+            if (modalRef.current) modalRef.current.showModal();
+          }}
         >
           {rootArray.map((rootLetter: string, index: number) => (
             <div className="inline mx-0.5" key={index}>

@@ -1,16 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: localStorage.getItem("textContent")
-    ? localStorage.getItem("textContent")
-    : null,
+  value: localStorage.getItem("textContent") ?? null,
 };
 
 export const textContentSlice = createSlice({
   name: "textContent",
   initialState,
   reducers: {
-    setTextContent: (state, action) => {
+    setTextContent: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
       console.log(action.payload);
       localStorage.setItem("textContent", action.payload);

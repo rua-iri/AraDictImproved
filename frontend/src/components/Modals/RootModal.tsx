@@ -32,7 +32,7 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
   }
 
   useEffect(() => {
-    getRootMeaning();
+    void getRootMeaning();
   }, [root, dictionaryChoice]);
 
   return (
@@ -54,7 +54,9 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
               name="dictionary-radio"
               className="radio"
               data-dictionary-name="lane"
-              onClick={(e) => changeDictionary(e)}
+              onClick={(e) => {
+                changeDictionary(e);
+              }}
               defaultChecked
             />
           </div>
@@ -68,7 +70,9 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
               name="dictionary-radio"
               className="radio"
               data-dictionary-name="hans"
-              onClick={(e) => changeDictionary(e)}
+              onClick={(e) => {
+                changeDictionary(e);
+              }}
             />
           </div>
         </div>
@@ -89,7 +93,7 @@ function RootDescription({
   rootMeanings,
   dictionaryChoice,
 }: RootDescriptionProps) {
-  if (!rootMeanings || Object.keys(rootMeanings).length === 0) {
+  if (rootMeanings.length === 0) {
     return <div>No Description Found</div>;
   }
 
@@ -98,7 +102,7 @@ function RootDescription({
       <div
         className="collapse collapse-plus bg-base-100 border border-base-300"
         dir="ltr"
-        key={`${dictionaryChoice}-${index}`}
+        key={`${dictionaryChoice}-${String(index)}`}
       >
         <input
           type="checkbox"

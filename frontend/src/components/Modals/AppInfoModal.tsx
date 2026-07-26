@@ -9,7 +9,9 @@ export default function AppInfoModal() {
       <div className="absolute bottom-0 m-3">
         <button
           className="btn glass btn-sm btn-circle"
-          onClick={() => modalRef.current && modalRef.current.showModal()}
+          onClick={() => {
+            if (modalRef.current) modalRef.current.showModal();
+          }}
         >
           <InformationCircleIcon className="h-full" />
         </button>

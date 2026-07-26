@@ -23,7 +23,7 @@ export default function AudioPlayer({
 
   function audioClick() {
     console.log(audioLink);
-    if (audioLink) audioElem.current?.play();
+    if (audioLink) void audioElem.current?.play();
   }
 
   return (

@@ -19,7 +19,11 @@ export default function InputArea() {
 
   return (
     <div className="my-3">
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event);
+        }}
+      >
         <div className="flex flex-col items-center">
           <textarea
             dir="rtl"

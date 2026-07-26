@@ -10,7 +10,9 @@ export default function OptionsMenu() {
     <>
       <CustomButton
         textContent="Options"
-        handleClick={() => optionsRef.current && optionsRef.current.showModal()}
+        handleClick={() => {
+          if (optionsRef.current) optionsRef.current.showModal();
+        }}
       />
 
       <dialog ref={optionsRef} className="modal">
