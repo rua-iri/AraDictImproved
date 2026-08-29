@@ -1,8 +1,11 @@
 body {
-  background-image: linear-gradient(
-      rgba(180, 90, 30, 0.15),
-      rgba(200, 130, 50, 0.10)
-    ),
+  background-color: oklch(92% 0.04 70);
+  /* warm sand base */
+  background-image:
+    linear-gradient(rgba(235, 205, 160, 0.75),
+      rgba(235, 205, 160, 0.75)),
     url("./assets/moroccan.png");
-  height: 98.5vh;
+  background-repeat: repeat;
+  background-blend-mode: normal, luminosity;
+  min-height: 100vh;
 }

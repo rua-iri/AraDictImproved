@@ -53,7 +53,7 @@ export default function App() {
   });
 
   return (
-    <div className="App min-h-svh h-full bg-base-100 relative">
+    <div className="App min-h-svh h-full relative">
       <TitleHeader />
 
       <div className="text-center bg-base-100 rounded-2xl shadow-lg border border-base-300 pb-6 mx-8 lg:mx-56">
