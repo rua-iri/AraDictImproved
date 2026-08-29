@@ -6,7 +6,7 @@ import type { ChangeEvent } from "react";
 type FontSizeKey = "0" | "10" | "20" | "30" | "40" | "50";
 
 const sizesRange: Record<FontSizeKey, string> = {
-  "0":  "1rem",
+  "0": "1rem",
   "10": "1.125rem",
   "20": "1.25rem",
   "30": "1.5rem",
