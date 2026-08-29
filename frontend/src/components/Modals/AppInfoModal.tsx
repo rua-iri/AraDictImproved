@@ -8,7 +8,7 @@ export default function AppInfoModal() {
     <>
       <div className="absolute bottom-0 m-3">
         <button
-          className="btn btn-accent btn-sm btn-circle"
+          className="btn btn-neutral btn-sm btn-circle"
           onClick={() => {
             if (modalRef.current) modalRef.current.showModal();
           }}

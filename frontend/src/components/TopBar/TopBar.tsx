@@ -58,9 +58,8 @@ export default function TopBar({ selectedWord }: TopBarProps) {
     }
   }
 
-  const selectedWordPhonetic = allMeanings[resultCounter]
-    ? allMeanings[resultCounter].phoneticSpelling
-    : selectedWord;
+  const selectedWordPhonetic =
+    allMeanings[resultCounter]?.phoneticSpelling || selectedWord;
 
   return (
     <div className="flex rounded-t-2xl py-3 mb-1 flex-row-reverse w-full bg-base-200 text-base-content border-b border-base-300">

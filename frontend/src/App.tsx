@@ -3,6 +3,7 @@ import TopBar from "./components/TopBar/TopBar.js";
 import InputArea from "./components/TextSpace/InputArea.js";
 import OptionsMenu from "./components/Modals/OptionsMenu.js";
 import CustomButton from "./components/CustomButton.js";
+import "./App.css";
 import TextContainer from "./components/TextSpace/TextContainer.js";
 import AppInfoModal from "./components/Modals/AppInfoModal.js";
 import { useDispatch } from "react-redux";
