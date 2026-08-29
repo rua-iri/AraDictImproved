@@ -10,7 +10,7 @@ export default function CustomButton({
   },
   style,
 }: CustomButtonProps) {
-  const buttonStyle = style || "btn btn-primary mx-3";
+  const buttonStyle = style ?? "btn btn-primary mx-3";
 
   return (
     <button

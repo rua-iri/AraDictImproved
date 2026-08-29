@@ -2,9 +2,9 @@ import { type RefObject } from "react";
 import Voices from "../Options/VoicesSelector.js";
 import FontSize from "../Options/FontSizeSelector.js";
 
-type OptionsMenuProps = {
+interface OptionsMenuProps {
   optionsRef: RefObject<HTMLDialogElement>;
-};
+}
 
 export default function OptionsMenu({ optionsRef }: OptionsMenuProps) {
   return (

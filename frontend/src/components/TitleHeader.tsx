@@ -1,6 +1,4 @@
 import { useRef } from "react";
-import Voices from "./Options/VoicesSelector.js";
-import FontSize from "./Options/FontSizeSelector.js";
 import OptionsMenu from "./Modals/OptionsMenu.js";
 import CustomButton from "./CustomButton.js";
 

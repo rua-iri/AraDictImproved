@@ -1,10 +1,10 @@
-type ToastsContainerProps = {
+interface ToastsContainerProps {
   toasts: {
     variety: "success" | "warn" | "error";
     message: string;
     timestamp: Date;
   }[];
-};
+}
 
 export default function ToastsContainer({ toasts }: ToastsContainerProps) {
   // TODO: store toast messages in redux state and expire after time has expired

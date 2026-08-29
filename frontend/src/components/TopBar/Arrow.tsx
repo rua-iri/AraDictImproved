@@ -18,9 +18,7 @@ export default function NavigationArrow({
     ? "w-10 flex items-center justify-center select-none btn-disabled opacity-30"
     : "w-10 flex items-center justify-center select-none cursor-pointer";
 
-  const iconClass = isDisabled
-    ? "size-8 text-base-300"
-    : "size-8 text-neutral";
+  const iconClass = isDisabled ? "size-8 text-base-300" : "size-8 text-neutral";
 
   return (
     <button
