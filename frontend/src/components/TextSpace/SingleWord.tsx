@@ -11,11 +11,7 @@ export default function SingleWord({
   alt,
   wordContent,
 }: SingleWordProps) {
-  let fontDecoration = "";
-
-  if (isSelected) {
-    fontDecoration = "bg-slate-200 rounded-sm";
-  }
+  const fontDecoration = isSelected ? "bg-secondary/30 rounded" : "";
 
   if (!wordContent) {
     return <div className="h-3 basis-full"></div>;

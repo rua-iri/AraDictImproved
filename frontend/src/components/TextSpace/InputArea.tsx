@@ -27,7 +27,7 @@ export default function InputArea() {
         <div className="flex flex-col items-center">
           <textarea
             dir="rtl"
-            className="h-60 w-10/12 text-lg m-2 resize-none textarea textarea-neutral"
+            className="h-60 w-10/12 text-lg m-2 resize-none textarea textarea-primary placeholder:text-base-content/50"
             id="input-textarea"
             name="input-textarea"
             placeholder="Input Arabic Text Here"

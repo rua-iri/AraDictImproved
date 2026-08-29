@@ -17,7 +17,7 @@ export default function OptionsMenu() {
 
       <dialog ref={optionsRef} className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Options</h3>
+          <h3 className="font-bold text-lg font-serif">Options</h3>
 
           <div className="divider"></div>
           <Voices />

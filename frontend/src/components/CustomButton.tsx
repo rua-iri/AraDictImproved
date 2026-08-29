@@ -10,7 +10,7 @@ export default function CustomButton({
 }: CustomButtonProps) {
   return (
     <button
-      className="btn glass bg-slate-200 hover:bg-slate-300 mx-3"
+      className="btn btn-primary mx-3"
       onClick={() => {
         handleClick();
       }}

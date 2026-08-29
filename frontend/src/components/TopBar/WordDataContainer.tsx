@@ -29,7 +29,7 @@ export default function WordDataContainer({
       ) : (
         <button
           dir="rtl"
-          className={`btn btn-sm`}
+          className="btn btn-secondary btn-sm"
           onClick={() => {
             if (modalRef.current) modalRef.current.showModal();
           }}
@@ -42,30 +42,38 @@ export default function WordDataContainer({
         </button>
       );
   } else {
-    rootElem = "";
+    rootElem = null;
   }
 
   return (
     <div>
       <div className="h-16 flex flex-col">
-        <div className="px-1 grow-1">
+        <div className="px-1 grow-1 text-md font-semibold">
           {allMeanings[resultCounter]
             ? allMeanings[resultCounter].meaning.replaceAll(";", "/ ")
             : "meaning"}
         </div>
         <div className="grow-1">
-          {allMeanings[resultCounter]
-            ? allMeanings[resultCounter].tense
-            : "tense"}
+          {allMeanings[resultCounter] ? (
+            <span className="badge badge-outline text-xs">
+              {allMeanings[resultCounter].tense}
+            </span>
+          ) : (
+            <span className="text-sm text-base-content/50">tense</span>
+          )}
         </div>
       </div>
 
       <div className="flex w-full h-8">
         <div className="w-full arab-text">{rootElem}</div>
         <div className="w-full">
-          {allMeanings[resultCounter]
-            ? allMeanings[resultCounter].verbForm
-            : "verbForm"}
+          {allMeanings[resultCounter] ? (
+            <span className="badge badge-outline text-xs">
+              Form {allMeanings[resultCounter].verbForm}
+            </span>
+          ) : (
+            <span className="text-sm text-base-content/50">verbForm</span>
+          )}
         </div>
         <div className="w-full">
           <AudioPlayer textContent={textContent} speakerName={selectedVoice} />

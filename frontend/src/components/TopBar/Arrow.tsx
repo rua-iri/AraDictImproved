@@ -14,16 +14,13 @@ export default function NavigationArrow({
   handleClick,
   isDisabled,
 }: NavigationArrowProps) {
-  let buttonClass = "invert w-10 flex items-center justify-center select-none";
+  const buttonClass = isDisabled
+    ? "w-10 flex items-center justify-center select-none btn-disabled opacity-30"
+    : "w-10 flex items-center justify-center select-none cursor-pointer";
 
-  let iconClass = "size-12";
-
-  if (isDisabled) {
-    buttonClass += " btn-disabled blur-xs grayscale";
-    iconClass += " text-slate-400";
-  } else {
-    iconClass += " text-black";
-  }
+  const iconClass = isDisabled
+    ? "size-8 text-base-300"
+    : "size-8 text-neutral";
 
   return (
     <button

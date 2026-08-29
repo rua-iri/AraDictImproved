@@ -19,7 +19,7 @@ function ExamplesAnchor({ selectedWordPhonetic }: ExamplesAnchorProps) {
 
   return (
     <a
-      className="text-xs text-stone-300 link link-hover"
+      className="text-xs text-accent link link-hover"
       href={examplesLink}
       target="_blank"
       rel="noreferrer"
@@ -63,7 +63,7 @@ export default function TopBar({ selectedWord }: TopBarProps) {
     : selectedWord;
 
   return (
-    <div className="flex rounded-t-lg py-3 mb-1 flex-row-reverse w-full bg-slate-600 text-slate-50">
+    <div className="flex rounded-t-2xl py-3 mb-1 flex-row-reverse w-full bg-base-200 text-base-content border-b border-base-300">
       <NavigationArrow
         isArrowRight={true}
         handleClick={() => {

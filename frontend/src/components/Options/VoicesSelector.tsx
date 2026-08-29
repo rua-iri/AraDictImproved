@@ -27,7 +27,7 @@ export default function VoicesSelector() {
             />
 
             <input
-              className="radio radio-info mx-2 my-3"
+              className="radio radio-primary mx-2 my-3"
               type="radio"
               name="radio-group"
               value={speaker.nameEn}

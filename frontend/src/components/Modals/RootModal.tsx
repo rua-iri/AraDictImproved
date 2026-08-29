@@ -37,7 +37,7 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
   return (
     <dialog id="root_modal" className="modal text-black" ref={modalRef}>
       <div className="modal-box h-[75%]">
-        <h3 className="font-bold text-lg">
+        <h3 className="font-bold text-lg font-serif">
           Root:
           <span className="badge badge-lg badge-neutral mx-2 p-3">{root}</span>
         </h3>
@@ -51,7 +51,7 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
               id="laneSelector"
               type="radio"
               name="dictionary-radio"
-              className="radio"
+              className="radio radio-primary"
               data-dictionary-name="lane"
               onClick={(e) => {
                 changeDictionary(e);
@@ -67,7 +67,7 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
               id="hansSelector"
               type="radio"
               name="dictionary-radio"
-              className="radio"
+              className="radio radio-primary"
               data-dictionary-name="hans"
               onClick={(e) => {
                 changeDictionary(e);
@@ -99,7 +99,7 @@ function RootDescription({
   const rootMeaningElements = rootMeanings.map(
     (rootMeaning: RootMeaning, index: number) => (
       <div
-        className="collapse collapse-plus bg-base-100 border border-base-300"
+        className="collapse collapse-plus bg-base-200 border border-base-300"
         dir="ltr"
         key={`${dictionaryChoice}-${String(index)}`}
       >

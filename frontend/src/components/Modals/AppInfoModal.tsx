@@ -8,7 +8,7 @@ export default function AppInfoModal() {
     <>
       <div className="absolute bottom-0 m-3">
         <button
-          className="btn glass btn-sm btn-circle"
+          className="btn btn-accent btn-sm btn-circle"
           onClick={() => {
             if (modalRef.current) modalRef.current.showModal();
           }}
@@ -26,7 +26,7 @@ export default function AppInfoModal() {
             />
           </div>
 
-          <h3 className="font-bold text-lg">About</h3>
+          <h3 className="font-bold text-lg font-serif">About</h3>
 
           <p className="my-5">
             Welcome to the Arabic Reading Assistant. A tool to help intermediate
