@@ -1,10 +1,12 @@
 import { useRef } from "react";
 import OptionsMenu from "./Modals/OptionsMenu.js";
 import CustomButton from "./CustomButton.js";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, ClockIcon } from "@heroicons/react/24/outline";
+import WordHistory from "./Modals/WordHistory.js";
 
 export default function TitleHeader() {
   const optionsRef = useRef<HTMLDialogElement>(null);
+  const historyRef = useRef<HTMLDialogElement>(null);
   return (
     <>
       <header className="w-full bg-neutral text-neutral-content rounded-b-lg mb-2 lg:mb-10">
@@ -24,19 +26,30 @@ export default function TitleHeader() {
               </p>
             </div>
           </div>
-          <CustomButton
-            textContent="Options"
-            icon={<Cog6ToothIcon className="h-5 w-5" />}
-            style="btn btn-primary btn-sm"
-            handleClick={() => {
-              if (optionsRef.current) optionsRef.current.showModal();
-            }}
-          />
+          <div className="flex gap-2">
+            <CustomButton
+              textContent="Word History"
+              icon={<ClockIcon className="h-5 w-5" />}
+              style="btn btn-primary btn-sm"
+              handleClick={() => {
+                if (historyRef.current) historyRef.current.showModal();
+              }}
+            />
+            <CustomButton
+              textContent="Options"
+              icon={<Cog6ToothIcon className="h-5 w-5" />}
+              style="btn btn-primary btn-sm"
+              handleClick={() => {
+                if (optionsRef.current) optionsRef.current.showModal();
+              }}
+            />
+          </div>
         </div>
 
         <div className="h-0.5 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-60" />
       </header>
 
+      <WordHistory historyRef={historyRef} />
       <OptionsMenu optionsRef={optionsRef} />
     </>
   );

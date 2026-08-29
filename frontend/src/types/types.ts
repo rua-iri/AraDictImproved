@@ -10,3 +10,8 @@ export interface RootMeaning {
   meaning: string;
   word: string;
 }
+
+export interface HistoryWords {
+  word: string;
+  timestamp: number;
+}

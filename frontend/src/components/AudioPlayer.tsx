@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { unicodeToBase64 } from "../../utils/textFormatter.js";
+import { unicodeToBase64 } from "../../utils/utils.js";
 import { SpeakerWaveIcon } from "@heroicons/react/16/solid";
 
 interface AudioPlayerProps {
