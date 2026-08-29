@@ -13,6 +13,7 @@ import {
 import { resetTextContent } from "./features/textContent/textContentSlice.js";
 import TitleHeader from "./components/TitleHeader.js";
 import { useAppSelector } from "./app/hooks.js";
+import { storeHistoryList } from "../utils/utils.js";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,13 @@ export default function App() {
     if (Date.now() >= pressTime + 500 && elemAlt !== selectedWord) {
       dispatch(setSelectedWord(elemAlt));
       pressTime = Date.now();
+
+      const historyWord = {
+        word: elemAlt,
+        timestamp: pressTime,
+      };
+
+      storeHistoryList(historyWord);
     }
   }
 
