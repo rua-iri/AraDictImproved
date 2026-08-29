@@ -28,8 +28,8 @@ export const retriveHistoryList = (): HistoryWord[] => {
   if (!historyString) return [];
 
   try {
-    return JSON.parse(historyString);
-  } catch (error) {
+    return JSON.parse(historyString) as HistoryWord[];
+  } catch {
     return [];
   }
 };

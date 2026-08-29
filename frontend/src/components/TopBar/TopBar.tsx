@@ -59,6 +59,7 @@ export default function TopBar({ selectedWord }: TopBarProps) {
   }
 
   const selectedWordPhonetic =
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     allMeanings[resultCounter]?.phoneticSpelling || selectedWord;
 
   return (
