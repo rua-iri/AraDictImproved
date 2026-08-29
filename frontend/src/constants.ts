@@ -16,3 +16,10 @@ export const voiceList = [
     nameAr: "سلمَى",
   },
 ];
+
+export enum localStorageKeys {
+  SELECTED_VOICE = "selectedVoice",
+  TEXT_CONTENT = "textContent",
+  FONT_SIZE = "fontSize",
+  WORD_HISTORY = "wordHistory",
+}
