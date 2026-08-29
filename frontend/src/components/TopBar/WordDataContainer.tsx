@@ -49,12 +49,12 @@ export default function WordDataContainer({
     <div>
       <div className="h-16 flex flex-col">
         <div className="px-1 grow-1 text-md font-semibold">
-          {allMeanings[resultCounter]
+          {allMeanings[resultCounter]?.meaning
             ? allMeanings[resultCounter].meaning.replaceAll(";", "/ ")
             : "meaning"}
         </div>
         <div className="grow-1">
-          {allMeanings[resultCounter] ? (
+          {allMeanings[resultCounter]?.tense ? (
             <span className="badge badge-outline text-xs">
               {allMeanings[resultCounter].tense}
             </span>
@@ -67,7 +67,7 @@ export default function WordDataContainer({
       <div className="flex w-full h-8">
         <div className="w-full arab-text">{rootElem}</div>
         <div className="w-full">
-          {allMeanings[resultCounter] ? (
+          {allMeanings[resultCounter]?.verbForm ? (
             <span className="badge badge-outline text-xs">
               Form {allMeanings[resultCounter].verbForm}
             </span>
