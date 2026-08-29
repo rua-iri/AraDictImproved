@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  size: localStorage.getItem("fontSize") ?? "sm",
+  size: localStorage.getItem("fontSize") ?? "1.25rem",
 };
 
 export const fontSlice = createSlice({
@@ -13,7 +13,7 @@ export const fontSlice = createSlice({
       localStorage.setItem("fontSize", action.payload);
     },
     resetFontSize: (state) => {
-      state.size = "sm";
+      state.size = "1.25rem";
       localStorage.removeItem("fontSize");
     },
   },

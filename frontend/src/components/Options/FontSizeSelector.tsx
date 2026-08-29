@@ -5,24 +5,30 @@ import type { ChangeEvent } from "react";
 
 type FontSizeKey = "0" | "10" | "20" | "30" | "40" | "50";
 
+const sizesRange: Record<FontSizeKey, string> = {
+  "0":  "1rem",
+  "10": "1.125rem",
+  "20": "1.25rem",
+  "30": "1.5rem",
+  "40": "1.875rem",
+  "50": "2.25rem",
+};
+
+const labels = ["XS", "S", "Md", "L", "XL", "XXL"];
+
 export default function FontSize() {
   const fontSize = useAppSelector((state) => state.fontSlice.size);
-
   const dispatch = useDispatch();
 
-  const sizesRange = {
-    "0": "xs",
-    "10": "sm",
-    "20": "base",
-    "30": "lg",
-    "40": "xl",
-    "50": "2xl",
-  };
-
   function changeFontSize(event: ChangeEvent<HTMLInputElement>) {
-    const fontSizeKey: FontSizeKey = event.currentTarget.value as FontSizeKey;
-    dispatch(setFontSize(sizesRange[fontSizeKey]));
+    const key = event.currentTarget.value as FontSizeKey;
+    dispatch(setFontSize(sizesRange[key]));
   }
+
+  const currentKey =
+    (Object.keys(sizesRange) as FontSizeKey[]).find(
+      (key) => sizesRange[key] === fontSize,
+    ) ?? "20";
 
   return (
     <div className="m-3 p-3 font-light">
@@ -31,9 +37,7 @@ export default function FontSize() {
         type="range"
         min={0}
         max="50"
-        value={Object.keys(sizesRange).find(
-          (key) => sizesRange[key as keyof typeof sizesRange] === fontSize,
-        )}
+        value={currentKey}
         className="range w-full"
         step="10"
         onChange={changeFontSize}
@@ -47,12 +51,9 @@ export default function FontSize() {
         <span>|</span>
       </div>
       <div className="flex w-full justify-between px-2 text-xs">
-        <span>XS</span>
-        <span>S</span>
-        <span>Md</span>
-        <span>L</span>
-        <span>XL</span>
-        <span>XXL</span>
+        {labels.map((label) => (
+          <span key={label}>{label}</span>
+        ))}
       </div>
     </div>
   );

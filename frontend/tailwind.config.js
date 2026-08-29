@@ -4,5 +4,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  safelist: ["text-xs", "text-sm", "text-base", "text-lg", "text-2xl"],
+  safelist: [],
 };
