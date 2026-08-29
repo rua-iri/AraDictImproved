@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import OptionsMenu from "./Modals/OptionsMenu.js";
 import CustomButton from "./CustomButton.js";
+import { Cog6ToothIcon } from "@heroicons/react/24/outline";
 
 export default function TitleHeader() {
   const optionsRef = useRef<HTMLDialogElement>(null);
@@ -25,6 +26,7 @@ export default function TitleHeader() {
           </div>
           <CustomButton
             textContent="Options"
+            icon={<Cog6ToothIcon className="h-5 w-5" />}
             style="btn btn-primary btn-sm"
             handleClick={() => {
               if (optionsRef.current) optionsRef.current.showModal();
