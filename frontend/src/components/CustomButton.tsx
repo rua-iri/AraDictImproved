@@ -1,16 +1,30 @@
-type CustomButtonProps = {
+import type { ReactNode } from "react";
+
+interface CustomButtonProps {
   textContent: string;
-  handleClick?: Function;
-};
+  handleClick?: () => void;
+  style?: string;
+  icon?: ReactNode;
+}
+
 export default function CustomButton({
   textContent,
-  handleClick = () => {},
+  handleClick = () => {
+    // do nothing.
+  },
+  style,
+  icon,
 }: CustomButtonProps) {
+  const buttonStyle = style ?? "btn btn-primary mx-3";
+
   return (
     <button
-      className="btn glass bg-slate-200 hover:bg-slate-300 mx-3"
-      onClick={() => handleClick()}
+      className={buttonStyle}
+      onClick={() => {
+        handleClick();
+      }}
     >
+      {icon}
       {textContent}
     </button>
   );

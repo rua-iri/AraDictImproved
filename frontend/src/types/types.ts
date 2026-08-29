@@ -1,12 +1,17 @@
-export type WordMeaning = {
+export interface WordMeaning {
   phoneticSpelling: string;
   root: string;
   meaning: string;
   tense: string;
   verbForm: string;
-};
+}
 
-export type RootMeaning = {
+export interface RootMeaning {
   meaning: string;
   word: string;
-};
+}
+
+export interface HistoryWord {
+  word: string;
+  timestamp: number;
+}

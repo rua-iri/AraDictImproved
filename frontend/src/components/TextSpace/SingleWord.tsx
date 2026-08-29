@@ -1,9 +1,9 @@
-type SingleWordProps = {
+interface SingleWordProps {
   isSelected: boolean;
-  onClick: Function;
+  onClick: (alt: string) => void;
   alt: string;
   wordContent: string;
-};
+}
 
 export default function SingleWord({
   isSelected,
@@ -11,13 +11,7 @@ export default function SingleWord({
   alt,
   wordContent,
 }: SingleWordProps) {
-  let fontDecoration = "";
-
-  // alert(fontSize)
-
-  if (isSelected) {
-    fontDecoration = "bg-slate-200 rounded-sm";
-  }
+  const fontDecoration = isSelected ? "bg-secondary/30 rounded" : "";
 
   if (!wordContent) {
     return <div className="h-3 basis-full"></div>;
@@ -26,7 +20,9 @@ export default function SingleWord({
       <span
         dir="rtl"
         className={`cursor-pointer ${fontDecoration} me-1`}
-        onClick={() => onClick(alt)}
+        onClick={() => {
+          onClick(alt);
+        }}
       >
         {wordContent}
       </span>

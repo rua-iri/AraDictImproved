@@ -2,14 +2,14 @@ import { useEffect, useState, type MouseEvent, type RefObject } from "react";
 import { fetchRootMeanings } from "../../../utils/fetcher.js";
 import type { RootMeaning } from "../../types/types.js";
 
-type RootModalProps = {
+interface RootModalProps {
   root: string | undefined;
   modalRef: RefObject<HTMLDialogElement>;
-};
-type RootDescriptionProps = {
+}
+interface RootDescriptionProps {
   rootMeanings: RootMeaning[];
   dictionaryChoice: string;
-};
+}
 
 export default function RootModal({ root, modalRef }: RootModalProps) {
   const [rootData, setRootData] = useState<RootMeaning[]>([]);
@@ -27,18 +27,17 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
     const dataDictionaryName = event.currentTarget.getAttribute(
       "data-dictionary-name",
     );
-    console.log(dataDictionaryName);
     if (dataDictionaryName) setDictionaryChoice(dataDictionaryName);
   }
 
   useEffect(() => {
-    getRootMeaning();
+    void getRootMeaning();
   }, [root, dictionaryChoice]);
 
   return (
     <dialog id="root_modal" className="modal text-black" ref={modalRef}>
       <div className="modal-box h-[75%]">
-        <h3 className="font-bold text-lg">
+        <h3 className="font-bold text-lg font-serif">
           Root:
           <span className="badge badge-lg badge-neutral mx-2 p-3">{root}</span>
         </h3>
@@ -52,9 +51,11 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
               id="laneSelector"
               type="radio"
               name="dictionary-radio"
-              className="radio"
+              className="radio radio-primary"
               data-dictionary-name="lane"
-              onClick={(e) => changeDictionary(e)}
+              onClick={(e) => {
+                changeDictionary(e);
+              }}
               defaultChecked
             />
           </div>
@@ -66,9 +67,11 @@ export default function RootModal({ root, modalRef }: RootModalProps) {
               id="hansSelector"
               type="radio"
               name="dictionary-radio"
-              className="radio"
+              className="radio radio-primary"
               data-dictionary-name="hans"
-              onClick={(e) => changeDictionary(e)}
+              onClick={(e) => {
+                changeDictionary(e);
+              }}
             />
           </div>
         </div>
@@ -89,16 +92,16 @@ function RootDescription({
   rootMeanings,
   dictionaryChoice,
 }: RootDescriptionProps) {
-  if (!rootMeanings || Object.keys(rootMeanings).length === 0) {
+  if (rootMeanings.length === 0) {
     return <div>No Description Found</div>;
   }
 
   const rootMeaningElements = rootMeanings.map(
     (rootMeaning: RootMeaning, index: number) => (
       <div
-        className="collapse collapse-plus bg-base-100 border border-base-300"
+        className="collapse collapse-plus bg-base-200 border border-base-300"
         dir="ltr"
-        key={`${dictionaryChoice}-${index}`}
+        key={`${dictionaryChoice}-${String(index)}`}
       >
         <input
           type="checkbox"

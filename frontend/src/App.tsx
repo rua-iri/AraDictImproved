@@ -1,8 +1,8 @@
 import SingleWord from "./components/TextSpace/SingleWord.js";
 import TopBar from "./components/TopBar/TopBar.js";
 import InputArea from "./components/TextSpace/InputArea.js";
-import OptionsMenu from "./components/Modals/OptionsMenu.js";
 import CustomButton from "./components/CustomButton.js";
+import "./App.css";
 import TextContainer from "./components/TextSpace/TextContainer.js";
 import AppInfoModal from "./components/Modals/AppInfoModal.js";
 import { useDispatch } from "react-redux";
@@ -10,13 +10,10 @@ import {
   setSelectedWord,
   resetSelectedWord,
 } from "./features/selectedWord/selectedWordSlice.js";
-import {
-  resetTextContent,
-  setTextContent,
-} from "./features/textContent/textContentSlice.js";
+import { resetTextContent } from "./features/textContent/textContentSlice.js";
 import TitleHeader from "./components/TitleHeader.js";
-import type { FormEvent } from "react";
 import { useAppSelector } from "./app/hooks.js";
+import { storeHistoryList } from "../utils/utils.js";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -25,19 +22,23 @@ export default function App() {
 
   let pressTime = Date.now();
 
-  // function to set the text to an empty string
   function resetText() {
     dispatch(resetTextContent());
     dispatch(resetSelectedWord());
   }
 
-  //function to be executed when a word is clicked
   function activateWord(elemAlt: string) {
     // check that 500 seconds have passed the same so the server isn't spammed
     if (Date.now() >= pressTime + 500 && elemAlt !== selectedWord) {
       dispatch(setSelectedWord(elemAlt));
       pressTime = Date.now();
-      console.log(elemAlt);
+
+      const historyWord = {
+        word: elemAlt,
+        timestamp: pressTime,
+      };
+
+      storeHistoryList(historyWord);
     }
   }
 
@@ -51,7 +52,7 @@ export default function App() {
     return (
       <SingleWord
         wordContent={word}
-        key={word + index}
+        key={word + String(index)}
         alt={wordSanitised}
         onClick={activateWord}
         isSelected={selectedWord === wordSanitised}
@@ -60,10 +61,10 @@ export default function App() {
   });
 
   return (
-    <div className="App min-h-svh h-full bg-slate-200 relative">
+    <div className="App min-h-svh h-full relative">
       <TitleHeader />
 
-      <div className="text-center bg-white rounded-lg pb-3 mx-8 lg:mx-56">
+      <div className="text-center bg-base-100 rounded-2xl shadow-lg border border-base-300 pb-6 mx-8 lg:mx-56">
         <div className="block">
           <TopBar selectedWord={selectedWord} />
         </div>
@@ -77,8 +78,6 @@ export default function App() {
         {textContent && (
           <CustomButton textContent={"Reset"} handleClick={resetText} />
         )}
-
-        <OptionsMenu />
       </div>
 
       <AppInfoModal />

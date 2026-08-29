@@ -1,13 +1,11 @@
 body {
-  /* background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/more-leaves.png");
-  background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/more-leaves-on-green.png");
-  background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/morocco.png"); 
-  background-image: url("https://www.toptal.com/designers/subtlepatterns/uploads/morocco.png"); */
-
-  background-image: linear-gradient(
-      rgba(28, 101, 129, 0.342),
-      rgba(51, 152, 192, 0.199)
-    ),
+  background-color: oklch(92% 0.04 70);
+  /* warm sand base */
+  background-image:
+    linear-gradient(rgba(235, 205, 160, 0.75),
+      rgba(235, 205, 160, 0.75)),
     url("./assets/moroccan.png");
-  height: 98.5vh;
+  background-repeat: repeat;
+  background-blend-mode: normal, luminosity;
+  min-height: 100vh;
 }

@@ -4,13 +4,13 @@ import NavigationArrow from "./Arrow.js";
 import { fetchWordMeanings } from "../../../utils/fetcher.js";
 import type { WordMeaning } from "../../types/types.js";
 
-type ExamplesAnchorProps = {
+interface ExamplesAnchorProps {
   selectedWordPhonetic: string;
-};
+}
 
-type TopBarProps = {
+interface TopBarProps {
   selectedWord: string;
-};
+}
 
 function ExamplesAnchor({ selectedWordPhonetic }: ExamplesAnchorProps) {
   const examplesLink =
@@ -19,7 +19,7 @@ function ExamplesAnchor({ selectedWordPhonetic }: ExamplesAnchorProps) {
 
   return (
     <a
-      className="text-xs text-stone-300 link link-hover"
+      className="text-xs text-accent link link-hover"
       href={examplesLink}
       target="_blank"
       rel="noreferrer"
@@ -35,18 +35,18 @@ export default function TopBar({ selectedWord }: TopBarProps) {
 
   const lookupWord = async () => {
     try {
-      console.log("selectedWord: ", selectedWord);
       setAllMeanings(await fetchWordMeanings(selectedWord));
     } catch (e) {
-      console.log(e);
-      alert("Error: API Call Failed");
+      /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
+      // TODO: improve error handling
+      console.error(e);
     }
   };
 
   useEffect(() => {
     setResultCounter(0);
     if (selectedWord && selectedWord !== "Selected Word") {
-      lookupWord();
+      void lookupWord();
     }
   }, [selectedWord]);
 
@@ -58,15 +58,17 @@ export default function TopBar({ selectedWord }: TopBarProps) {
     }
   }
 
-  const selectedWordPhonetic = allMeanings[resultCounter]
-    ? allMeanings[resultCounter].phoneticSpelling
-    : selectedWord;
+  const selectedWordPhonetic =
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    allMeanings[resultCounter]?.phoneticSpelling || selectedWord;
 
   return (
-    <div className="flex rounded-t-lg py-3 mb-1 flex-row-reverse w-full bg-slate-600 text-slate-50">
+    <div className="flex rounded-t-2xl py-3 mb-1 flex-row-reverse w-full bg-base-200 text-base-content border-b border-base-300">
       <NavigationArrow
         isArrowRight={true}
-        handleClick={() => cycleResults(false)}
+        handleClick={() => {
+          cycleResults(false);
+        }}
         isDisabled={!resultCounter}
       />
 
@@ -90,7 +92,9 @@ export default function TopBar({ selectedWord }: TopBarProps) {
 
       <NavigationArrow
         isArrowRight={false}
-        handleClick={() => cycleResults(true)}
+        handleClick={() => {
+          cycleResults(true);
+        }}
         isDisabled={!(resultCounter < allMeanings.length - 1)}
       />
     </div>

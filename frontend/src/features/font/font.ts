@@ -1,22 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { localStorageKeys } from "../../constants.js";
 
 const initialState = {
-  size: localStorage.getItem("fontSize")
-    ? localStorage.getItem("fontSize")
-    : "sm",
+  size: localStorage.getItem(localStorageKeys.FONT_SIZE) ?? "1.25rem",
 };
 
 export const fontSlice = createSlice({
   name: "font",
   initialState,
   reducers: {
-    setFontSize: (state, action) => {
+    setFontSize: (state, action: PayloadAction<string>) => {
       state.size = action.payload;
-      localStorage.setItem("fontSize", action.payload);
+      localStorage.setItem(localStorageKeys.FONT_SIZE, action.payload);
     },
     resetFontSize: (state) => {
-      state.size = null;
-      localStorage.removeItem("fontSize");
+      state.size = "1.25rem";
+      localStorage.removeItem(localStorageKeys.FONT_SIZE);
     },
   },
 });

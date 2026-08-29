@@ -1,5 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
 @import 'tailwindcss';
-@plugin "daisyui";
+
+@plugin "daisyui" {
+  themes: aradict --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "aradict";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Base surfaces — warm sand */
+  --color-base-100: oklch(96% 0.03 70);
+  --color-base-200: oklch(92% 0.04 70);
+  --color-base-300: oklch(85% 0.06 60);
+  --color-base-content: oklch(25% 0.04 50);
+
+  /* Primary — terracotta */
+  --color-primary: oklch(55% 0.17 35);
+  --color-primary-content: oklch(97% 0.01 35);
+
+  /* Secondary — warm amber/gold */
+  --color-secondary: oklch(65% 0.12 55);
+  --color-secondary-content: oklch(20% 0.04 55);
+
+  /* Accent — muted teal (Moroccan tile echo) */
+  --color-accent: oklch(45% 0.12 200);
+  --color-accent-content: oklch(97% 0.01 200);
+
+  /* Neutral — dark umber (replaces slate-600 headers) */
+  --color-neutral: oklch(28% 0.05 50);
+  --color-neutral-content: oklch(95% 0.02 70);
+
+  /* Semantic */
+  --color-info: oklch(55% 0.15 240);
+  --color-info-content: oklch(97% 0.01 240);
+  --color-success: oklch(60% 0.17 150);
+  --color-success-content: oklch(97% 0.01 150);
+  --color-warning: oklch(75% 0.18 75);
+  --color-warning-content: oklch(20% 0.04 75);
+  --color-error: oklch(60% 0.22 20);
+  --color-error-content: oklch(97% 0.01 20);
+
+  /* Shape */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.75rem;
+
+  /* Border */
+  --border: 1px;
+
+  /* Effects */
+  --depth: 1;
+  --noise: 0;
+}
 
 @config '../tailwind.config.js';
 
@@ -7,12 +63,8 @@
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
 */
 @layer base {
-
   *,
   ::after,
   ::before,
@@ -20,18 +72,24 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  body {
+    font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .debug {
