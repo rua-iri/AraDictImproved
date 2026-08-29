@@ -1,5 +1,5 @@
 import { localStorageKeys } from "../src/constants.js";
-import type { HistoryWords } from "../src/types/types.js";
+import type { HistoryWord } from "../src/types/types.js";
 
 /**
  * Converts a regular unicode string into base64
@@ -21,9 +21,9 @@ export const unicodeToBase64 = (unicodeString: string): string => {
 /**
  * Retrieves the words that the user has referenced previously
  *
- * @returns {HistoryWords[]} an array of words that have been referenced
+ * @returns {HistoryWord[]} an array of words that have been referenced
  */
-export const retriveHistoryList = (): HistoryWords[] => {
+export const retriveHistoryList = (): HistoryWord[] => {
   const historyString = localStorage.getItem(localStorageKeys.WORD_HISTORY);
   if (!historyString) return [];
 
@@ -38,9 +38,15 @@ export const retriveHistoryList = (): HistoryWords[] => {
  *
  * Stores a new/updated list of words that the user has reference
  *
- * @param {HistoryWords} historyList an array of words that have been referenced
+ * @param {HistoryWord} historyWord a word that have been referenced
  */
-export const storeHistoryList = (historyList: HistoryWords[]) => {
+export const storeHistoryList = (historyWord: HistoryWord) => {
+  const historyList = retriveHistoryList();
+
+  if (!historyList.find((elem) => elem.word === historyWord.word)) {
+    historyList.push(historyWord);
+  }
+
   const historyString = JSON.stringify(historyList);
   localStorage.setItem(localStorageKeys.WORD_HISTORY, historyString);
 };

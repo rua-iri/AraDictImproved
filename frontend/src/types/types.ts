@@ -11,7 +11,7 @@ export interface RootMeaning {
   word: string;
 }
 
-export interface HistoryWords {
+export interface HistoryWord {
   word: string;
   timestamp: number;
 }

@@ -11,8 +11,9 @@ export default function WordHistory({ historyRef }: WordHistoryProps) {
   return (
     <dialog id="my_modal_2" className="modal" ref={historyRef}>
       <div className="modal-box">
-        {historyList.map((historyItem, index) => (
-          <div key={`${historyItem.word}-${index}`}>
+        <div>Word History</div>
+        {historyList.map((historyItem) => (
+          <div key={historyItem.word}>
             <span>{historyItem.word}</span>
             <span>At: {new Date(historyItem.timestamp).toLocaleString()}</span>
           </div>
